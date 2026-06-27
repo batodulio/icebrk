@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IceBrk Brand Identity Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ib-blue:#1A56C4; --sky-blue:#38B6FF; --energy-orange:#F47920; --vitality-green:#00A651;
+  --sunshine-yellow:#FFD23F; --playful-purple:#8338EC;
+  --cloud-white:#FFFDF7; --mist:#F2EFE4; --slate:#8C8A7E; --charcoal:#22223B;
+  --font-display:'Baloo 2',sans-serif; --font-body:'Poppins',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-body);background:var(--cloud-white);color:var(--charcoal);line-height:1.6;overflow-x:hidden;}
+
+/* HERO */
+.hero{background:var(--ib-blue);color:white;padding:72px 48px 88px;position:relative;overflow:hidden;}
+.hero-blob-1{position:absolute;top:-70px;left:-60px;width:220px;height:220px;border-radius:50%;background:var(--sky-blue);opacity:0.9;pointer-events:none;}
+.hero-blob-2{position:absolute;bottom:-140px;right:-110px;width:340px;height:340px;border-radius:50%;background:var(--energy-orange);opacity:0.85;pointer-events:none;}
+.hero-dot-1{position:absolute;top:60px;right:140px;width:18px;height:18px;border-radius:50%;background:var(--sunshine-yellow);pointer-events:none;}
+.hero-dot-2{position:absolute;top:140px;right:80px;width:12px;height:12px;border-radius:50%;background:var(--vitality-green);pointer-events:none;}
+.hero-dot-3{position:absolute;bottom:60px;right:260px;width:14px;height:14px;border-radius:50%;background:var(--playful-purple);pointer-events:none;}
+.hero-tri{position:absolute;top:30%;left:6%;width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:18px solid var(--sunshine-yellow);opacity:0.85;pointer-events:none;}
+.hero-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--sunshine-yellow);margin-bottom:16px;position:relative;}
+.hero h1{font-family:var(--font-display);font-size:clamp(34px,5.2vw,56px);font-weight:800;line-height:1.12;max-width:620px;margin-bottom:20px;position:relative;}
+.hero p{font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);max-width:480px;position:relative;}
+
+/* SECTIONS */
+section{padding:64px 48px;border-bottom:4px dashed var(--mist);position:relative;overflow:hidden;}
+.section-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--ib-blue);margin-bottom:8px;position:relative;}
+.section-title{font-family:var(--font-display);font-size:30px;font-weight:700;color:var(--charcoal);margin-bottom:32px;position:relative;}
+
+/* DECORATIVE */
+.blob{position:absolute;border-radius:50%;pointer-events:none;}
+
+/* PALETTE */
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:18px;margin-bottom:40px;}
+.swatch{border-radius:18px;overflow:hidden;box-shadow:0 6px 0 rgba(34,34,59,0.08);}
+.swatch-color{height:100px;position:relative;}
+.swatch-color span{position:absolute;bottom:10px;right:14px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.92);font-family:monospace;}
+.swatch-color.light span{color:rgba(34,34,59,0.55);}
+.swatch-info{background:white;padding:14px 16px;}
+.swatch-name{font-size:14px;font-weight:700;color:var(--charcoal);display:block;font-family:var(--font-display);}
+.swatch-role{font-size:11px;color:var(--slate);margin-top:3px;}
+
+/* SHAPE SHOWCASE */
+.shape-showcase{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;}
+.shape-card{background:white;border-radius:20px;padding:28px 24px 24px;box-shadow:0 6px 0 rgba(34,34,59,0.06);position:relative;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;border:3px solid transparent;}
+.shape-card-label{font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--charcoal);margin-bottom:6px;position:relative;}
+.shape-card-desc{font-size:13px;color:var(--slate);line-height:1.55;position:relative;}
+
+/* LAYOUT DEMO */
+.layout-demo{background:var(--ib-blue);border-radius:24px;padding:48px;position:relative;overflow:hidden;min-height:260px;display:flex;flex-direction:column;justify-content:center;margin-top:32px;}
+.layout-demo h3{font-family:var(--font-display);font-size:32px;font-weight:700;color:white;max-width:380px;line-height:1.2;margin-bottom:14px;position:relative;}
+.layout-demo p{font-size:15px;color:rgba(255,255,255,0.82);max-width:360px;font-weight:400;position:relative;}
+.layout-demo-btn{display:inline-block;margin-top:24px;padding:13px 30px;background:var(--sunshine-yellow);color:var(--charcoal);font-weight:700;font-size:14px;font-family:var(--font-body);border-radius:999px;position:relative;width:fit-content;}
+
+/* TYPOGRAPHY */
+.type-block{background:white;border-radius:20px;padding:36px 40px;margin-bottom:20px;box-shadow:0 6px 0 rgba(34,34,59,0.06);position:relative;overflow:hidden;}
+.type-meta{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--slate);margin-bottom:12px;}
+.type-display{font-family:var(--font-display);font-size:42px;font-weight:800;color:var(--charcoal);line-height:1.15;position:relative;}
+.type-display-sub{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--ib-blue);margin-top:8px;position:relative;}
+.type-body-demo{font-family:var(--font-body);font-size:16px;color:var(--charcoal);line-height:1.75;max-width:580px;position:relative;}
+.font-detail{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;}
+.font-detail span{font-size:12px;font-weight:600;color:var(--ib-blue);background:var(--mist);padding:5px 12px;border-radius:20px;}
+
+/* COMPONENTS */
+.components-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;}
+.component-card{background:white;border-radius:20px;padding:32px;box-shadow:0 6px 0 rgba(34,34,59,0.06);}
+.component-card h4{font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slate);margin-bottom:20px;}
+.btn-row{display:flex;flex-direction:column;gap:12px;}
+.btn{display:inline-block;padding:13px 26px;border-radius:999px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;border:none;text-align:center;}
+.btn-primary{background:var(--ib-blue);color:white;}
+.btn-secondary{background:var(--vitality-green);color:white;}
+.btn-accent{background:var(--energy-orange);color:white;}
+.btn-yellow{background:var(--sunshine-yellow);color:var(--charcoal);}
+.btn-outline{background:transparent;color:var(--ib-blue);border:3px solid var(--ib-blue);padding:10px 26px;}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;color:white;}
+.tag-blue{background:var(--ib-blue);}
+.tag-sky{background:var(--sky-blue);}
+.tag-orange{background:var(--energy-orange);}
+.tag-green{background:var(--vitality-green);}
+.tag-purple{background:var(--playful-purple);}
+.tag-yellow{background:var(--sunshine-yellow);color:var(--charcoal);}
+.mini-card{border-radius:18px;overflow:hidden;border:3px solid var(--mist);}
+.mini-card-header{height:84px;background:var(--ib-blue);display:flex;align-items:center;padding:0 20px;gap:12px;position:relative;overflow:hidden;}
+.mini-card-header .blob{width:70px;height:70px;background:var(--sunshine-yellow);opacity:0.85;bottom:-30px;right:-20px;}
+.mini-card-icon{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.22);display:flex;align-items:center;justify-content:center;position:relative;}
+.mini-card-icon svg{width:18px;height:18px;fill:white;}
+.mini-card-title{color:white;font-weight:700;font-size:14px;font-family:var(--font-display);position:relative;}
+.mini-card-body{padding:18px 20px;}
+.mini-card-body p{font-size:13px;color:var(--slate);margin-bottom:14px;}
+.mini-card-stat{display:flex;gap:18px;}
+.stat{text-align:center;}
+.stat-val{font-size:22px;font-weight:800;color:var(--ib-blue);font-family:var(--font-display);}
+.stat-lbl{font-size:10px;color:var(--slate);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+
+/* CELEBRATION CARD */
+.celebrate-card{background:var(--ib-blue);border-radius:20px;padding:28px;position:relative;overflow:hidden;}
+.celebrate-card h4{font-family:var(--font-display);font-weight:800;font-size:22px;color:white;max-width:280px;position:relative;}
+.celebrate-card p{font-size:13px;color:rgba(255,255,255,0.85);margin-top:6px;max-width:260px;position:relative;}
+
+/* RULES */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:640px){.rules-grid{grid-template-columns:1fr;}}
+.rule-card{border-radius:18px;padding:28px;position:relative;overflow:hidden;}
+.rule-card.do{background:#E6F7EE;border-left:6px solid var(--vitality-green);}
+.rule-card.dont{background:#FEEDE2;border-left:6px solid var(--energy-orange);}
+.rule-badge{display:inline-block;font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:20px;margin-bottom:14px;}
+.do .rule-badge{background:var(--vitality-green);color:white;}
+.dont .rule-badge{background:var(--energy-orange);color:white;}
+.rule-card ul{padding-left:18px;}
+.rule-card li{font-size:14px;color:var(--charcoal);margin-bottom:9px;line-height:1.55;position:relative;}
+
+/* ACCENT CARDS */
+.accent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+.accent-card{background:white;border-radius:18px;padding:24px;box-shadow:0 6px 0 rgba(34,34,59,0.06);position:relative;overflow:hidden;}
+
+/* VOICE EXAMPLES */
+.voice-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:640px){.voice-grid{grid-template-columns:1fr;}}
+.voice-card{border-radius:18px;padding:24px;font-size:14px;line-height:1.6;}
+.voice-card.good{background:#E6F7EE;}
+.voice-card.bad{background:var(--mist);}
+.voice-tag{font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:block;}
+.voice-card.good .voice-tag{color:var(--vitality-green);}
+.voice-card.bad .voice-tag{color:var(--slate);}
+
+/* FOOTER */
+.guide-footer{background:var(--charcoal);color:rgba(255,255,255,0.65);text-align:center;padding:36px 40px;font-size:13px;position:relative;overflow:hidden;font-family:var(--font-body);}
+.guide-footer strong{color:white;font-family:var(--font-display);}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-blob-1"></div>
+  <div class="hero-blob-2"></div>
+  <div class="hero-dot-1"></div>
+  <div class="hero-dot-2"></div>
+  <div class="hero-dot-3"></div>
+  <div class="hero-tri"></div>
+  <p class="hero-label">Visual identity system</p>
+  <h1>Bonding made simple.</h1>
+  <p>We're all about genuine connection and fun. A bold, colorful, game-show-bright identity system built for icebreaker games, corporate events, classrooms, and gatherings of every kind.</p>
+</div>
+
+<!-- 01 COLOR -->
+<section>
+  <div class="blob" style="width:260px;height:260px;background:var(--sky-blue);opacity:0.08;bottom:-120px;right:-100px;"></div>
+  <div class="section-label">01 — Color system</div>
+  <div class="section-title">Primary &amp; accent palette</div>
+  <p style="font-size:13px;color:var(--slate);margin-bottom:28px;max-width:620px;position:relative;">IceBrk Blue, Energy Orange, Sky Blue, and Vitality Green form the signature quartet — bold, saturated, and built to feel like a game show, not a dashboard. Sunshine Yellow and Playful Purple step in for celebratory moments: badges, timers, and team colors. Use at least two or three of the four primaries together in any hero section or key visual.</p>
+  <div class="palette-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#1A56C4;"><span>#1A56C4</span></div><div class="swatch-info"><span class="swatch-name">IceBrk Blue</span><span class="swatch-role">Primary / brand anchor</span></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F47920;"><span>#F47920</span></div><div class="swatch-info"><span class="swatch-name">Energy Orange</span><span class="swatch-role">Primary / CTAs</span></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#38B6FF;"><span>#38B6FF</span></div><div class="swatch-info"><span class="swatch-name">Sky Blue</span><span class="swatch-role">Primary / links</span></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#00A651;"><span>#00A651</span></div><div class="swatch-info"><span class="swatch-name">Vitality Green</span><span class="swatch-role">Success / correct answer</span></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#FFD23F;"><span>#FFD23F</span></div><div class="swatch-info"><span class="swatch-name">Sunshine Yellow</span><span class="swatch-role">Energy accent / timers</span></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#8338EC;"><span>#8338EC</span></div><div class="swatch-info"><span class="swatch-name">Playful Purple</span><span class="swatch-role">Variety accent / teams</span></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#22223B;"><span>#22223B</span></div><div class="swatch-info"><span class="swatch-name">Charcoal Ink</span><span class="swatch-role">Body text / headings</span></div></div>
+    <div class="swatch"><div class="swatch-color light" style="background:#FFFDF7;"><span>#FFFDF7</span></div><div class="swatch-info"><span class="swatch-name">Cloud White</span><span class="swatch-role">Warm background</span></div></div>
+  </div>
+</section>
+
+<!-- 02 SHAPES -->
+<section>
+  <div class="blob" style="width:240px;height:240px;background:var(--sunshine-yellow);opacity:0.07;top:-100px;right:60px;"></div>
+  <div class="section-label">02 — Decorative shape language</div>
+  <div class="section-title">Confetti blobs &amp; bold bursts</div>
+  <p style="font-size:13px;color:var(--slate);margin-bottom:32px;max-width:640px;position:relative;">Where a corporate system uses thin dotted rings at low opacity, IceBrk's shape language is loud on purpose. <strong>Solid color blobs</strong> bleed off card and section edges like confetti. <strong>Scattered dots and triangles</strong> sit in mixed primary colors near celebratory moments. Everything stays at full or near-full opacity — if a shape doesn't read as fun at a glance, it's too subtle for this brand.</p>
+  <div class="shape-showcase">
+    <div class="shape-card">
+      <div class="blob" style="width:140px;height:140px;background:var(--ib-blue);top:-50px;right:-50px;opacity:0.9;"></div>
+      <div class="blob" style="width:70px;height:70px;background:var(--sunshine-yellow);top:10px;right:30px;opacity:0.95;"></div>
+      <div class="shape-card-label">Confetti blob — on white</div>
+      <div class="shape-card-desc">Solid filled circles at full opacity, bleeding off the card corner like a balloon.</div>
+    </div>
+    <div class="shape-card">
+      <div class="blob" style="width:16px;height:16px;background:var(--vitality-green);top:24px;right:80px;"></div>
+      <div class="blob" style="width:12px;height:12px;background:var(--energy-orange);top:60px;right:40px;"></div>
+      <div class="blob" style="width:10px;height:10px;background:var(--playful-purple);top:100px;right:90px;"></div>
+      <div class="shape-card-label">Scattered dots</div>
+      <div class="shape-card-desc">Small mixed-color dots near CTAs and celebratory headlines — never near body text.</div>
+    </div>
+    <div class="shape-card" style="background:var(--ib-blue);">
+      <div class="blob" style="width:160px;height:160px;background:var(--sky-blue);bottom:-90px;left:-70px;opacity:0.9;"></div>
+      <div class="blob" style="width:80px;height:80px;background:var(--sunshine-yellow);top:-20px;right:10px;opacity:0.9;"></div>
+      <div class="shape-card-label" style="color:rgba(255,255,255,0.7);">Confetti blob — on blue</div>
+      <div class="shape-card-desc" style="color:rgba(255,255,255,0.85);">Sky Blue and Sunshine Yellow at full opacity create depth on hero sections.</div>
+    </div>
+    <div class="shape-card" style="background:var(--energy-orange);">
+      <div class="blob" style="width:130px;height:130px;background:var(--sunshine-yellow);bottom:-60px;right:-60px;opacity:0.9;"></div>
+      <div class="blob" style="width:14px;height:14px;background:white;top:30px;right:40px;"></div>
+      <div class="shape-card-label" style="color:rgba(255,255,255,0.75);">Confetti blob — on orange</div>
+      <div class="shape-card-desc" style="color:rgba(255,255,255,0.9);">Pair any primary with one contrasting blob plus a small white accent dot.</div>
+    </div>
+    <div class="shape-card">
+      <div style="position:absolute;top:14px;right:24px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:20px solid var(--vitality-green);"></div>
+      <div style="position:absolute;top:54px;right:60px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--playful-purple);"></div>
+      <div class="shape-card-label">Triangle accents</div>
+      <div class="shape-card-desc">Small bold triangles add party-confetti energy alongside the dots and blobs.</div>
+    </div>
+    <div class="shape-card">
+      <div class="blob" style="width:90px;height:90px;background:var(--vitality-green);bottom:-50px;right:-40px;opacity:0.9;"></div>
+      <div class="blob" style="width:50px;height:50px;background:var(--sky-blue);bottom:0px;right:60px;opacity:0.9;"></div>
+      <div class="shape-card-label">Layered blobs</div>
+      <div class="shape-card-desc">Two overlapping blobs of different sizes and colors read as more dynamic than one.</div>
+    </div>
+  </div>
+
+  <!-- Usage reference panel -->
+  <div style="margin-top:36px;background:white;border-radius:20px;padding:32px;box-shadow:0 6px 0 rgba(34,34,59,0.06);position:relative;overflow:hidden;">
+    <div class="section-label" style="margin-bottom:20px;">Shape usage quick reference</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;position:relative;">
+      <div>
+        <div style="font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--ib-blue);margin-bottom:8px;">Placement</div>
+        <ul style="padding-left:16px;font-size:13px;color:var(--charcoal);line-height:2.1;">
+          <li>Corner-bleed (most common)</li>
+          <li>Behind headlines / hero text</li>
+          <li>Around winning/celebration moments</li>
+          <li>Scattered near CTAs</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--ib-blue);margin-bottom:8px;">Sizing guide</div>
+        <ul style="padding-left:16px;font-size:13px;color:var(--charcoal);line-height:2.1;">
+          <li>Hero/page: 200–340px</li>
+          <li>Card sections: 60–160px</li>
+          <li>Confetti dots: 8–18px</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--ib-blue);margin-bottom:8px;">Opacity rules</div>
+        <ul style="padding-left:16px;font-size:13px;color:var(--charcoal);line-height:2.1;">
+          <li>Blobs: 80–100%</li>
+          <li>Dots / triangles: 90–100%</li>
+          <li>Never below 70% — IceBrk is bold, not subtle</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--ib-blue);margin-bottom:8px;">CSS pattern</div>
+        <pre style="font-size:11px;background:var(--mist);padding:12px;border-radius:10px;line-height:1.8;overflow-x:auto;color:var(--charcoal);">.blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+/* Confetti dot: */
+width: 12px; height: 12px;
+border-radius: 50%;</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live example -->
+  <div class="layout-demo">
+    <div class="blob" style="width:280px;height:280px;background:var(--sky-blue);opacity:0.85;top:-110px;right:-110px;"></div>
+    <div class="blob" style="width:150px;height:150px;background:var(--sunshine-yellow);opacity:0.9;bottom:-70px;left:38%;"></div>
+    <div class="blob" style="width:16px;height:16px;background:var(--vitality-green);top:30px;right:200px;"></div>
+    <div class="blob" style="width:12px;height:12px;background:var(--playful-purple);bottom:30px;left:60px;"></div>
+    <div style="position:absolute;top:60px;left:60px;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:16px solid var(--energy-orange);"></div>
+    <h3>Shapes in context</h3>
+    <p>Confetti blobs push in from the corners. Dots and triangles scatter lightly across the background. Together they create energy, warmth, and a sense of celebration — exactly the feeling a winning round should have.</p>
+    <div class="layout-demo-btn">See it live</div>
+  </div>
+</section>
+
+<!-- 03 TYPOGRAPHY -->
+<section>
+  <div class="blob" style="width:200px;height:200px;background:var(--energy-orange);opacity:0.06;top:-100px;right:-100px;"></div>
+  <div class="section-label">03 — Typography</div>
+  <div class="section-title">Type system</div>
+  <div class="type-block">
+    <div class="blob" style="width:90px;height:90px;background:var(--sunshine-yellow);opacity:0.85;top:-30px;right:-20px;"></div>
+    <div class="type-meta">Display — Baloo 2</div>
+    <div class="type-display">Built for Bonding, Made for Fun</div>
+    <div class="type-display-sub">Bold. Rounded. Never delicate.</div>
+    <div class="font-detail"><span>Rounded sans</span><span>Weight: 500, 600, 700, 800</span><span>Use: H1, H2, game titles</span></div>
+  </div>
+  <div class="type-block">
+    <div class="type-meta">Body — Poppins</div>
+    <div class="type-body-demo">IceBrk exists to remove the friction between people and connection. Every word, from a button label to a winning-moment headline, should feel like a fun friend hosting the party — never a vendor pitching software.</div>
+    <div class="font-detail"><span>Geometric sans</span><span>Weight: 400, 500, 600, 700</span><span>Use: Body, UI, captions</span></div>
+  </div>
+  <div class="type-block" style="background:var(--ib-blue);padding:28px 36px;">
+    <div class="blob" style="width:110px;height:110px;background:var(--sunshine-yellow);opacity:0.85;bottom:-40px;right:50px;"></div>
+    <div class="blob" style="width:16px;height:16px;background:var(--vitality-green);top:20px;right:160px;"></div>
+    <div class="type-meta" style="color:rgba(255,255,255,0.55);">On dark — IceBrk Blue</div>
+    <div style="font-family:var(--font-display);font-size:30px;font-weight:800;color:white;line-height:1.2;position:relative;">Always white text on color fills</div>
+    <div style="font-family:var(--font-body);font-size:14px;color:rgba(255,255,255,0.75);margin-top:10px;font-weight:400;position:relative;">Sunshine Yellow fills pair with Charcoal Ink text instead — never with white. Avoid light-weight type on any colored background; keep it bold (600+) for legibility and energy.</div>
+  </div>
+</section>
+
+<!-- 04 COMPONENTS -->
+<section>
+  <div class="blob" style="width:220px;height:220px;background:var(--playful-purple);opacity:0.06;bottom:-80px;left:-80px;"></div>
+  <div class="section-label">04 — UI components</div>
+  <div class="section-title">Buttons, tags &amp; cards</div>
+  <div class="components-grid">
+    <div class="component-card">
+      <h4>Buttons</h4>
+      <div class="btn-row">
+        <button class="btn btn-primary">Start game</button>
+        <button class="btn btn-secondary">Confirm / success</button>
+        <button class="btn btn-accent">Customize</button>
+        <button class="btn btn-yellow">Invite players</button>
+        <button class="btn btn-outline">Save template</button>
+      </div>
+    </div>
+    <div class="component-card">
+      <h4>Tags &amp; labels</h4>
+      <div class="tag-row">
+        <span class="tag tag-blue">Corporate</span>
+        <span class="tag tag-green">Built</span>
+        <span class="tag tag-orange">New</span>
+        <span class="tag tag-sky">School</span>
+        <span class="tag tag-purple">Team purple</span>
+        <span class="tag tag-yellow">Timer</span>
+        <span class="tag tag-blue">Trivia</span>
+        <span class="tag tag-green">Correct!</span>
+      </div>
+    </div>
+    <div class="component-card" style="padding:0;overflow:hidden;background:transparent;box-shadow:none;">
+      <div style="font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slate);padding:0 0 12px;">Game card</div>
+      <div class="mini-card">
+        <div class="mini-card-header">
+          <div class="blob"></div>
+          <div class="mini-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2zm0 2a8 8 0 100 16A8 8 0 0012 4zm1 4v4h3l-4 4-4-4h3V8h2z"/></svg>
+          </div>
+          <span class="mini-card-title">Jeopardy</span>
+        </div>
+        <div class="mini-card-body">
+          <p>A fast-paced trivia showdown, fully customizable for any group or theme.</p>
+          <div class="mini-card-stat">
+            <div class="stat"><div class="stat-val">6</div><div class="stat-lbl">Categories</div></div>
+            <div class="stat"><div class="stat-val">30</div><div class="stat-lbl">Questions</div></div>
+            <div class="stat"><div class="stat-val">∞</div><div class="stat-lbl">Themes</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <h4 style="font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slate);margin-bottom:16px;">Celebration moment</h4>
+    <div class="celebrate-card">
+      <div class="blob" style="width:90px;height:90px;background:var(--sunshine-yellow);opacity:0.9;top:-30px;right:30px;"></div>
+      <div class="blob" style="width:100px;height:100px;background:var(--sky-blue);opacity:0.9;bottom:-40px;right:-20px;"></div>
+      <div class="blob" style="width:14px;height:14px;background:var(--vitality-green);top:50%;left:30px;"></div>
+      <div class="blob" style="width:10px;height:10px;background:var(--energy-orange);top:20%;left:50%;"></div>
+      <h4>Correct answer!</h4>
+      <p>Team blue takes the lead.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 VOICE -->
+<section>
+  <div class="blob" style="width:200px;height:200px;background:var(--vitality-green);opacity:0.06;top:-90px;right:100px;"></div>
+  <div class="section-label">05 — Brand voice</div>
+  <div class="section-title">How IceBrk talks</div>
+  <p style="font-size:13px;color:var(--slate);margin-bottom:28px;max-width:620px;position:relative;">Casual, warm, and emotion-first — like a fun friend hosting the party, never a vendor pitching software. Positive scripting only: say what IceBrk <em>does</em>, not what it removes.</p>
+  <div class="voice-grid">
+    <div class="voice-card good">
+      <span class="voice-tag">✓ On brand</span>
+      <p>"Create instant bonding and memories with friends, zero setup needed!"</p>
+    </div>
+    <div class="voice-card bad">
+      <span class="voice-tag">Avoid</span>
+      <p>"Eliminate the hassle of awkward, unproductive team-building sessions."</p>
+    </div>
+    <div class="voice-card good">
+      <span class="voice-tag">✓ On brand</span>
+      <p>"Bonding made simple."</p>
+    </div>
+    <div class="voice-card bad">
+      <span class="voice-tag">Avoid</span>
+      <p>"Built on Trust. Designed to Last."</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 RULES -->
+<section>
+  <div class="blob" style="width:180px;height:180px;background:var(--vitality-green);opacity:0.07;top:-90px;right:100px;"></div>
+  <div class="section-label">06 — Brand rules</div>
+  <div class="section-title">Do's &amp; don'ts</div>
+  <div class="rules-grid">
+    <div class="rule-card do">
+      <div class="blob" style="width:90px;height:90px;background:var(--vitality-green);opacity:0.1;bottom:-40px;right:-40px;"></div>
+      <span class="rule-badge">✓ Do</span>
+      <ul>
+        <li>Use <strong>IceBrk Blue, Energy Orange, Sky Blue, and Vitality Green</strong> together as the signature combo</li>
+        <li>Keep type <strong>bold and rounded</strong> — Baloo 2 for display, Poppins for body</li>
+        <li>Use <strong>full-opacity</strong> confetti blobs, dots, and triangles</li>
+        <li>Keep corners <strong>rounded everywhere</strong> — buttons, cards, containers</li>
+        <li>Lead messaging with <strong>fun, connection, and memories</strong></li>
+        <li>Use <strong>positive scripting</strong> — say what IceBrk does, not what it removes</li>
+      </ul>
+    </div>
+    <div class="rule-card dont">
+      <div class="blob" style="width:90px;height:90px;background:var(--energy-orange);opacity:0.1;bottom:-40px;right:-40px;"></div>
+      <span class="rule-badge">✕ Don't</span>
+      <ul>
+        <li>Don't default to a single muted corporate color as the dominant anchor</li>
+        <li>Don't use serif fonts or thin/light font weights</li>
+        <li>Don't use low-opacity (6–15%) decorative shapes — this brand is bold, not subtle</li>
+        <li>Don't use sharp corners or thin hairline borders</li>
+        <li>Don't write headlines using negation words (no, zero, less, can't)</li>
+        <li>Don't let copy sound corporate or vendor-like</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 ACCENT STRATEGY -->
+<section style="border-bottom:none;">
+  <div class="blob" style="width:280px;height:280px;background:var(--sky-blue);opacity:0.06;top:-120px;right:-120px;"></div>
+  <div class="section-label">07 — Accent strategy</div>
+  <div class="section-title">When to use each color</div>
+  <div class="accent-grid">
+    <div class="accent-card" style="border-top:6px solid var(--vitality-green);">
+      <div class="blob" style="width:70px;height:70px;background:var(--vitality-green);opacity:0.1;bottom:-30px;right:-30px;"></div>
+      <div style="font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--vitality-green);margin-bottom:10px;">Vitality green</div>
+      <p style="font-size:13px;color:var(--charcoal);line-height:1.6;position:relative;">Correct answers, completed games, success badges, and any CTA signaling positive forward motion — "Start game," "Join the fun."</p>
+    </div>
+    <div class="accent-card" style="border-top:6px solid var(--energy-orange);">
+      <div class="blob" style="width:70px;height:70px;background:var(--energy-orange);opacity:0.1;bottom:-30px;right:-30px;"></div>
+      <div style="font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--energy-orange);margin-bottom:10px;">Energy orange</div>
+      <p style="font-size:13px;color:var(--charcoal);line-height:1.6;position:relative;">Primary CTAs, "Customize" actions, high-energy moments, and anything that needs to grab attention without feeling alarming.</p>
+    </div>
+    <div class="accent-card" style="border-top:6px solid var(--sunshine-yellow);">
+      <div class="blob" style="width:70px;height:70px;background:var(--sunshine-yellow);opacity:0.15;bottom:-30px;right:-30px;"></div>
+      <div style="font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#B8860B;margin-bottom:10px;">Sunshine yellow</div>
+      <p style="font-size:13px;color:var(--charcoal);line-height:1.6;position:relative;">Timers, countdowns, urgency states, and celebratory badges. Pairs with Charcoal Ink text, never white.</p>
+    </div>
+    <div class="accent-card" style="border-top:6px solid var(--playful-purple);">
+      <div class="blob" style="width:70px;height:70px;background:var(--playful-purple);opacity:0.1;bottom:-30px;right:-30px;"></div>
+      <div style="font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--playful-purple);margin-bottom:10px;">Playful purple</div>
+      <p style="font-size:13px;color:var(--charcoal);line-height:1.6;position:relative;">Team colors and alternate category tags — use to add variety when more than four distinct colors are needed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="guide-footer">
+  <div class="blob" style="width:160px;height:160px;background:var(--sky-blue);opacity:0.08;top:-80px;right:80px;"></div>
+  <strong>IceBrk Brand Identity Guide</strong> — Bonding made simple &nbsp;·&nbsp; Fonts: Baloo 2 + Poppins &nbsp;·&nbsp; Primary: #1A56C4
+</div>
+
+</body>
+</html>
