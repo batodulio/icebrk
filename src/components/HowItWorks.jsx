@@ -24,7 +24,7 @@ const STEPS = [
 export default function HowItWorks() {
   return (
     <section className="how-section" id="how">
-      <div className="deco-blob" style={{ width: 180, height: 180, background: 'var(--vitality-green)', opacity: 0.9, top: -80, right: -60 }} />
+      <div className="deco-blob" style={{ width: 180, height: 180, background: 'var(--sky-blue)', opacity: 0.9, top: -80, right: -60 }} />
       <div className="wrap">
         <p className="eyebrow">How it works</p>
         <h2 className="section-title">Three tabs, every game, every time</h2>
