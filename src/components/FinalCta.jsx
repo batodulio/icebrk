@@ -6,7 +6,7 @@ export default function FinalCta() {
       <div className="wrap">
         <h2>Your next gathering deserves a memory worth keeping</h2>
         <p>Your first game is free and ready in seconds.</p>
-        <a href="#top" className="btn btn-yellow">Start your first game</a>
+        <a href="#games" className="btn btn-yellow">Start Your First Game</a>
       </div>
     </section>
   )

@@ -12,7 +12,7 @@ export default function Nav() {
           <a href="#quote">Why hosts love it</a>
         </div>
         <div className="nav-actions">
-          <a className="btn btn-yellow" href="#games">Start free</a>
+          <a className="btn btn-yellow" href="#games">Start Free</a>
         </div>
       </div>
     </div>
