@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import GameShell from '../shared/GameShell'
+import { useSessionState } from '../shared/sessionStore'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import { soundManager } from '../shared/sound'
 import BingoCustomizeTab from './BingoCustomizeTab'
@@ -29,11 +30,12 @@ interface BingoGameProps {
  */
 export default function BingoGame({ onExit }: BingoGameProps) {
   const [activeTab, setActiveTab] = useState<string>('arena')
-  const [calledNumbers, setCalledNumbers] = useState<number[]>([])
-  const [cardCount, setCardCount] = useState(DEFAULT_CARD_COUNT)
-  const [cards, setCards] = useState<BingoCard[]>(() => generateCards(DEFAULT_CARD_COUNT))
-  const [autoCallSeconds, setAutoCallSeconds] = useState<AutoCallSeconds>(DEFAULT_AUTO_CALL)
-  const [themeId, setThemeId] = useState<ColorThemeId>('colorful')
+  // Session-persisted: survives navigating away and back, resets on page refresh.
+  const [calledNumbers, setCalledNumbers] = useSessionState<number[]>('bng:called', () => [])
+  const [cardCount, setCardCount] = useSessionState('bng:cardCount', () => DEFAULT_CARD_COUNT)
+  const [cards, setCards] = useSessionState<BingoCard[]>('bng:cards', () => generateCards(DEFAULT_CARD_COUNT))
+  const [autoCallSeconds, setAutoCallSeconds] = useSessionState<AutoCallSeconds>('bng:autoCall', () => DEFAULT_AUTO_CALL)
+  const [themeId, setThemeId] = useSessionState<ColorThemeId>('bng:theme', () => 'colorful')
 
   const draw = useCallback(() => {
     setCalledNumbers((current) => {

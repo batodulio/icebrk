@@ -15,6 +15,8 @@ interface RouletteWheelProps {
   emptyHint?: string
   onSpinStart: () => void
   onSpinComplete: (winner: Participant) => void
+  /** "Withdraw" on the winner overlay: undo the most recent win and return the name to the wheel. */
+  onWithdrawLastWinner: () => void
 }
 
 const SIZE = 220
@@ -55,12 +57,13 @@ function truncateName(name: string): string {
  * rotation/animation state; delegates sound to the shared soundManager and the win
  * celebration to the shared ConfettiBurst so those systems stay reusable elsewhere.
  */
-export default function RouletteWheel({ participants, spinSeconds, themeId, spinning, emptyHint, onSpinStart, onSpinComplete }: RouletteWheelProps) {
+export default function RouletteWheel({ participants, spinSeconds, themeId, spinning, emptyHint, onSpinStart, onSpinComplete, onWithdrawLastWinner }: RouletteWheelProps) {
   const [rotation, setRotation] = useState(0)
   const [transitionMs, setTransitionMs] = useState(0)
   const [celebrating, setCelebrating] = useState(false)
   const [burstKey, setBurstKey] = useState(0)
-  const [lastWinnerName, setLastWinnerName] = useState<string | null>(null)
+  // Winner awaiting the host's decision on the overlay (Spin Again vs Withdraw).
+  const [announced, setAnnounced] = useState<Participant | null>(null)
   const pendingWinnerRef = useRef<Participant | null>(null)
 
   const theme = COLOR_THEMES[themeId]
@@ -68,10 +71,12 @@ export default function RouletteWheel({ participants, spinSeconds, themeId, spin
   const wedgeAngle = n > 0 ? 360 / n : 0
   const showLabels = n > 0 && n <= 24
 
-  const canSpin = n >= 2 && !spinning
+  const canSpin = n >= 2 && !spinning && !announced
 
-  const handleSpin = () => {
-    if (!canSpin) return
+  // Core spin: used by both the main button and the overlay's Spin Again (which
+  // fires right after clearing `announced`, so it can't go through canSpin).
+  const startSpin = () => {
+    if (n < 2 || spinning) return
 
     const winnerIndex = Math.floor(Math.random() * n)
     const winner = participants[winnerIndex]
@@ -94,16 +99,36 @@ export default function RouletteWheel({ participants, spinSeconds, themeId, spin
     soundManager.playSpinTicks(durationMs)
   }
 
+  const handleSpin = () => {
+    if (!canSpin) return
+    startSpin()
+  }
+
   const handleTransitionEnd = () => {
     const winner = pendingWinnerRef.current
     if (!winner) return
     pendingWinnerRef.current = null
 
     soundManager.playWinnerFanfare()
-    setLastWinnerName(winner.name)
+    setAnnounced(winner)
     setCelebrating(true)
     setBurstKey((k) => k + 1)
     onSpinComplete(winner)
+  }
+
+  // Winner is kept (already recorded on spin completion); roll straight into the
+  // next spin. By this render `participants` no longer contains the winner. With
+  // fewer than 2 names left, startSpin no-ops and this just dismisses the overlay.
+  const handleSpinAgain = () => {
+    setAnnounced(null)
+    setCelebrating(false)
+    startSpin()
+  }
+
+  const handleWithdraw = () => {
+    setAnnounced(null)
+    setCelebrating(false)
+    onWithdrawLastWinner()
   }
 
   return (
@@ -160,13 +185,28 @@ export default function RouletteWheel({ participants, spinSeconds, themeId, spin
         </svg>
         {n > 0 && <div className="wheel-hub" aria-hidden="true">⭐</div>}
         {celebrating && <ConfettiBurst key={burstKey} theme={themeId} onDone={() => setCelebrating(false)} />}
+
+        {announced && (
+          <div className="wheel-winner-overlay" role="dialog" aria-label={`${announced.name} wins`}>
+            <div className="wheel-winner-card">
+              <p className="wheel-winner-name">🎉 {announced.name} wins! 🎉</p>
+              <div className="wheel-winner-actions">
+                <button type="button" className="btn btn-primary" onClick={handleSpinAgain}>
+                  {n >= 2 ? '🎡 Spin Again' : '✓ Keep Winner'}
+                </button>
+                <button type="button" className="btn btn-yellow" onClick={handleWithdraw}>
+                  ↩ Withdraw
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <button type="button" className="btn btn-primary wheel-spin-btn" onClick={handleSpin} disabled={!canSpin}>
         {spinning ? 'Spinning…' : 'Spin the Wheel'}
       </button>
-      {n < 2 && <p className="wheel-hint">{emptyHint ?? 'Add at least 2 participants to spin.'}</p>}
-      {!spinning && lastWinnerName && <p className="wheel-winner-line">🎉 {lastWinnerName} wins! 🎉</p>}
+      {n < 2 && !announced && <p className="wheel-hint">{emptyHint ?? 'Add at least 2 participants to spin.'}</p>}
     </div>
   )
 }

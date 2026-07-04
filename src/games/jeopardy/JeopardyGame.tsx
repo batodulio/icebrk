@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
+import { useSessionState } from '../shared/sessionStore'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import JpdCustomizeTab from './JpdCustomizeTab'
 import JpdArenaTab from './JpdArenaTab'
@@ -31,10 +32,11 @@ interface JeopardyGameProps {
  */
 export default function JeopardyGame({ onExit }: JeopardyGameProps) {
   const [activeTab, setActiveTab] = useState<string>('arena')
-  const [board, setBoard] = useState<JpdCategory[]>(buildStarterBoard)
-  const [teams, setTeams] = useState<JpdTeam[]>(() => DEFAULT_TEAM_NAMES.map(createTeam))
-  const [usedClueIds, setUsedClueIds] = useState<Set<string>>(new Set())
-  const [themeId, setThemeId] = useState<ColorThemeId>('colorful')
+  // Session-persisted: survives navigating away and back, resets on page refresh.
+  const [board, setBoard] = useSessionState<JpdCategory[]>('jpd:board', buildStarterBoard)
+  const [teams, setTeams] = useSessionState<JpdTeam[]>('jpd:teams', () => DEFAULT_TEAM_NAMES.map(createTeam))
+  const [usedClueIds, setUsedClueIds] = useSessionState<Set<string>>('jpd:used', () => new Set())
+  const [themeId, setThemeId] = useSessionState<ColorThemeId>('jpd:theme', () => 'colorful')
 
   const setCategoryName = (categoryId: string, name: string) => {
     setBoard((current) => current.map((c) => (c.id === categoryId ? { ...c, name } : c)))

@@ -16,7 +16,7 @@ export default function Hero() {
 
       <div className="wrap hero-inner">
         <div>
-          <span className="hero-eyebrow">Games for teams, classrooms &amp; every gathering</span>
+          <span className="hero-eyebrow">Games For Every Gathering!</span>
           <h1>Bonding made simple.</h1>
           <p className="hero-sub">
             Pick a game, customize it to your group, and watch the room come alive.

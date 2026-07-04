@@ -110,7 +110,8 @@ export default function JpdArenaTab({ board, usedClueIds, teams, themeId, onAwar
         </div>
       )}
 
-      <div className="jpd-board" style={{ gridTemplateColumns: `repeat(${board.length}, 1fr)` }}>
+      {/* minmax floor keeps cells finger-sized on phones; the board scrolls sideways instead of crushing. */}
+      <div className="jpd-board" style={{ gridTemplateColumns: `repeat(${board.length}, minmax(90px, 1fr))` }}>
         {board.map((cat) => (
           <div className="jpd-board-header" key={cat.id}>
             {cat.name}
