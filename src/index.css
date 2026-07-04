@@ -44,10 +44,12 @@ a { color: inherit; text-decoration: none; }
 .btn-yellow { background: var(--sunshine); color: var(--ink); box-shadow: 0 8px 0 rgba(34, 34, 59, 0.16); }
 .btn-sky { background: var(--sky-blue); color: var(--white); box-shadow: 0 8px 0 rgba(20, 90, 150, 0.3); }
 
-section { padding: 88px 0; position: relative; }
+/* Consistent vertical rhythm: one section padding token everywhere, tightened on small screens. */
+section { padding: 56px 0; position: relative; }
+@media (max-width: 640px) { section { padding: 44px 0; } }
 .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ib-blue); margin-bottom: 12px; text-align: center; }
 .section-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 4vw, 38px); color: var(--ink); text-align: center; max-width: 640px; margin: 0 auto 16px; line-height: 1.2; }
-.section-sub { text-align: center; color: var(--slate); font-size: 16px; max-width: 540px; margin: 0 auto 56px; position: relative; }
+.section-sub { text-align: center; color: var(--slate); font-size: 16px; max-width: 540px; margin: 0 auto 36px; position: relative; }
 
 /* Reusable decorative blob, used on any bold-colored section */
 .deco-blob { position: absolute; border-radius: 50%; pointer-events: none; animation: float 7s ease-in-out infinite; }
@@ -68,7 +70,7 @@ section { padding: 88px 0; position: relative; }
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  padding: 56px 0 0;
+  padding: 36px 0 0;
   background: linear-gradient(135deg, var(--ib-blue) 0%, var(--royal-blue) 100%);
 }
 .hero-scene { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
@@ -87,7 +89,7 @@ section { padding: 88px 0; position: relative; }
   animation-delay: -3s;
 }
 
-.hero-inner { position: relative; display: grid; grid-template-columns: minmax(0, 540px) 1fr; align-items: center; gap: 48px; padding: 48px 0 80px; }
+.hero-inner { position: relative; display: grid; grid-template-columns: minmax(0, 540px) 1fr; align-items: center; gap: 48px; padding: 24px 0 56px; }
 @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; } }
 
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--vitality-green); color: var(--white); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 8px 16px; border-radius: 999px; margin-bottom: 22px; }
@@ -96,23 +98,90 @@ section { padding: 88px 0; position: relative; }
 .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
 
 /* HERO PREVIEW BOARD */
-.preview-board { position: relative; border-radius: 26px; background: var(--ib-blue); padding: 22px; box-shadow: 0 18px 0 rgba(10, 30, 60, 0.35); transform: rotate(2deg); max-width: 460px; margin: 0 auto; }
+.preview-board {
+  position: relative; border-radius: 26px; background: var(--ib-blue); padding: 22px;
+  box-shadow: 0 18px 0 rgba(10, 30, 60, 0.35); max-width: 460px; margin: 0 auto;
+  animation: preview-float 7s ease-in-out infinite;
+}
+@keyframes preview-float {
+  0%, 100% { transform: rotate(2deg) translateY(0); }
+  50% { transform: rotate(2deg) translateY(-12px); }
+}
+.preview-sticker {
+  position: absolute; top: -16px; right: -14px; z-index: 1; background: var(--sunshine); color: var(--ink);
+  font-family: var(--font-display); font-weight: 800; font-size: 13px; padding: 8px 16px;
+  border-radius: 999px; transform: rotate(6deg); box-shadow: 0 5px 0 rgba(10, 30, 60, 0.3);
+}
 .preview-topbar { display: flex; gap: 8px; margin-bottom: 16px; }
 .preview-dot { width: 10px; height: 10px; border-radius: 50%; }
 .preview-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
 .preview-tab { font-size: 11px; font-weight: 700; padding: 7px 14px; border-radius: 999px; color: var(--white); background: rgba(255, 255, 255, 0.18); }
 .preview-tab.active { background: var(--sunshine); color: var(--ink); }
-.preview-board-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
-.preview-cat { font-family: var(--font-display); font-size: 10px; font-weight: 700; color: var(--ink); background: var(--sunshine); text-align: center; padding: 7px 2px; border-radius: 8px; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18); }
-.preview-cell { text-align: center; padding: 14px 2px; font-family: var(--font-display); font-weight: 800; font-size: 16px; color: var(--white); border-radius: 12px; box-shadow: 0 5px 0 rgba(0, 0, 0, 0.22); background: var(--sky-blue); }
-.preview-cell.alt { background: var(--vitality-green); }
-.preview-cell.alt2 { background: var(--energy-orange); }
+/* Mini Play Arena inside the preview window: spinning wheel + winner moment */
+.preview-arena { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 4px 0 6px; }
+.preview-wheel-wrap { position: relative; width: 190px; height: 190px; }
+.preview-wheel {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: conic-gradient(
+    var(--energy-orange) 0 60deg,
+    var(--sunshine) 60deg 120deg,
+    var(--vitality-green) 120deg 180deg,
+    var(--sky-blue) 180deg 240deg,
+    var(--purple) 240deg 300deg,
+    var(--royal-blue) 300deg 360deg
+  );
+  border: 7px solid var(--white); box-shadow: 0 7px 0 rgba(10, 30, 60, 0.35);
+  animation: preview-spin 16s linear infinite;
+}
+@keyframes preview-spin { to { transform: rotate(360deg); } }
+.preview-pointer {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 2;
+  width: 0; height: 0; border-left: 11px solid transparent; border-right: 11px solid transparent;
+  border-top: 18px solid var(--energy-orange);
+}
+.preview-hub {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;
+  width: 44px; height: 44px; border-radius: 50%; background: var(--sunshine);
+  border: 3px solid var(--white); display: grid; place-items: center; font-size: 18px;
+}
+.preview-spark { position: absolute; border-radius: 50%; animation: float 5s ease-in-out infinite; }
+.preview-spark-1 { width: 12px; height: 12px; background: var(--sunshine); top: 4px; left: -18px; }
+.preview-spark-2 { width: 9px; height: 9px; background: var(--vitality-green); bottom: 18px; right: -20px; animation-delay: -1.5s; }
+.preview-spark-3 { width: 7px; height: 7px; background: var(--white); top: 40px; right: -26px; animation-delay: -3s; }
+.preview-spark-4 { width: 10px; height: 10px; background: var(--energy-orange); bottom: -6px; left: -10px; animation-delay: -2.2s; }
+.preview-winner {
+  background: var(--sunshine); color: var(--ink); font-family: var(--font-display); font-weight: 800;
+  font-size: 16px; padding: 9px 22px; border-radius: 999px; box-shadow: 0 5px 0 rgba(10, 30, 60, 0.3);
+}
+
+/* HERO GAME MARQUEE — scrolling ticker of the live game catalog. Kept straight and
+   full-bleed so it sits flush against the hero's bottom edge with no background gaps. */
+.hero-marquee {
+  position: relative; background: var(--sunshine); padding: 12px 0; overflow: hidden; width: 100%;
+}
+.hero-marquee-track { display: flex; width: max-content; animation: marquee 24s linear infinite; }
+.hero-marquee-group { display: flex; flex-shrink: 0; }
+.hero-marquee-item {
+  font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--ink); white-space: nowrap;
+  display: inline-flex; align-items: center;
+}
+.hero-marquee-item::after { content: '✦'; margin: 0 22px; font-size: 11px; opacity: 0.55; }
+@keyframes marquee { to { transform: translateX(-50%); } }
 
 /* WHY ICEBRK / VALUE PROPS */
 .value-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 @media (max-width: 880px) { .value-grid { grid-template-columns: 1fr; } }
-.value-card { background: var(--white); border-radius: 22px; padding: 32px 28px; box-shadow: 0 10px 0 rgba(34, 34, 59, 0.08); }
-.value-icon { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--white); }
+.value-card {
+  background: var(--white); border-radius: 22px; padding: 32px 28px; box-shadow: 0 10px 0 rgba(34, 34, 59, 0.08);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.value-card:hover { transform: translateY(-6px) rotate(-0.5deg); box-shadow: 0 14px 0 rgba(34, 34, 59, 0.10); }
+.value-icon {
+  width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px; font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--white);
+  transition: transform 200ms ease;
+}
+.value-card:hover .value-icon { transform: rotate(-8deg) scale(1.12); }
 .value-card h3 { font-family: var(--font-display); font-size: 19px; font-weight: 700; margin-bottom: 10px; }
 .value-card p { font-size: 14px; color: var(--slate); line-height: 1.6; }
 
@@ -148,31 +217,32 @@ section { padding: 88px 0; position: relative; }
   .flow-arrow { transform: rotate(90deg); margin: 4px 0; }
 }
 
-/* CELEBRATION BANNER */
-.celebrate-section { background: var(--ib-blue); position: relative; text-align: center; }
+/* CELEBRATION BANNER — shares its blue block with the testimonials below, so the
+   pair gets tighter inner padding to read as one continuous section. */
+.celebrate-section { background: var(--ib-blue); position: relative; text-align: center; padding-bottom: 28px; }
 .celebrate-section h2 { font-family: var(--font-display); font-weight: 800; color: var(--white); font-size: clamp(26px, 4vw, 36px); max-width: 560px; margin: 0 auto 14px; position: relative; }
 .celebrate-section p { color: rgba(255, 255, 255, 0.86); font-size: 16px; max-width: 460px; margin: 0 auto; position: relative; }
 
 /* TESTIMONIALS — same block as the celebration banner above it */
-.quote-section { background: var(--ib-blue); }
+.quote-section { background: var(--ib-blue); padding-top: 28px; }
 .quote-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 @media (max-width: 880px) { .quote-grid { grid-template-columns: 1fr; } }
 .quote-card { background: var(--white); border-radius: 24px; padding: 36px 30px; text-align: center; box-shadow: 0 10px 0 rgba(0, 0, 0, 0.08); }
 .quote-mark { font-family: var(--font-display); font-size: 42px; line-height: 1; margin-bottom: 8px; }
-.quote-text { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.5; margin-bottom: 16px; }
+.quote-text { font-size: 21px; font-weight: 500; color: var(--ink); line-height: 1.45; margin-bottom: 16px; }
 .quote-author { font-size: 13px; color: var(--slate); font-weight: 600; }
 
 /* FINAL CTA */
-.final-cta { background: var(--purple); position: relative; text-align: center; padding: 96px 0; }
+.final-cta { background: var(--purple); position: relative; text-align: center; padding: 64px 0; }
 .final-cta h2 { font-family: var(--font-display); font-weight: 800; color: var(--white); font-size: clamp(30px, 5vw, 46px); max-width: 600px; margin: 0 auto 18px; position: relative; line-height: 1.15; }
-.final-cta p { color: rgba(255, 255, 255, 0.92); font-size: 16px; margin-bottom: 36px; position: relative; }
+.final-cta p { color: rgba(255, 255, 255, 0.92); font-size: 16px; margin-bottom: 28px; position: relative; }
 
 /* FOOTER */
-footer { position: relative; background: var(--ink); color: rgba(255, 255, 255, 0.65); padding: 48px 0 32px; }
+footer { position: relative; background: var(--ink); color: rgba(255, 255, 255, 0.65); padding: 36px 0 24px; }
 .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
 .footer-logo { font-family: var(--font-display); font-weight: 800; color: var(--white); font-size: 18px; }
 .footer-links { display: flex; gap: 24px; font-size: 13px; }
-.footer-bottom { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: 12px; text-align: center; }
+.footer-bottom { margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: 12px; text-align: center; }
 
 @keyframes float {
   0%, 100% { transform: translate3d(0, 0, 0) scale(1); }

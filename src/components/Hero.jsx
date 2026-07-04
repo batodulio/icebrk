@@ -1,3 +1,5 @@
+import { GAME_CATALOG } from '../games/shared/gameCatalog'
+
 export default function Hero() {
   return (
     <div className="hero" id="top">
@@ -21,36 +23,49 @@ export default function Hero() {
             Just instant connection, no pakulo.
           </p>
           <div className="hero-ctas">
-            <a href="#games" className="btn btn-primary">Start your first game</a>
-            <a href="#games" className="btn btn-sky">Browse games</a>
+            <a href="#games" className="btn btn-primary">Browse Games</a>
           </div>
         </div>
 
         <div className="preview-board">
+          <div className="preview-sticker" aria-hidden="true">✨ 6 games inside</div>
           <div className="preview-topbar">
             <span className="preview-dot" style={{ background: 'var(--energy-orange)' }} />
             <span className="preview-dot" style={{ background: 'var(--sunshine)' }} />
             <span className="preview-dot" style={{ background: 'var(--vitality-green)' }} />
           </div>
           <div className="preview-tabs">
-            <span className="preview-tab active">Game arena</span>
-            <span className="preview-tab">Customize game</span>
-            <span className="preview-tab">Utilities</span>
+            <span className="preview-tab">Customize Game</span>
+            <span className="preview-tab active">Play Arena</span>
           </div>
-          <div className="preview-board-grid">
-            <div className="preview-cat">Movies</div>
-            <div className="preview-cat">Office life</div>
-            <div className="preview-cat">Random</div>
-            <div className="preview-cat">Pinoy pop</div>
-            <div className="preview-cell">200</div>
-            <div className="preview-cell alt">200</div>
-            <div className="preview-cell alt2">200</div>
-            <div className="preview-cell">200</div>
-            <div className="preview-cell alt2">400</div>
-            <div className="preview-cell">400</div>
-            <div className="preview-cell alt">400</div>
-            <div className="preview-cell">400</div>
+          {/* Mini Play Arena: a slowly spinning roulette wheel mid-celebration. */}
+          <div className="preview-arena" aria-hidden="true">
+            <div className="preview-wheel-wrap">
+              <span className="preview-pointer" />
+              <div className="preview-wheel" />
+              <span className="preview-hub">⭐</span>
+              <span className="preview-spark preview-spark-1" />
+              <span className="preview-spark preview-spark-2" />
+              <span className="preview-spark preview-spark-3" />
+              <span className="preview-spark preview-spark-4" />
+            </div>
+            <span className="preview-winner">🎉 Ana wins!</span>
           </div>
+        </div>
+      </div>
+
+      {/* Scrolling ticker of the actual game catalog — updates itself as games ship. */}
+      <div className="hero-marquee" aria-hidden="true">
+        <div className="hero-marquee-track">
+          {[0, 1].map((copy) => (
+            <span className="hero-marquee-group" key={copy}>
+              {GAME_CATALOG.map((g) => (
+                <span className="hero-marquee-item" key={g.id}>
+                  {g.emoji} {g.title}
+                </span>
+              ))}
+            </span>
+          ))}
         </div>
       </div>
     </div>

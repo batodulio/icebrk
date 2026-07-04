@@ -1,7 +1,6 @@
 export default function Footer() {
   return (
     <footer>
-      <div className="deco-blob" style={{ width: 160, height: 160, background: 'var(--sky-blue)', opacity: 0.9, top: -80, left: -50 }} />
       <div className="wrap">
         <div className="footer-inner">
           <div className="footer-logo">IceBrk</div>

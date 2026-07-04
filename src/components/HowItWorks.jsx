@@ -4,31 +4,31 @@ const STEPS = [
   {
     icon: '✏️',
     iconBg: 'var(--sunshine)',
-    title: 'Customize game',
-    body: 'Add your questions, pick a theme, drop in your logo. Save it to reuse at your next event.',
+    title: 'Customize Game',
+    body: 'Names, questions, timers, themes — everything you set up lives in one friendly tab.',
   },
   {
-    icon: '🛠️',
-    iconBg: 'var(--energy-orange)',
-    title: 'Set up utilities',
-    body: 'Add your players, form teams, and you\'re ready to roll.',
-  },
-  {
-    icon: '😂',
+    icon: '🎉',
     iconBg: 'var(--sky-blue)',
-    title: 'Play in the arena',
-    body: 'Project the game arena and let the room take over. Scores update, timers run, memories happen.',
+    title: 'Play Arena',
+    body: 'Project the arena and let the room take over. Wheels spin, boards light up, scores climb.',
+  },
+  {
+    icon: '🏆',
+    iconBg: 'var(--energy-orange)',
+    title: 'Crown the Winners',
+    body: 'Confetti bursts, fanfares play, bragging rights get awarded. Every game ends with a moment.',
   },
 ]
 
 export default function HowItWorks() {
   return (
     <section className="how-section" id="how">
-      <div className="deco-blob" style={{ width: 180, height: 180, background: 'var(--vitality-green)', opacity: 0.9, top: -80, right: -60 }} />
+      <div className="deco-blob" style={{ width: 180, height: 180, background: 'var(--sky-blue)', opacity: 0.9, top: -80, right: -60 }} />
       <div className="wrap">
         <p className="eyebrow">How it works</p>
-        <h2 className="section-title">Three tabs, every game, every time</h2>
-        <p className="section-sub">Learn the pattern once and you can run any game in the IceBrk library.</p>
+        <h2 className="section-title">Two tabs, every game, every time</h2>
+        <p className="section-sub">Learn the pattern once — Customize Game, then Play Arena — and you can run anything in the IceBrk library.</p>
         <div className="flow">
           {STEPS.map((s, i) => (
             <Fragment key={s.title}>
