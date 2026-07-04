@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
 import { useParticipants } from '../shared/useParticipants'
+import { useSessionState } from '../shared/sessionStore'
 import type { GameTabDefinition } from '../shared/types'
 import type { ColorThemeId, Participant, Winner } from '../shared/types'
 import CustomizeGameTab from './CustomizeGameTab'
@@ -26,11 +27,13 @@ interface RouletteGameProps {
  */
 export default function RouletteGame({ onExit }: RouletteGameProps) {
   const [activeTab, setActiveTab] = useState<string>('arena')
-  const roster = useParticipants()
-  const [spinSeconds, setSpinSeconds] = useState<SpinSeconds>(DEFAULT_SPIN_SECONDS)
-  const [themeId, setThemeId] = useState<ColorThemeId>('colorful')
+  // Roster, settings, and winners live in the session store: they survive leaving
+  // the game and coming back, and only reset on a full page refresh.
+  const roster = useParticipants('roulette:roster')
+  const [spinSeconds, setSpinSeconds] = useSessionState<SpinSeconds>('roulette:spinSeconds', () => DEFAULT_SPIN_SECONDS)
+  const [themeId, setThemeId] = useSessionState<ColorThemeId>('roulette:theme', () => 'colorful')
   const [spinning, setSpinning] = useState(false)
-  const [winners, setWinners] = useState<Winner[]>([])
+  const [winners, setWinners] = useSessionState<Winner[]>('roulette:winners', () => [])
 
   // Winners come off the wheel: once someone wins they can't win again. The full
   // roster stays intact (Customize Game keeps everyone), so resetting the winners
@@ -45,7 +48,18 @@ export default function RouletteGame({ onExit }: RouletteGameProps) {
     setWinners((current) => [...current, { id: crypto.randomUUID(), participantId: winner.id, name: winner.name, place: current.length + 1 }])
   }
 
+  // "Withdraw" on the wheel's winner overlay: undo the most recent win, which puts
+  // that participant back into the eligible pool (it's derived from winners).
+  const handleWithdrawLastWinner = () => setWinners((current) => current.slice(0, -1))
+
   const handleResetWinners = () => setWinners([])
+
+  // Leaving the arena mid-spin unmounts the wheel, so its transitionend (which
+  // clears `spinning`) never fires — abort the spin instead of wedging the button.
+  const handleTabChange = (id: string) => {
+    if (id !== 'arena') setSpinning(false)
+    setActiveTab(id)
+  }
 
   return (
     <GameShell
@@ -54,7 +68,7 @@ export default function RouletteGame({ onExit }: RouletteGameProps) {
       tagline="Spin the wheel, crown a winner"
       tabs={TABS}
       activeTabId={activeTab}
-      onTabChange={setActiveTab}
+      onTabChange={handleTabChange}
       onBack={onExit}
     >
       {activeTab === 'customize' && (
@@ -78,6 +92,7 @@ export default function RouletteGame({ onExit }: RouletteGameProps) {
           spinning={spinning}
           onSpinStart={() => setSpinning(true)}
           onSpinComplete={handleSpinComplete}
+          onWithdrawLastWinner={handleWithdrawLastWinner}
           onResetWinners={handleResetWinners}
         />
       )}

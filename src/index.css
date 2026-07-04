@@ -89,7 +89,9 @@ section { padding: 56px 0; position: relative; }
   animation-delay: -3s;
 }
 
-.hero-inner { position: relative; display: grid; grid-template-columns: minmax(0, 540px) 1fr; align-items: center; gap: 48px; padding: 24px 0 56px; }
+/* Longhand padding only — the shorthand would wipe out .wrap's horizontal padding,
+   which is all that separates content from the screen edge on mobile. */
+.hero-inner { position: relative; display: grid; grid-template-columns: minmax(0, 540px) 1fr; align-items: center; gap: 48px; padding-top: 24px; padding-bottom: 56px; }
 @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; } }
 
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--vitality-green); color: var(--white); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 8px 16px; border-radius: 999px; margin-bottom: 22px; }
@@ -243,6 +245,21 @@ footer { position: relative; background: var(--ink); color: rgba(255, 255, 255, 
 .footer-logo { font-family: var(--font-display); font-weight: 800; color: var(--white); font-size: 18px; }
 .footer-links { display: flex; gap: 24px; font-size: 13px; }
 .footer-bottom { margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: 12px; text-align: center; }
+
+/* MOBILE POLISH — larger touch targets, full-width primary actions, extra breathing room */
+@media (max-width: 640px) {
+  .btn { min-height: 48px; }
+  .nav-inner { padding: 12px 20px; }
+  .hero-inner { gap: 32px; padding-bottom: 44px; }
+  .hero-ctas { width: 100%; }
+  .hero-ctas .btn { width: 100%; }
+  .hero-sub { font-size: 16px; }
+  .preview-sticker { right: 0; }
+  .final-cta .btn { width: min(100%, 360px); }
+  .value-card { padding: 26px 22px; }
+  .quote-card { padding: 28px 22px; }
+  .flow-step { max-width: 300px; }
+}
 
 @keyframes float {
   0%, 100% { transform: translate3d(0, 0, 0) scale(1); }

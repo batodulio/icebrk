@@ -93,6 +93,10 @@
   font-weight: 600; font-size: 14px; color: var(--ink);
 }
 .participant-name-input:focus { outline: none; }
+.participant-name-label {
+  flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--ink);
+}
 .participant-remove {
   display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: none;
   background: var(--mist); color: var(--ink); font-size: 16px; font-weight: 800; cursor: pointer; flex-shrink: 0;
@@ -168,6 +172,21 @@
 }
 .wheel-spin-btn { min-width: 220px; }
 .wheel-hint { color: var(--slate); font-size: 13px; }
+
+/* Winner decision overlay — sits on the wheel itself after a spin lands. */
+.wheel-winner-overlay {
+  position: absolute; inset: 0; z-index: 5; display: grid; place-items: center;
+  background: rgba(255, 253, 247, 0.45); border-radius: 50%;
+}
+.wheel-winner-card {
+  background: var(--white); border: 4px solid var(--sunshine); border-radius: 22px;
+  padding: 20px 24px; text-align: center; display: flex; flex-direction: column; gap: 14px;
+  box-shadow: 0 8px 0 rgba(34, 34, 59, 0.18); max-width: 86%;
+  animation: winner-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.wheel-winner-name { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--ink); }
+.wheel-winner-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.wheel-winner-actions .btn { padding: 12px 20px; font-size: 14px; }
 .wheel-winner-line {
   font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--ink);
   background: var(--sunshine); padding: 10px 26px; border-radius: 999px;
@@ -297,7 +316,7 @@
   box-shadow: 0 6px 0 rgba(34, 34, 59, 0.16); animation: winner-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-.jpd-board { display: grid; gap: 10px; }
+.jpd-board { display: grid; gap: 10px; overflow-x: auto; padding-bottom: 6px; }
 .jpd-board-header {
   background: var(--sunshine); color: var(--ink); font-family: var(--font-display); font-weight: 800;
   font-size: clamp(12px, 1.6vw, 17px); text-align: center; padding: 12px 6px; border-radius: 14px;
@@ -460,6 +479,49 @@
 .game-card-clickable { cursor: pointer; transition: transform 180ms ease, box-shadow 180ms ease; }
 .game-card-clickable:hover { transform: translateY(-4px) scale(1.02); }
 .game-card-clickable:focus-visible { outline: 3px solid var(--sunshine); outline-offset: 3px; }
+
+/* ---------- Mobile polish ---------- */
+@media (max-width: 960px) {
+  /* When the arena stacks, put the play surface first — the primary action stays
+     on screen and its button lands within thumb reach. */
+  .arena-grid .wheel-panel, .arena-grid .ttl-spotlight-panel { order: -1; }
+  .arena-grid .queue-panel { order: 1; }
+  .arena-grid .winners-panel { order: 2; }
+  .queue-panel, .winners-panel { max-height: 300px; }
+}
+
+@media (max-width: 640px) {
+  .game-shell-inner { padding-top: 18px; }
+  .game-shell-header { gap: 12px; margin-bottom: 18px; }
+  .game-shell-title { font-size: 24px; }
+  .customize-card { padding: 18px 16px; }
+  .customize-settings { padding: 16px; }
+  .utility-card { min-width: 100%; }
+
+  /* Finger-sized touch targets: primary actions go full width, small controls grow. */
+  .customize-card-actions .btn,
+  .wyr-controls .btn,
+  .bng-controls .btn,
+  .ttl-verdict-row .btn,
+  .ttl-spotlight .btn,
+  .jpd-award-row .btn,
+  .jpd-overlay-actions > .btn,
+  .wheel-winner-actions .btn,
+  .wheel-spin-btn { width: 100%; }
+  .wheel-spin-btn { min-width: 0; }
+  .ttl-verdict-row, .jpd-award-row { width: 100%; }
+  .participant-remove { width: 34px; height: 34px; font-size: 18px; }
+  .wyr-timer, .sch-timer { padding: 10px 16px; }
+  .wyr-timer-btn { padding: 10px 16px; font-size: 13px; }
+
+  .ttl-spotlight { padding: 28px 18px; }
+  .jpd-overlay { padding: 14px; }
+  .jpd-overlay-card { padding: 26px 18px; }
+  .jpd-cell { padding: 18px 4px; }
+  .bng-ball { width: 140px; height: 140px; font-size: 32px; }
+  .bng-ball.empty { font-size: 22px; }
+  .sch-timer { transform: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .wheel-svg, .confetti-piece, .queue-item { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }

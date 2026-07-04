@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { UseParticipantsResult } from './useParticipants'
 
 interface RosterEditorProps {
@@ -6,65 +5,39 @@ interface RosterEditorProps {
 }
 
 /**
- * Shared "who's playing" editor: paste-names card + editable participant grid.
- * Extracted from Roulette's Customize tab so every game with a roster (Roulette,
- * Two Truths & a Lie, future team games) shares one implementation.
+ * Shared "who's playing" editor. The textarea is the roster: every keystroke and
+ * paste syncs the participant list instantly — no add button. Chips below mirror
+ * the list; removing a chip also deletes its line from the textarea.
  */
 export default function RosterEditor({ roster }: RosterEditorProps) {
-  const [pasteText, setPasteText] = useState('')
-  const [notice, setNotice] = useState<string | null>(null)
-
-  const commitPastedNames = () => {
-    if (!pasteText.trim()) return
-    const { added, overflow } = roster.addFromText(pasteText)
-    setPasteText('')
-    if (overflow > 0) {
-      setNotice(`Added ${added} names — ${overflow} skipped, ${roster.max} max reached.`)
-    } else if (added > 0) {
-      setNotice(null)
-    }
-  }
-
   return (
     <>
       <div className="customize-card paste-card">
         <div className="customize-card-head">
-          <h3>📝 Paste Names</h3>
+          <h3>📝 Type or Paste Names</h3>
           <span className="participant-count-badge">
             {roster.count} / {roster.max}
           </span>
         </div>
-        <p className="customize-card-hint">One name per line — they'll turn into participant cards below.</p>
+        <p className="customize-card-hint">One name per line — the game updates live as you type. No save button needed.</p>
         <textarea
           className="paste-textarea"
           placeholder={'John\nSarah\nMichael\nAshley'}
-          value={pasteText}
-          onChange={(e) => setPasteText(e.target.value)}
-          onPaste={() => {
-            // Let the paste land in the textarea first, then convert it on the next tick.
-            requestAnimationFrame(commitPastedNames)
-          }}
-          disabled={roster.isFull}
+          value={roster.text}
+          onChange={(e) => roster.setText(e.target.value)}
           rows={6}
         />
-        {notice && <p className="customize-notice">{notice}</p>}
-        <div className="customize-card-actions">
-          <button type="button" className="btn btn-primary" onClick={commitPastedNames} disabled={roster.isFull || !pasteText.trim()}>
-            Add to Participants
-          </button>
-          {roster.isFull && <span className="customize-notice">Maximum of {roster.max} participants reached.</span>}
-        </div>
+        {roster.overflow > 0 && (
+          <p className="customize-notice">
+            Maximum of {roster.max} participants — the last {roster.overflow} name{roster.overflow > 1 ? 's' : ''} won't join the game.
+          </p>
+        )}
       </div>
 
       <div className="participant-grid">
         {roster.participants.map((p) => (
           <div className="participant-card" key={p.id}>
-            <input
-              className="participant-name-input"
-              value={p.name}
-              onChange={(e) => roster.updateName(p.id, e.target.value)}
-              aria-label="Participant name"
-            />
+            <span className="participant-name-label">{p.name}</span>
             <button
               type="button"
               className="participant-remove"
@@ -76,7 +49,7 @@ export default function RosterEditor({ roster }: RosterEditorProps) {
           </div>
         ))}
         {roster.participants.length === 0 && (
-          <p className="participant-empty">Paste names above to build your participant list.</p>
+          <p className="participant-empty">Type names above to build your participant list.</p>
         )}
       </div>
     </>

@@ -18,6 +18,7 @@ interface PlayArenaTabProps {
   spinning: boolean
   onSpinStart: () => void
   onSpinComplete: (winner: Participant) => void
+  onWithdrawLastWinner: () => void
   onResetWinners: () => void
 }
 
@@ -33,6 +34,7 @@ export default function PlayArenaTab({
   spinning,
   onSpinStart,
   onSpinComplete,
+  onWithdrawLastWinner,
   onResetWinners,
 }: PlayArenaTabProps) {
   const everyoneHasWon = roster.length >= 2 && eligibleParticipants.length < 2 && winners.length > 0
@@ -47,6 +49,7 @@ export default function PlayArenaTab({
         emptyHint={everyoneHasWon ? 'Everyone has had their moment — reset the winners to spin again!' : undefined}
         onSpinStart={onSpinStart}
         onSpinComplete={onSpinComplete}
+        onWithdrawLastWinner={onWithdrawLastWinner}
       />
       <WinnersList winners={winners} onReset={onResetWinners} />
     </div>
