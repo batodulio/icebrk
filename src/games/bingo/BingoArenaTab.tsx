@@ -63,7 +63,7 @@ export default function BingoArenaTab({ calledNumbers, themeId, autoCallSeconds,
           {calledNumbers.length} of {TOTAL_NUMBERS} called
         </span>
         <button type="button" className="winners-reset" onClick={handleReset}>
-          ↺ Reset Game
+          <span className="reset-icon" aria-hidden="true">↺</span> Reset Game
         </button>
       </div>
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
+import { useSessionState } from '../shared/sessionStore'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import CustomizeQuestionsTab from './CustomizeQuestionsTab'
 import WyrArenaTab from './WyrArenaTab'
@@ -34,26 +35,19 @@ function buildStarterDeck(): WyrQuestion[] {
  */
 export default function WouldYouRatherGame({ onExit }: WouldYouRatherGameProps) {
   const [activeTab, setActiveTab] = useState<string>('arena')
-  const [questions, setQuestions] = useState<WyrQuestion[]>(buildStarterDeck)
-  const [index, setIndex] = useState(0)
-  const [picks, setPicks] = useState<Record<string, WyrSide>>({})
-  const [timerSeconds, setTimerSeconds] = useState<WyrTimerSeconds>(DEFAULT_TIMER_SECONDS)
-  const [themeId, setThemeId] = useState<ColorThemeId>('colorful')
+  // Session-persisted: survives navigating away and back, resets on page refresh.
+  const [questions, setQuestions] = useSessionState<WyrQuestion[]>('wyr:questions', buildStarterDeck)
+  const [index, setIndex] = useSessionState('wyr:index', () => 0)
+  const [picks, setPicks] = useSessionState<Record<string, WyrSide>>('wyr:picks', () => ({}))
+  const [timerSeconds, setTimerSeconds] = useSessionState<WyrTimerSeconds>('wyr:timer', () => DEFAULT_TIMER_SECONDS)
+  const [themeId, setThemeId] = useSessionState<ColorThemeId>('wyr:theme', () => 'colorful')
 
   // Deck edits can shrink the list while the arena is mid-deck — clamp instead of
   // storing a possibly-stale index.
   const safeIndex = questions.length > 0 ? Math.min(index, questions.length - 1) : 0
   const currentQuestion = questions.length > 0 ? questions[safeIndex] : null
 
-  const tally = Object.values(picks).reduce(
-    (acc, side) => {
-      acc[side] += 1
-      return acc
-    },
-    { a: 0, b: 0 },
-  )
-
-  const addQuestion = (a: string, b: string) => {
+  const addQuestion =(a: string, b: string) => {
     setQuestions((current) => (current.length >= MAX_QUESTIONS ? current : [...current, createQuestion(a, b)]))
   }
 
@@ -128,7 +122,6 @@ export default function WouldYouRatherGame({ onExit }: WouldYouRatherGameProps) 
           index={safeIndex}
           total={questions.length}
           pick={currentQuestion ? (picks[currentQuestion.id] ?? null) : null}
-          tally={tally}
           themeId={themeId}
           timerSeconds={timerSeconds}
           onPick={handlePick}

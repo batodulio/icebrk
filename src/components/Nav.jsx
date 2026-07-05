@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function Nav() {
   return (
     <div className="nav">
@@ -12,7 +14,7 @@ export default function Nav() {
           <a href="#quote">Why hosts love it</a>
         </div>
         <div className="nav-actions">
-          <a className="btn btn-yellow" href="#games">Start Free</a>
+          <Link className="nav-coffee" to="/support">☕ Buy me a coffee</Link>
         </div>
       </div>
     </div>

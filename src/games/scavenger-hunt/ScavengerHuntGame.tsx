@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
+import { useSessionState } from '../shared/sessionStore'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import SchCustomizeTab from './SchCustomizeTab'
 import SchArenaTab from './SchArenaTab'
@@ -21,10 +22,11 @@ interface ScavengerHuntGameProps {
  */
 export default function ScavengerHuntGame({ onExit }: ScavengerHuntGameProps) {
   const [activeTab, setActiveTab] = useState<string>('arena')
-  const [items, setItems] = useState<HuntItem[]>(buildStarterItems)
-  const [foundIds, setFoundIds] = useState<Set<string>>(new Set())
-  const [minutes, setMinutes] = useState<HuntMinutes>(DEFAULT_HUNT_MINUTES)
-  const [themeId, setThemeId] = useState<ColorThemeId>('colorful')
+  // Session-persisted: survives navigating away and back, resets on page refresh.
+  const [items, setItems] = useSessionState<HuntItem[]>('sch:items', buildStarterItems)
+  const [foundIds, setFoundIds] = useSessionState<Set<string>>('sch:found', () => new Set())
+  const [minutes, setMinutes] = useSessionState<HuntMinutes>('sch:minutes', () => DEFAULT_HUNT_MINUTES)
+  const [themeId, setThemeId] = useSessionState<ColorThemeId>('sch:theme', () => 'colorful')
 
   const addItem = (text: string) => {
     setItems((current) => (current.length >= MAX_ITEMS ? current : [...current, createItem(text)]))

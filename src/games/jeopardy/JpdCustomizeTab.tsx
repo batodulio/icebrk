@@ -77,7 +77,7 @@ export default function JpdCustomizeTab({
             {teams.length} / {MAX_TEAMS}
           </span>
         </div>
-        <p className="customize-card-hint">Name the teams battling on the board — scores are tracked in the Play Arena.</p>
+        <p className="customize-card-hint">Name the teams battling on the board. Scores are tracked in the Play Arena.</p>
         <div className="participant-grid">
           {teams.map((t) => (
             <div className="participant-card" key={t.id}>
@@ -114,7 +114,7 @@ export default function JpdCustomizeTab({
           </button>
         </div>
         <p className="customize-card-hint">
-          Size the board in Game Settings above, then edit anything here — the answer is only shown when you reveal it in the arena.
+          Size the board in Game Settings above, then edit anything here. The answer is only shown when you reveal it in the arena.
         </p>
         <div className="jpd-category-grid">
           {board.map((cat) => (

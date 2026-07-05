@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
 import { useParticipants } from '../shared/useParticipants'
+import { useSessionState } from '../shared/sessionStore'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import TtlCustomizeTab from './TtlCustomizeTab'
 import TtlArenaTab from './TtlArenaTab'
@@ -23,11 +24,12 @@ interface TwoTruthsGameProps {
  */
 export default function TwoTruthsGame({ onExit }: TwoTruthsGameProps) {
   const [activeTab, setActiveTab] = useState<string>('arena')
-  const roster = useParticipants()
-  const [turnIndex, setTurnIndex] = useState(0)
-  const [results, setResults] = useState<Record<string, TtlVerdict>>({})
-  const [timerSeconds, setTimerSeconds] = useState<TtlTimerSeconds>(DEFAULT_TTL_TIMER)
-  const [themeId, setThemeId] = useState<ColorThemeId>('colorful')
+  // Session-persisted: survives navigating away and back, resets on page refresh.
+  const roster = useParticipants('ttl:roster')
+  const [turnIndex, setTurnIndex] = useSessionState('ttl:turnIndex', () => 0)
+  const [results, setResults] = useSessionState<Record<string, TtlVerdict>>('ttl:results', () => ({}))
+  const [timerSeconds, setTimerSeconds] = useSessionState<TtlTimerSeconds>('ttl:timer', () => DEFAULT_TTL_TIMER)
+  const [themeId, setThemeId] = useSessionState<ColorThemeId>('ttl:theme', () => 'colorful')
 
   const players = roster.participants
   // Roster edits can shrink the list mid-game — clamp instead of storing a stale index.

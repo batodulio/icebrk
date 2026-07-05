@@ -99,18 +99,19 @@ export default function JpdArenaTab({ board, usedClueIds, teams, themeId, onAwar
           )
         })}
         <button type="button" className="winners-reset" onClick={() => { setCelebrating(false); onRestart() }}>
-          ↺ Restart Game
+          <span className="reset-icon" aria-hidden="true">↺</span> Restart Game
         </button>
       </div>
 
       {complete && (
         <div className="jpd-winner-banner">
-          🎉 {champions.length > 1 ? `It's a tie — ${champions.map((c) => c.name).join(' & ')}!` : champions.length === 1 ? `${champions[0].name} wins the board!` : 'Board cleared!'} 🎉
+          🎉 {champions.length > 1 ? `It's a tie: ${champions.map((c) => c.name).join(' & ')}!` : champions.length === 1 ? `${champions[0].name} wins the board!` : 'Board cleared!'} 🎉
           {celebrating && <ConfettiBurst key={burstKey} theme={themeId} pieceCount={64} onDone={() => setCelebrating(false)} />}
         </div>
       )}
 
-      <div className="jpd-board" style={{ gridTemplateColumns: `repeat(${board.length}, 1fr)` }}>
+      {/* minmax floor keeps cells finger-sized on phones; the board scrolls sideways instead of crushing. */}
+      <div className="jpd-board" style={{ gridTemplateColumns: `repeat(${board.length}, minmax(90px, 1fr))` }}>
         {board.map((cat) => (
           <div className="jpd-board-header" key={cat.id}>
             {cat.name}

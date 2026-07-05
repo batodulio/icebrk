@@ -85,7 +85,7 @@ export default function CustomizeQuestionsTab({
           </span>
         </div>
         <p className="customize-card-hint">
-          Write the two sides of a dilemma — the room picks one and defends it. Starter questions are ready below; edit or remove any of them.
+          Write the two sides of a dilemma. The room picks one and defends it. Starter questions are ready below; edit or remove any of them.
         </p>
         <div className="wyr-add-row">
           <input
@@ -143,7 +143,7 @@ export default function CustomizeQuestionsTab({
           </div>
         ))}
         {questions.length === 0 && (
-          <p className="participant-empty">The deck is empty — add a question above or restore the starter deck.</p>
+          <p className="participant-empty">The deck is empty. Add a question above or restore the starter deck.</p>
         )}
       </div>
     </div>
