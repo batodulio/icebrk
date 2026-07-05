@@ -10,6 +10,7 @@ interface SchCustomizeTabProps {
   onUpdate: (id: string, text: string) => void
   onRemove: (id: string) => void
   onRestore: () => void
+  onClear: () => void
   minutes: HuntMinutes
   onMinutesChange: (value: HuntMinutes) => void
   themeId: ColorThemeId
@@ -35,6 +36,7 @@ export default function SchCustomizeTab({
   onUpdate,
   onRemove,
   onRestore,
+  onClear,
   minutes,
   onMinutesChange,
   themeId,
@@ -99,6 +101,9 @@ export default function SchCustomizeTab({
           </button>
           <button type="button" className="wyr-restore-btn" onClick={onRestore}>
             ↺ Restore Starter List
+          </button>
+          <button type="button" className="wyr-clear-btn" onClick={onClear} disabled={items.length === 0}>
+            🗑 Clear All
           </button>
           {isFull && <span className="customize-notice">Maximum of {MAX_ITEMS} items reached.</span>}
         </div>

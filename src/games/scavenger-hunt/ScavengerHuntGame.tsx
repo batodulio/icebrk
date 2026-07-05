@@ -51,6 +51,11 @@ export default function ScavengerHuntGame({ onExit }: ScavengerHuntGameProps) {
     setFoundIds(new Set())
   }
 
+  const clearItems = () => {
+    setItems([])
+    setFoundIds(new Set())
+  }
+
   const toggleFound = (itemId: string) => {
     setFoundIds((current) => {
       const next = new Set(current)
@@ -84,6 +89,7 @@ export default function ScavengerHuntGame({ onExit }: ScavengerHuntGameProps) {
           onUpdate={updateItem}
           onRemove={removeItem}
           onRestore={restoreItems}
+          onClear={clearItems}
           minutes={minutes}
           onMinutesChange={setMinutes}
           themeId={themeId}

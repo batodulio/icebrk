@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+  .slide { background: var(--vitality-green); justify-content: center; gap: 44px; padding: 0 90px; }
+  .head { text-align: center; position: relative; }
+  .how-eyebrow { background: rgba(255, 255, 255, 0.2); color: var(--sunshine); margin-bottom: 24px; }
+  h1 { font-size: 98px; color: var(--white); line-height: 1.02; }
+  h1 .tab { display: inline-block; background: var(--sunshine); color: var(--ink); padding: 0 26px; border-radius: 22px; transform: rotate(-2deg); box-shadow: 0 9px 0 rgba(0, 0, 0, 0.22); }
+  .steps { display: flex; flex-direction: column; gap: 24px; width: 100%; position: relative; }
+  .step {
+    display: flex; align-items: center; gap: 34px; background: var(--white);
+    border-radius: 30px; padding: 28px 38px; box-shadow: 0 12px 0 rgba(0, 0, 0, 0.18);
+  }
+  .step:nth-child(1) { transform: rotate(-0.8deg); }
+  .step:nth-child(3) { transform: rotate(0.8deg); }
+  .step:nth-child(5) { transform: rotate(-0.6deg); }
+  .num {
+    flex-shrink: 0; width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center;
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 46px; color: var(--white);
+    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.14);
+  }
+  .step h3 { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 38px; color: var(--ink); }
+  .step p { font-size: 25px; color: var(--slate); font-weight: 500; margin-top: 2px; }
+  .arrow { text-align: center; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 44px; color: var(--sunshine); line-height: .6; }
+  .promise {
+    position: absolute; right: 40px; bottom: 44px; background: var(--sunshine); color: var(--ink);
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 26px; padding: 14px 28px;
+    border-radius: 999px; transform: rotate(3deg); box-shadow: 0 8px 0 rgba(0, 0, 0, 0.22);
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <span class="blob" style="width:250px;height:250px;right:-95px;top:-85px;background:var(--sky-blue);opacity:.9"></span>
+  <span class="blob" style="width:180px;height:180px;left:-70px;bottom:-55px;background:var(--sunshine);opacity:.9"></span>
+  <span class="ring" style="width:86px;height:86px;border:10px solid rgba(255,255,255,.4);left:7%;top:16%"></span>
+  <span class="spark" style="left:90%;top:34%;font-size:40px;color:var(--sunshine)">✦</span>
+  <span class="spark" style="left:4%;top:56%;font-size:32px;color:#fff;opacity:.85">✧</span>
+  <span class="plus" style="left:88%;top:70%;font-size:44px;color:#fff;opacity:.7">+</span>
+  <span class="confetti" style="left:12%;top:78%;width:20px;height:20px;background:var(--sunshine)"></span>
+  <span class="spark" style="left:4%;top:34%;font-size:36px;color:var(--sunshine)">✦</span>
+
+  <div class="head">
+    <span class="eyebrow how-eyebrow">How it works</span>
+    <h1 class="display"><span class="tab">Two tabs.</span> That&rsquo;s it.</h1>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <span class="num" style="background:var(--sunshine);color:var(--ink)">1</span>
+      <div>
+        <h3>Customize Game</h3>
+        <p>Names, questions, timers, themes. One friendly tab.</p>
+      </div>
+    </div>
+    <p class="arrow">↓</p>
+    <div class="step">
+      <span class="num" style="background:var(--sky-blue)">2</span>
+      <div>
+        <h3>Play Arena</h3>
+        <p>Project it and let the room take over.</p>
+      </div>
+    </div>
+    <p class="arrow">↓</p>
+    <div class="step">
+      <span class="num" style="background:var(--energy-orange)">3</span>
+      <div>
+        <h3>Crown the winners</h3>
+        <p>Confetti bursts, fanfares, bragging rights.</p>
+      </div>
+    </div>
+  </div>
+
+  <span class="promise">No manuals, promise!</span>
+</div>
+</body>
+</html>
