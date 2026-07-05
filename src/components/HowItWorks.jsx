@@ -5,7 +5,7 @@ const STEPS = [
     icon: '✏️',
     iconBg: 'var(--sunshine)',
     title: 'Customize Game',
-    body: 'Names, questions, timers, themes — everything you set up lives in one friendly tab.',
+    body: 'Names, questions, timers, themes. Everything you set up lives in one friendly tab.',
   },
   {
     icon: '🎉',
@@ -28,7 +28,7 @@ export default function HowItWorks() {
       <div className="wrap">
         <p className="eyebrow">How it works</p>
         <h2 className="section-title">Two tabs, every game, every time</h2>
-        <p className="section-sub">Learn the pattern once — Customize Game, then Play Arena — and you can run anything in the IceBrk library.</p>
+        <p className="section-sub">Learn the pattern once (Customize Game, then Play Arena) and you can run anything in the IceBrk library.</p>
         <div className="flow">
           {STEPS.map((s, i) => (
             <Fragment key={s.title}>

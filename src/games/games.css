@@ -134,11 +134,22 @@
 .winners-panel { border: 3px solid var(--sunshine); }
 .arena-panel-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--ink); margin-bottom: 14px; }
 .winners-panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+/* Reset actions are destructive-ish and easy to miss mid-game, so they get a loud
+   sunshine pill with the site's hard shadow. The arrow does a full spin on hover as
+   a wink at what the button does. */
 .winners-reset {
-  border: none; background: transparent; cursor: pointer; font-family: var(--font-body);
-  font-weight: 700; font-size: 12px; color: var(--ib-blue); padding: 2px 4px; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 7px;
+  border: none; cursor: pointer; font-family: var(--font-body);
+  font-weight: 800; font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase;
+  color: var(--ink); background: var(--sunshine);
+  padding: 9px 16px; border-radius: 999px; white-space: nowrap;
+  box-shadow: 0 4px 0 rgba(34, 34, 59, 0.18);
+  transition: transform 160ms ease, box-shadow 160ms ease;
 }
-.winners-reset:hover { text-decoration: underline; }
+.winners-reset:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(34, 34, 59, 0.18); }
+.winners-reset:active { transform: translateY(1px); box-shadow: 0 2px 0 rgba(34, 34, 59, 0.18); }
+.reset-icon { display: inline-block; font-size: 14px; line-height: 1; transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+.winners-reset:hover .reset-icon { transform: rotate(-360deg); }
 
 .queue-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
 .queue-item {
@@ -218,13 +229,8 @@
 
 /* ---------- Would You Rather ---------- */
 .wyr-arena { display: flex; flex-direction: column; align-items: center; gap: 18px; }
-.wyr-topline { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 12px; flex-wrap: wrap; }
+.wyr-topline { display: flex; justify-content: center; align-items: center; width: 100%; gap: 12px; flex-wrap: wrap; }
 .wyr-progress { font-weight: 700; font-size: 14px; color: var(--slate); }
-.wyr-tally { display: flex; gap: 8px; }
-.wyr-tally-chip {
-  background: var(--white); border: 2px solid var(--mist); border-radius: 999px;
-  padding: 4px 14px; font-weight: 800; font-size: 13px; color: var(--ink);
-}
 .wyr-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(22px, 3vw, 30px); color: var(--ink); }
 
 .wyr-faceoff { display: grid; grid-template-columns: 1fr 72px 1fr; align-items: stretch; width: 100%; }

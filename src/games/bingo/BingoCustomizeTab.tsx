@@ -66,7 +66,7 @@ export default function BingoCustomizeTab({
           <span className="participant-count-badge">{cards.length} cards</span>
         </div>
         <p className="customize-card-hint">
-          Deal a card to every player — print this page, screenshot it, or let players copy one onto paper. Reshuffle for fresh cards.
+          Deal a card to every player: print this page, screenshot it, or let players copy one onto paper. Reshuffle for fresh cards.
         </p>
         <div className="customize-card-actions">
           <select

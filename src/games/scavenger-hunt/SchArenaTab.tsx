@@ -81,7 +81,7 @@ export default function SchArenaTab({ items, foundIds, themeId, minutes, onToggl
   if (items.length === 0) {
     return (
       <div className="sch-arena">
-        <p className="wheel-hint">The hunt list is empty — add items in Customize Game to start the hunt.</p>
+        <p className="wheel-hint">The hunt list is empty. Add items in Customize Game to start the hunt.</p>
       </div>
     )
   }
@@ -93,7 +93,7 @@ export default function SchArenaTab({ items, foundIds, themeId, minutes, onToggl
           {foundCount} of {items.length} found
         </span>
         <button type="button" className="winners-reset" onClick={handleReset}>
-          ↺ Reset Hunt
+          <span className="reset-icon" aria-hidden="true">↺</span> Reset Hunt
         </button>
       </div>
 
@@ -120,7 +120,7 @@ export default function SchArenaTab({ items, foundIds, themeId, minutes, onToggl
 
       {complete && (
         <div className="jpd-winner-banner">
-          🎉 Hunt complete — you found everything! 🎉
+          🎉 Hunt complete, you found everything! 🎉
           {celebrating && <ConfettiBurst key={burstKey} theme={themeId} pieceCount={64} onDone={() => setCelebrating(false)} />}
         </div>
       )}
@@ -149,7 +149,7 @@ export default function SchArenaTab({ items, foundIds, themeId, minutes, onToggl
           )
         })}
       </div>
-      <p className="wyr-instruction">Tap an item when someone brings it in — tap again to undo.</p>
+      <p className="wyr-instruction">Tap an item when someone brings it in. Tap again to undo.</p>
     </div>
   )
 }

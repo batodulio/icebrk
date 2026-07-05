@@ -54,10 +54,12 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scrolling ticker of the actual game catalog — updates itself as games ship. */}
+      {/* Scrolling ticker of the actual game catalog — updates itself as games ship.
+          Four identical copies + a -50% translate loop: the track is always wider than
+          the widest viewport, so the loop restarts on an identical frame with no gap. */}
       <div className="hero-marquee" aria-hidden="true">
         <div className="hero-marquee-track">
-          {[0, 1].map((copy) => (
+          {[0, 1, 2, 3].map((copy) => (
             <span className="hero-marquee-group" key={copy}>
               {GAME_CATALOG.map((g) => (
                 <span className="hero-marquee-item" key={g.id}>

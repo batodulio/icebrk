@@ -22,7 +22,7 @@ export default function WinnersList({ winners, onReset }: WinnersListProps) {
         <h3 className="arena-panel-title">🏆 Completed Winners</h3>
         {winners.length > 0 && (
           <button type="button" className="winners-reset" onClick={onReset}>
-            ↺ Reset
+            <span className="reset-icon" aria-hidden="true">↺</span> Reset
           </button>
         )}
       </div>

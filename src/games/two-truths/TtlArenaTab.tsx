@@ -89,7 +89,7 @@ export default function TtlArenaTab({ players, results, currentIndex, themeId, t
       </div>
 
       <div className="ttl-spotlight-panel">
-        {players.length === 0 && <p className="wheel-hint">Everyone needs a turn in the spotlight — add at least 2 participants.</p>}
+        {players.length === 0 && <p className="wheel-hint">Everyone needs a turn in the spotlight. Add at least 2 participants.</p>}
 
         {players.length > 0 && allDone && (
           <div className="ttl-spotlight ttl-complete">
@@ -117,7 +117,7 @@ export default function TtlArenaTab({ players, results, currentIndex, themeId, t
             {!currentVerdict ? (
               <>
                 <p className="ttl-spotlight-instructions">
-                  Tell the room <strong>two truths and one lie</strong> — then let them vote on which one is the lie!
+                  Tell the room <strong>two truths and one lie</strong>, then let them vote on which one is the lie!
                 </p>
                 {timerSeconds > 0 && (
                   <div className={`wyr-timer ${timesUp ? 'done' : ''}`}>
@@ -139,7 +139,7 @@ export default function TtlArenaTab({ players, results, currentIndex, themeId, t
                     )}
                   </div>
                 )}
-                <p className="ttl-verdict-prompt">The votes are in — what happened?</p>
+                <p className="ttl-verdict-prompt">The votes are in. What happened?</p>
                 <div className="ttl-verdict-row">
                   <button type="button" className="btn btn-primary" onClick={() => handleVerdict('fooled')}>
                     😱 They Fooled Us!
