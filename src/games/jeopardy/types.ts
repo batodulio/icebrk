@@ -68,7 +68,7 @@ const STARTER_BOARD: Array<{ name: string; clues: Array<[question: string, answe
     clues: [
       ['"This meeting could have been" one of these instead', 'An email'],
       ['Three-letter acronym for working away from the office', 'WFH'],
-      ['"You\'re on ___" — the most-said phrase in video calls', 'Mute'],
+      ['"You\'re on ___", the most-said phrase in video calls', 'Mute'],
       ['The Office (US) is set at this Scranton paper company', 'Dunder Mifflin'],
     ],
   },

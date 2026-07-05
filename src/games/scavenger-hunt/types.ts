@@ -30,7 +30,7 @@ export const STARTER_ITEMS: string[] = [
   'Something smaller than a coin',
   'A book (paper or e-book)',
   'Something borrowed',
-  'A plant — real or fake',
+  'A plant, real or fake',
   'Something that makes noise',
   'Your most-used object today',
 ]

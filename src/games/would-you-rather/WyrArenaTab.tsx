@@ -10,7 +10,6 @@ interface WyrArenaTabProps {
   index: number
   total: number
   pick: WyrSide | null
-  tally: { a: number; b: number }
   themeId: ColorThemeId
   timerSeconds: WyrTimerSeconds
   onPick: (questionId: string, side: WyrSide) => void
@@ -35,7 +34,6 @@ export default function WyrArenaTab({
   index,
   total,
   pick,
-  tally,
   themeId,
   timerSeconds,
   onPick,
@@ -74,7 +72,7 @@ export default function WyrArenaTab({
   if (!question) {
     return (
       <div className="wyr-arena">
-        <p className="wheel-hint">The deck is empty — add questions in Customize Game to start the debate.</p>
+        <p className="wheel-hint">The deck is empty. Add questions in Customize Game to start the debate.</p>
       </div>
     )
   }
@@ -94,10 +92,6 @@ export default function WyrArenaTab({
         <span className="wyr-progress">
           Question {index + 1} of {total}
         </span>
-        <div className="wyr-tally" title="Sides picked so far">
-          <span className="wyr-tally-chip">🅰️ {tally.a}</span>
-          <span className="wyr-tally-chip">🅱️ {tally.b}</span>
-        </div>
       </div>
 
       <h2 className="wyr-title">Would you rather…</h2>
@@ -127,7 +121,7 @@ export default function WyrArenaTab({
       </div>
 
       <p className="wyr-instruction">
-        {pick ? 'Side picked — change it or move on!' : 'Debate it out, then tap the side that wins the room.'}
+        {pick ? 'Side picked! Change it or move on.' : 'Debate it out, then tap the side that wins the room.'}
       </p>
 
       {timerSeconds > 0 && (

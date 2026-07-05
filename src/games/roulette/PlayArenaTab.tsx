@@ -46,7 +46,7 @@ export default function PlayArenaTab({
         spinSeconds={spinSeconds}
         themeId={themeId}
         spinning={spinning}
-        emptyHint={everyoneHasWon ? 'Everyone has had their moment — reset the winners to spin again!' : undefined}
+        emptyHint={everyoneHasWon ? 'Everyone has had their moment. Reset the winners to spin again!' : undefined}
         onSpinStart={onSpinStart}
         onSpinComplete={onSpinComplete}
         onWithdrawLastWinner={onWithdrawLastWinner}

@@ -21,7 +21,7 @@ export default function ComingSoonGame({ emoji, title, tagline, onBack }: Coming
         <div className="deco-blob" style={{ width: 70, height: 70, background: 'var(--sky-blue)', opacity: 0.85, bottom: -30, right: -20 }} />
         <p className="coming-soon-eyebrow">Up next in the library</p>
         <h2>We're building {title} right now!</h2>
-        <p>This game is getting the same Roulette-level polish — check back soon for your turn to play.</p>
+        <p>This game is getting the same Roulette-level polish. Check back soon for your turn to play.</p>
       </div>
     </GameShell>
   )

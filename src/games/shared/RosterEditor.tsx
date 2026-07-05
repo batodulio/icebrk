@@ -19,7 +19,7 @@ export default function RosterEditor({ roster }: RosterEditorProps) {
             {roster.count} / {roster.max}
           </span>
         </div>
-        <p className="customize-card-hint">One name per line — the game updates live as you type. No save button needed.</p>
+        <p className="customize-card-hint">One name per line. The game updates live as you type, no save button needed.</p>
         <textarea
           className="paste-textarea"
           placeholder={'John\nSarah\nMichael\nAshley'}
@@ -29,7 +29,7 @@ export default function RosterEditor({ roster }: RosterEditorProps) {
         />
         {roster.overflow > 0 && (
           <p className="customize-notice">
-            Maximum of {roster.max} participants — the last {roster.overflow} name{roster.overflow > 1 ? 's' : ''} won't join the game.
+            Maximum of {roster.max} participants. The last {roster.overflow} name{roster.overflow > 1 ? 's' : ''} won't join the game.
           </p>
         )}
       </div>

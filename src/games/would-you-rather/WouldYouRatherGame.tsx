@@ -47,15 +47,7 @@ export default function WouldYouRatherGame({ onExit }: WouldYouRatherGameProps) 
   const safeIndex = questions.length > 0 ? Math.min(index, questions.length - 1) : 0
   const currentQuestion = questions.length > 0 ? questions[safeIndex] : null
 
-  const tally = Object.values(picks).reduce(
-    (acc, side) => {
-      acc[side] += 1
-      return acc
-    },
-    { a: 0, b: 0 },
-  )
-
-  const addQuestion = (a: string, b: string) => {
+  const addQuestion =(a: string, b: string) => {
     setQuestions((current) => (current.length >= MAX_QUESTIONS ? current : [...current, createQuestion(a, b)]))
   }
 
@@ -130,7 +122,6 @@ export default function WouldYouRatherGame({ onExit }: WouldYouRatherGameProps) 
           index={safeIndex}
           total={questions.length}
           pick={currentQuestion ? (picks[currentQuestion.id] ?? null) : null}
-          tally={tally}
           themeId={themeId}
           timerSeconds={timerSeconds}
           onPick={handlePick}

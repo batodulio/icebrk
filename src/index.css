@@ -64,6 +64,14 @@ section { padding: 56px 0; position: relative; }
 @media (max-width: 720px) { .nav-links { display: none; } }
 .nav-actions { display: flex; align-items: center; gap: 10px; }
 .nav-actions .btn { padding: 11px 22px; font-size: 14px; }
+/* Quiet pill for the donation link — deliberately softer than the CTA buttons */
+.nav-coffee {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px; border: 2px solid var(--mist); border-radius: 999px;
+  font-size: 13px; font-weight: 600; color: var(--slate); white-space: nowrap;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+.nav-coffee:hover { color: var(--ink); border-color: var(--sunshine); background: rgba(255, 210, 63, 0.18); }
 
 /* HERO */
 .hero {
@@ -161,7 +169,7 @@ section { padding: 56px 0; position: relative; }
 .hero-marquee {
   position: relative; background: var(--sunshine); padding: 12px 0; overflow: hidden; width: 100%;
 }
-.hero-marquee-track { display: flex; width: max-content; animation: marquee 24s linear infinite; }
+.hero-marquee-track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
 .hero-marquee-group { display: flex; flex-shrink: 0; }
 .hero-marquee-item {
   font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--ink); white-space: nowrap;
@@ -238,6 +246,71 @@ section { padding: 56px 0; position: relative; }
 .final-cta { background: var(--purple); position: relative; text-align: center; padding: 64px 0; }
 .final-cta h2 { font-family: var(--font-display); font-weight: 800; color: var(--white); font-size: clamp(30px, 5vw, 46px); max-width: 600px; margin: 0 auto 18px; position: relative; line-height: 1.15; }
 .final-cta p { color: rgba(255, 255, 255, 0.92); font-size: 16px; margin-bottom: 28px; position: relative; }
+
+/* SUPPORT / BUY ME A COFFEE — a single-viewport screen on desktop: no scrolling.
+   The hero fills everything below the sticky nav; copy + PayPal + maker strip on
+   the left, GCash QR card on the right. */
+.support-screen { display: flex; flex-direction: column; min-height: 100dvh; }
+.support-hero {
+  position: relative; overflow: hidden; flex: 1;
+  display: flex; align-items: center;
+  background: linear-gradient(135deg, var(--ib-blue) 0%, var(--royal-blue) 100%);
+  padding: 32px 0;
+}
+.support-grid {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center; gap: 48px; width: 100%;
+}
+.support-eyebrow {
+  display: inline-flex; background: var(--vitality-green); color: var(--white);
+  font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+  padding: 7px 15px; border-radius: 999px; margin-bottom: 16px;
+}
+.support-copy h1 {
+  font-family: var(--font-display); font-weight: 800; color: var(--white);
+  font-size: clamp(30px, 4.5vw, 46px); line-height: 1.1; margin-bottom: 14px;
+}
+.support-sub { color: rgba(255, 255, 255, 0.92); font-size: 16px; max-width: 520px; margin-bottom: 24px; }
+.maker-strip {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.12); border-radius: 18px;
+  padding: 14px 18px; margin-top: 24px; max-width: 520px;
+}
+.maker-avatar {
+  flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; background: rgba(255, 255, 255, 0.18);
+}
+.maker-id { flex: 1; min-width: 180px; }
+.maker-name { font-family: var(--font-display); font-weight: 800; font-size: 16px; color: var(--white); line-height: 1.3; }
+.maker-tag { font-size: 12px; color: rgba(255, 255, 255, 0.78); line-height: 1.5; }
+.maker-link {
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+  background: #0A66C2; color: var(--white); font-weight: 700; font-size: 13px;
+  padding: 9px 16px; border-radius: 999px; box-shadow: 0 4px 0 rgba(10, 30, 60, 0.35);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.maker-link:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(10, 30, 60, 0.35); }
+.maker-link-badge {
+  display: grid; place-items: center; width: 20px; height: 20px; border-radius: 5px;
+  background: var(--white); color: #0A66C2; font-family: var(--font-display); font-weight: 800; font-size: 12px;
+}
+.gcash-card {
+  position: relative; background: var(--white); border-radius: 24px; text-align: center;
+  width: min(280px, 100%); margin: 0 auto; padding: 16px 18px 14px;
+  box-shadow: 0 10px 0 rgba(10, 30, 60, 0.35); transform: rotate(-1deg);
+}
+.gcash-or { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--slate); margin-bottom: 10px; }
+.gcash-card img { width: 100%; height: auto; border-radius: 10px; }
+.gcash-label { font-family: var(--font-display); font-weight: 800; font-size: 16px; color: var(--ink); margin-top: 10px; }
+.gcash-sub { font-size: 12px; color: var(--slate); margin-top: 2px; }
+@media (max-width: 860px) {
+  .support-hero { align-items: flex-start; }
+  .support-grid { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+  .support-sub, .maker-strip { margin-left: auto; margin-right: auto; }
+  .maker-strip { text-align: left; }
+  .support-hero .btn { width: min(100%, 360px); }
+}
 
 /* FOOTER */
 footer { position: relative; background: var(--ink); color: rgba(255, 255, 255, 0.65); padding: 36px 0 24px; }

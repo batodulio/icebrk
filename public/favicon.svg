@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- IceBrk brand mark: the nav's .brand-mark rebuilt as a crisp vector.
+       Blue rounded square, sunshine hard shadow, -6 degree tilt, white IB. -->
+  <g transform="rotate(-6 32 32)">
+    <rect x="9" y="12" width="46" height="46" rx="14" fill="#FFD23F"/>
+    <rect x="9" y="7" width="46" height="46" rx="14" fill="#1A56C4"/>
+    <text x="32" y="31" text-anchor="middle" dominant-baseline="central"
+      font-family="'Baloo 2','Arial Rounded MT Bold','Helvetica Neue',Arial,sans-serif"
+      font-weight="800" font-size="23" fill="#FFFFFF">IB</text>
+  </g>
+</svg>

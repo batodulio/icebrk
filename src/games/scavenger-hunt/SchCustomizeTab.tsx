@@ -81,7 +81,7 @@ export default function SchCustomizeTab({
           </span>
         </div>
         <p className="customize-card-hint">
-          What should the room go find? Keep items findable where you're playing — the starter list works indoors anywhere.
+          What should the room go find? Keep items findable where you're playing. The starter list works indoors anywhere.
         </p>
         <div className="wyr-add-row">
           <input
@@ -119,7 +119,7 @@ export default function SchCustomizeTab({
             </button>
           </div>
         ))}
-        {items.length === 0 && <p className="participant-empty">The hunt list is empty — add items above or restore the starter list.</p>}
+        {items.length === 0 && <p className="participant-empty">The hunt list is empty. Add items above or restore the starter list.</p>}
       </div>
     </div>
   )

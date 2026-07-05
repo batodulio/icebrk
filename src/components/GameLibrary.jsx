@@ -83,7 +83,7 @@ export default function GameLibrary() {
         <p className="eyebrow">Game library</p>
         <h2 className="section-title">Choose the vibe</h2>
         <p className="section-sub">
-          Six games, all playable right now — pick a vibe and go. New games join the library all the time.
+          Six games, all playable right now. Pick a vibe and go. New games join the library all the time.
         </p>
         <div className="game-grid">
           {GAMES.map((g) => {
