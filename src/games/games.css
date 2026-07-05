@@ -292,6 +292,15 @@
   font-weight: 700; font-size: 13px; color: var(--ib-blue); padding: 4px;
 }
 .wyr-restore-btn:hover { text-decoration: underline; }
+/* Clear All empties the list in one tap; Restore Starter right next to it is the
+   undo, so no confirmation dialog needed. Orange marks it as the caution action. */
+.wyr-clear-btn {
+  border: none; background: transparent; cursor: pointer; font-family: var(--font-body);
+  font-weight: 700; font-size: 13px; color: var(--energy-orange); padding: 4px;
+}
+.wyr-clear-btn:hover { text-decoration: underline; }
+.wyr-clear-btn:disabled { opacity: 0.45; cursor: default; text-decoration: none; }
+.customize-head-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
 
 .wyr-question-list { display: flex; flex-direction: column; gap: 10px; }
 .wyr-question-row {

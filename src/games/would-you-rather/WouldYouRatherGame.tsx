@@ -83,6 +83,12 @@ export default function WouldYouRatherGame({ onExit }: WouldYouRatherGameProps) 
     setIndex(0)
   }
 
+  const clearDeck = () => {
+    setQuestions([])
+    setPicks({})
+    setIndex(0)
+  }
+
   const handlePick = (questionId: string, side: WyrSide) => {
     setPicks((current) => ({ ...current, [questionId]: side }))
   }
@@ -110,6 +116,7 @@ export default function WouldYouRatherGame({ onExit }: WouldYouRatherGameProps) 
           onRemove={removeQuestion}
           onShuffle={shuffleDeck}
           onRestore={restoreStarterDeck}
+          onClear={clearDeck}
           timerSeconds={timerSeconds}
           onTimerSecondsChange={setTimerSeconds}
           themeId={themeId}
