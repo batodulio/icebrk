@@ -2,11 +2,18 @@ import { useState } from 'react'
 import GameShell from '../shared/GameShell'
 import { useParticipants } from '../shared/useParticipants'
 import { useSessionState } from '../shared/sessionStore'
+import { useCloudSync } from '../shared/useCloudSync'
 import type { GameTabDefinition } from '../shared/types'
 import type { ColorThemeId, Participant, Winner } from '../shared/types'
 import CustomizeGameTab from './CustomizeGameTab'
 import PlayArenaTab from './PlayArenaTab'
 import { DEFAULT_SPIN_SECONDS, type SpinSeconds } from './types'
+
+interface RouletteRow {
+  participants: Participant[]
+  spin_seconds: SpinSeconds
+  theme_id: ColorThemeId
+}
 
 // Two tabs per game: everything you set up lives in Customize Game, everything you
 // play lives in Play Arena (the default — players land ready to spin).
@@ -34,6 +41,17 @@ export default function RouletteGame({ onExit }: RouletteGameProps) {
   const [themeId, setThemeId] = useSessionState<ColorThemeId>('roulette:theme', () => 'colorful')
   const [spinning, setSpinning] = useState(false)
   const [winners, setWinners] = useSessionState<Winner[]>('roulette:winners', () => [])
+
+  // Signed-in hosts: load a saved roster/settings on open, autosave changes after.
+  useCloudSync<RouletteRow>(
+    'roulette_settings',
+    { participants: roster.participants, spin_seconds: spinSeconds, theme_id: themeId },
+    (row) => {
+      roster.setText(row.participants.map((p) => p.name).join('\n'))
+      setSpinSeconds(row.spin_seconds)
+      setThemeId(row.theme_id)
+    },
+  )
 
   // Winners come off the wheel: once someone wins they can't win again. The full
   // roster stays intact (Customize Game keeps everyone), so resetting the winners

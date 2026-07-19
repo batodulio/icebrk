@@ -2,10 +2,17 @@ import { useState } from 'react'
 import GameShell from '../shared/GameShell'
 import { useParticipants } from '../shared/useParticipants'
 import { useSessionState } from '../shared/sessionStore'
-import type { ColorThemeId, GameTabDefinition } from '../shared/types'
+import { useCloudSync } from '../shared/useCloudSync'
+import type { ColorThemeId, GameTabDefinition, Participant } from '../shared/types'
 import TtlCustomizeTab from './TtlCustomizeTab'
 import TtlArenaTab from './TtlArenaTab'
 import { DEFAULT_TTL_TIMER, type TtlTimerSeconds, type TtlVerdict } from './types'
+
+interface TwoTruthsRow {
+  participants: Participant[]
+  timer_seconds: TtlTimerSeconds
+  theme_id: ColorThemeId
+}
 
 // Two tabs per game module: set up in Customize Game, play in Play Arena (default).
 const TABS: GameTabDefinition[] = [
@@ -30,6 +37,19 @@ export default function TwoTruthsGame({ onExit }: TwoTruthsGameProps) {
   const [results, setResults] = useSessionState<Record<string, TtlVerdict>>('ttl:results', () => ({}))
   const [timerSeconds, setTimerSeconds] = useSessionState<TtlTimerSeconds>('ttl:timer', () => DEFAULT_TTL_TIMER)
   const [themeId, setThemeId] = useSessionState<ColorThemeId>('ttl:theme', () => 'colorful')
+
+  // Signed-in hosts: load a saved roster/settings on open, autosave changes after.
+  useCloudSync<TwoTruthsRow>(
+    'two_truths_settings',
+    { participants: roster.participants, timer_seconds: timerSeconds, theme_id: themeId },
+    (row) => {
+      roster.setText(row.participants.map((p) => p.name).join('\n'))
+      setTimerSeconds(row.timer_seconds)
+      setThemeId(row.theme_id)
+      setResults({})
+      setTurnIndex(0)
+    },
+  )
 
   const players = roster.participants
   // Roster edits can shrink the list mid-game — clamp instead of storing a stale index.

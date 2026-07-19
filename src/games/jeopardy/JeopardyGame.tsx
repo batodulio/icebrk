@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
 import { useSessionState } from '../shared/sessionStore'
+import { useCloudSync } from '../shared/useCloudSync'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import JpdCustomizeTab from './JpdCustomizeTab'
 import JpdArenaTab from './JpdArenaTab'
@@ -14,6 +15,12 @@ import {
   type JpdCategory,
   type JpdTeam,
 } from './types'
+
+interface JeopardyRow {
+  board: JpdCategory[]
+  teams: JpdTeam[]
+  theme_id: ColorThemeId
+}
 
 // Two tabs per game module: set up in Customize Game, play in Play Arena (default).
 const TABS: GameTabDefinition[] = [
@@ -37,6 +44,18 @@ export default function JeopardyGame({ onExit }: JeopardyGameProps) {
   const [teams, setTeams] = useSessionState<JpdTeam[]>('jpd:teams', () => DEFAULT_TEAM_NAMES.map(createTeam))
   const [usedClueIds, setUsedClueIds] = useSessionState<Set<string>>('jpd:used', () => new Set())
   const [themeId, setThemeId] = useSessionState<ColorThemeId>('jpd:theme', () => 'colorful')
+
+  // Signed-in hosts: load a saved board/teams on open, autosave changes after.
+  useCloudSync<JeopardyRow>(
+    'jeopardy_settings',
+    { board, teams, theme_id: themeId },
+    (row) => {
+      setBoard(row.board)
+      setTeams(row.teams)
+      setThemeId(row.theme_id)
+      setUsedClueIds(new Set())
+    },
+  )
 
   const setCategoryName = (categoryId: string, name: string) => {
     setBoard((current) => current.map((c) => (c.id === categoryId ? { ...c, name } : c)))
