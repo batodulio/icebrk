@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 import type { Participant } from '../shared/types'
 import { COLOR_THEMES, wedgeTextColor } from '../shared/themes'
 import type { ColorThemeId } from '../shared/types'
@@ -104,6 +104,16 @@ export default function RouletteWheel({ participants, spinSeconds, themeId, spin
     startSpin()
   }
 
+  // The wheel itself doubles as a giant spin button — same guard and handler as
+  // the "Spin the Wheel" button below, just triggerable by tapping the wheel.
+  const handleWheelKeyDown = (e: KeyboardEvent<SVGSVGElement>) => {
+    if (!canSpin) return
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      startSpin()
+    }
+  }
+
   const handleTransitionEnd = () => {
     const winner = pendingWinnerRef.current
     if (!winner) return
@@ -136,13 +146,18 @@ export default function RouletteWheel({ participants, spinSeconds, themeId, spin
       <div className="wheel-stage">
         <div className="wheel-pointer" aria-hidden="true" />
         <svg
-          className="wheel-svg"
+          className={`wheel-svg${canSpin ? ' wheel-svg-clickable' : ''}`}
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: transitionMs ? `transform ${transitionMs}ms cubic-bezier(0.32, 0, 0.14, 1)` : 'none',
           }}
           onTransitionEnd={handleTransitionEnd}
+          onClick={handleSpin}
+          onKeyDown={handleWheelKeyDown}
+          role="button"
+          tabIndex={canSpin ? 0 : -1}
+          aria-label={n >= 2 ? 'Spin the wheel' : undefined}
         >
           <circle cx={CENTER} cy={CENTER} r={RADIUS} fill="var(--white)" />
           {participants.map((p, i) => {

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
 import { useSessionState } from '../shared/sessionStore'
+import { useCloudSync } from '../shared/useCloudSync'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import CustomizeQuestionsTab from './CustomizeQuestionsTab'
 import WyrArenaTab from './WyrArenaTab'
@@ -13,6 +14,12 @@ import {
   type WyrSide,
   type WyrTimerSeconds,
 } from './types'
+
+interface WyrRow {
+  questions: WyrQuestion[]
+  timer_seconds: WyrTimerSeconds
+  theme_id: ColorThemeId
+}
 
 // Two tabs per game module: set up in Customize Game, play in Play Arena (default).
 const TABS: GameTabDefinition[] = [
@@ -41,6 +48,19 @@ export default function WouldYouRatherGame({ onExit }: WouldYouRatherGameProps) 
   const [picks, setPicks] = useSessionState<Record<string, WyrSide>>('wyr:picks', () => ({}))
   const [timerSeconds, setTimerSeconds] = useSessionState<WyrTimerSeconds>('wyr:timer', () => DEFAULT_TIMER_SECONDS)
   const [themeId, setThemeId] = useSessionState<ColorThemeId>('wyr:theme', () => 'colorful')
+
+  // Signed-in hosts: load a saved deck/settings on open, autosave changes after.
+  useCloudSync<WyrRow>(
+    'would_you_rather_settings',
+    { questions, timer_seconds: timerSeconds, theme_id: themeId },
+    (row) => {
+      setQuestions(row.questions)
+      setTimerSeconds(row.timer_seconds)
+      setThemeId(row.theme_id)
+      setIndex(0)
+      setPicks({})
+    },
+  )
 
   // Deck edits can shrink the list while the arena is mid-deck — clamp instead of
   // storing a possibly-stale index.
