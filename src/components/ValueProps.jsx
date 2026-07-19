@@ -20,6 +20,13 @@ const VALUES = [
     title: 'Built-in host tools',
     body: 'Timer, team setup, and scorecard come standard with every game, all living in one place.',
   },
+  {
+    color: 'var(--sky-blue)',
+    tint: '#E7F6FF',
+    num: '4',
+    title: 'Save it for next time',
+    body: 'Pop in a username and password (totally optional) and IceBrk remembers your rosters, questions, and boards. Next game night, just hit play.',
+  },
 ]
 
 export default function ValueProps() {

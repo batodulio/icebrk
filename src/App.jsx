@@ -18,6 +18,7 @@ import ScavengerHuntGame from './games/scavenger-hunt/ScavengerHuntGame.tsx'
 import ComingSoonGame from './games/shared/ComingSoonGame.tsx'
 import SuggestGamePage from './games/shared/SuggestGamePage.tsx'
 import SupportPage from './components/SupportPage.jsx'
+import AuthPage from './auth/AuthPage.tsx'
 import { GAME_CATALOG } from './games/shared/gameCatalog.ts'
 
 function LandingPage() {
@@ -90,6 +91,7 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/suggest-a-game" element={<SuggestGamePage onBack={() => navigate('/')} />} />
         <Route path="/support" element={<SupportPage />} />
+        <Route path="/login" element={<AuthPage />} />
         <Route path="/:gameId" element={<GamePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
