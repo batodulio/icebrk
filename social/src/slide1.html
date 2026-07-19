@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+  .slide { background: linear-gradient(135deg, var(--ib-blue) 0%, var(--royal-blue) 100%); }
+  .top { margin-top: 64px; position: relative; }
+  .brand-name { color: var(--white); }
+  /* Inverted mark: white tile + blue letters so it pops on the blue background */
+  .brand-mark { background: var(--white); color: var(--ib-blue); box-shadow: 0 8px 0 var(--sunshine); }
+
+  .hero { position: relative; display: flex; align-items: center; gap: 56px; padding: 0 84px; margin-top: 118px; width: 100%; }
+  .copy { flex: 1; position: relative; }
+  .hero-eyebrow { background: var(--vitality-green); color: var(--white); font-size: 20px; padding: 12px 26px; margin-bottom: 30px; box-shadow: 0 6px 0 rgba(10, 30, 60, 0.3); }
+  h1 { color: var(--white); font-size: 104px; line-height: 1.04; }
+  h1 .pop { color: var(--sunshine); }
+  .sub { color: rgba(255, 255, 255, 0.94); font-size: 30px; font-weight: 600; margin-top: 26px; max-width: 470px; }
+  .promise-chip {
+    display: inline-flex; margin-top: 32px; background: var(--white); color: var(--ib-blue);
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 24px;
+    padding: 14px 30px; border-radius: 999px; box-shadow: 0 7px 0 rgba(10, 30, 60, 0.3); transform: rotate(-1deg);
+  }
+
+  /* The IceBrk wheel: the product's signature moment as the slide's focal point */
+  .wheel-wrap { position: relative; width: 400px; height: 400px; flex-shrink: 0; transform: rotate(6deg); }
+  .wheel {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: conic-gradient(
+      var(--energy-orange) 0 60deg,
+      var(--sunshine) 60deg 120deg,
+      var(--vitality-green) 120deg 180deg,
+      var(--sky-blue) 180deg 240deg,
+      var(--purple) 240deg 300deg,
+      var(--ink) 300deg 360deg
+    );
+    border: 12px solid var(--white); box-shadow: 0 16px 0 rgba(10, 30, 60, 0.35);
+  }
+  .pointer {
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%); z-index: 2;
+    width: 0; height: 0; border-left: 22px solid transparent; border-right: 22px solid transparent;
+    border-top: 36px solid var(--white);
+  }
+  .hub {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-6deg); z-index: 1;
+    width: 108px; height: 108px; border-radius: 50%; background: var(--white);
+    display: grid; place-items: center; font-family: 'Baloo 2', sans-serif; font-weight: 800;
+    font-size: 32px; color: var(--ib-blue); box-shadow: 0 6px 0 rgba(10, 30, 60, 0.25);
+  }
+  .wspark { position: absolute; font-family: 'Baloo 2', sans-serif; font-weight: 800; }
+
+  .swipe {
+    position: absolute; left: 50%; transform: translateX(-50%) rotate(-1.5deg); bottom: 66px;
+    background: var(--sunshine); color: var(--ink);
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 28px; padding: 16px 38px;
+    border-radius: 999px; box-shadow: 0 8px 0 rgba(10, 30, 60, 0.35);
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <span class="blob" style="width:260px;height:260px;right:-100px;top:-90px;background:var(--energy-orange);opacity:.9"></span>
+  <span class="blob" style="width:200px;height:200px;left:-80px;bottom:-70px;background:var(--vitality-green);opacity:.9"></span>
+  <span class="blob" style="width:120px;height:120px;left:-45px;top:16%;background:var(--sunshine);opacity:.9"></span>
+  <span class="confetti" style="left:12%;top:11%;width:18px;height:18px;background:var(--sunshine)"></span>
+  <span class="confetti" style="left:86%;top:70%;width:22px;height:22px;background:var(--sunshine)"></span>
+  <span class="confetti" style="left:4%;top:64%;width:16px;height:16px;background:var(--energy-orange)"></span>
+  <span class="confetti tri" style="left:58%;top:12%"></span>
+  <span class="spark" style="left:4%;top:42%;font-size:36px;color:var(--sunshine)">✦</span>
+  <span class="spark" style="left:93%;top:38%;font-size:32px;color:#fff">✧</span>
+  <span class="spark" style="left:26%;top:88%;font-size:28px;color:#fff;opacity:.85">✦</span>
+  <span class="spark" style="left:72%;top:90%;font-size:28px;color:var(--sunshine)">✧</span>
+  <span class="plus" style="left:20%;top:15%;font-size:38px;color:var(--sky-blue)">+</span>
+  <span class="plus" style="left:88%;top:16%;font-size:36px;color:var(--sunshine)">+</span>
+  <span class="ring" style="width:70px;height:70px;border:9px solid rgba(255,255,255,.4);right:6%;top:56%"></span>
+
+  <div class="top brand-row">
+    <span class="brand-mark">IB</span>
+    <span class="brand-name">IceBrk</span>
+  </div>
+
+  <div class="hero">
+    <div class="copy">
+      <span class="eyebrow hero-eyebrow">Games for every gathering!</span>
+      <h1 class="display">Bonding made <span class="pop">simple.</span></h1>
+      <p class="sub">Free party games that turn any gathering into a core memory.</p>
+      <span class="promise-chip">100% free ✦ New games all the time</span>
+    </div>
+
+    <div class="wheel-wrap">
+      <span class="pointer"></span>
+      <div class="wheel"></div>
+      <span class="hub">GO!</span>
+      <span class="wspark" style="top:-6px;left:-30px;font-size:40px;color:var(--sunshine)">✦</span>
+      <span class="wspark" style="bottom:30px;right:-36px;font-size:34px;color:#fff">✧</span>
+      <span class="wspark" style="bottom:-24px;left:24px;font-size:28px;color:#fff;opacity:.85">✦</span>
+    </div>
+  </div>
+
+  <span class="swipe">swipe →</span>
+</div>
+</body>
+</html>

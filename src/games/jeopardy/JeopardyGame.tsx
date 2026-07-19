@@ -57,6 +57,13 @@ export default function JeopardyGame({ onExit }: JeopardyGameProps) {
     setUsedClueIds(new Set())
   }
 
+  // Blank every cell but keep the current board dimensions, so hosts can write
+  // their own board from scratch without resizing first.
+  const clearBoard = () => {
+    setBoard((current) => current.map((cat, i) => createBlankCategory(`Category ${i + 1}`, cat.clues.length)))
+    setUsedClueIds(new Set())
+  }
+
   // Board sizing: shrinking truncates from the end, growing appends blank editable
   // slots. Category count and questions-per-category are derived from the board
   // itself, so the settings dropdowns always reflect reality (e.g. after a restore).
@@ -130,6 +137,7 @@ export default function JeopardyGame({ onExit }: JeopardyGameProps) {
           onCategoryName={setCategoryName}
           onClueText={setClueText}
           onRestoreBoard={restoreBoard}
+          onClearBoard={clearBoard}
           teams={teams}
           onAddTeam={addTeam}
           onTeamName={setTeamName}

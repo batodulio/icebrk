@@ -47,7 +47,12 @@ export default function SupportPage() {
               <span className="maker-avatar" aria-hidden="true">👋</span>
               <div className="maker-id">
                 <p className="maker-name">Batman Odulio</p>
-                <p className="maker-tag">Builder of purposeful passion projects from the Philippines</p>
+                <p className="maker-role">Experienced Product Manager · Builder from the Philippines</p>
+                <p className="maker-tag">
+                  I ship products by day and passion projects by heart. IceBrk sits on a growing
+                  shelf beside Filipino word games, AI tools, and whatever solves a real problem
+                  next. Each one is built to be useful, human, and fun.
+                </p>
               </div>
               <a
                 className="maker-link"

@@ -14,6 +14,7 @@ interface JpdCustomizeTabProps {
   onCategoryName: (categoryId: string, name: string) => void
   onClueText: (categoryId: string, clueId: string, field: 'question' | 'answer', text: string) => void
   onRestoreBoard: () => void
+  onClearBoard: () => void
   teams: JpdTeam[]
   onAddTeam: () => void
   onTeamName: (teamId: string, name: string) => void
@@ -34,6 +35,7 @@ export default function JpdCustomizeTab({
   onCategoryName,
   onClueText,
   onRestoreBoard,
+  onClearBoard,
   teams,
   onAddTeam,
   onTeamName,
@@ -109,9 +111,14 @@ export default function JpdCustomizeTab({
       <div className="customize-card">
         <div className="customize-card-head">
           <h3>🧠 Board Questions</h3>
-          <button type="button" className="wyr-restore-btn" onClick={onRestoreBoard}>
-            ↺ Restore Starter Board
-          </button>
+          <div className="customize-head-actions">
+            <button type="button" className="wyr-restore-btn" onClick={onRestoreBoard}>
+              ↺ Restore Starter Board
+            </button>
+            <button type="button" className="wyr-clear-btn" onClick={onClearBoard}>
+              🗑 Clear All
+            </button>
+          </div>
         </div>
         <p className="customize-card-hint">
           Size the board in Game Settings above, then edit anything here. The answer is only shown when you reveal it in the arena.

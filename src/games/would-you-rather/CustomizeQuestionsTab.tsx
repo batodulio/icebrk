@@ -11,6 +11,7 @@ interface CustomizeQuestionsTabProps {
   onRemove: (id: string) => void
   onShuffle: () => void
   onRestore: () => void
+  onClear: () => void
   timerSeconds: WyrTimerSeconds
   onTimerSecondsChange: (value: WyrTimerSeconds) => void
   themeId: ColorThemeId
@@ -37,6 +38,7 @@ export default function CustomizeQuestionsTab({
   onRemove,
   onShuffle,
   onRestore,
+  onClear,
   timerSeconds,
   onTimerSecondsChange,
   themeId,
@@ -115,6 +117,9 @@ export default function CustomizeQuestionsTab({
           </button>
           <button type="button" className="wyr-restore-btn" onClick={onRestore}>
             ↺ Restore Starter Deck
+          </button>
+          <button type="button" className="wyr-clear-btn" onClick={onClear} disabled={questions.length === 0}>
+            🗑 Clear All
           </button>
           {isFull && <span className="customize-notice">Maximum of {MAX_QUESTIONS} questions reached.</span>}
         </div>
