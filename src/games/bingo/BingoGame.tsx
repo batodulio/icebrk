@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import GameShell from '../shared/GameShell'
 import { useSessionState } from '../shared/sessionStore'
+import { useCloudSync } from '../shared/useCloudSync'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import { soundManager } from '../shared/sound'
 import BingoCustomizeTab from './BingoCustomizeTab'
@@ -13,6 +14,13 @@ import {
   type AutoCallSeconds,
   type BingoCard,
 } from './types'
+
+interface BingoRow {
+  card_count: number
+  cards: BingoCard[]
+  auto_call_seconds: AutoCallSeconds
+  theme_id: ColorThemeId
+}
 
 // Two tabs per game module: set up in Customize Game, play in Play Arena (default).
 const TABS: GameTabDefinition[] = [
@@ -36,6 +44,19 @@ export default function BingoGame({ onExit }: BingoGameProps) {
   const [cards, setCards] = useSessionState<BingoCard[]>('bng:cards', () => generateCards(DEFAULT_CARD_COUNT))
   const [autoCallSeconds, setAutoCallSeconds] = useSessionState<AutoCallSeconds>('bng:autoCall', () => DEFAULT_AUTO_CALL)
   const [themeId, setThemeId] = useSessionState<ColorThemeId>('bng:theme', () => 'colorful')
+
+  // Signed-in hosts: load saved cards/settings on open, autosave changes after.
+  useCloudSync<BingoRow>(
+    'bingo_settings',
+    { card_count: cardCount, cards, auto_call_seconds: autoCallSeconds, theme_id: themeId },
+    (row) => {
+      setCardCount(row.card_count)
+      setCards(row.cards)
+      setAutoCallSeconds(row.auto_call_seconds)
+      setThemeId(row.theme_id)
+      setCalledNumbers([])
+    },
+  )
 
   const draw = useCallback(() => {
     setCalledNumbers((current) => {

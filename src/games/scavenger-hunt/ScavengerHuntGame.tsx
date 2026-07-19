@@ -1,10 +1,17 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
 import { useSessionState } from '../shared/sessionStore'
+import { useCloudSync } from '../shared/useCloudSync'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
 import SchCustomizeTab from './SchCustomizeTab'
 import SchArenaTab from './SchArenaTab'
 import { DEFAULT_HUNT_MINUTES, MAX_ITEMS, buildStarterItems, createItem, type HuntItem, type HuntMinutes } from './types'
+
+interface ScavengerHuntRow {
+  items: HuntItem[]
+  hunt_minutes: HuntMinutes
+  theme_id: ColorThemeId
+}
 
 // Two tabs per game module: set up in Customize Game, play in Play Arena (default).
 const TABS: GameTabDefinition[] = [
@@ -27,6 +34,18 @@ export default function ScavengerHuntGame({ onExit }: ScavengerHuntGameProps) {
   const [foundIds, setFoundIds] = useSessionState<Set<string>>('sch:found', () => new Set())
   const [minutes, setMinutes] = useSessionState<HuntMinutes>('sch:minutes', () => DEFAULT_HUNT_MINUTES)
   const [themeId, setThemeId] = useSessionState<ColorThemeId>('sch:theme', () => 'colorful')
+
+  // Signed-in hosts: load saved items/settings on open, autosave changes after.
+  useCloudSync<ScavengerHuntRow>(
+    'scavenger_hunt_settings',
+    { items, hunt_minutes: minutes, theme_id: themeId },
+    (row) => {
+      setItems(row.items)
+      setMinutes(row.hunt_minutes)
+      setThemeId(row.theme_id)
+      setFoundIds(new Set())
+    },
+  )
 
   const addItem = (text: string) => {
     setItems((current) => (current.length >= MAX_ITEMS ? current : [...current, createItem(text)]))

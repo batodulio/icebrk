@@ -171,15 +171,22 @@
 .wheel-stage { position: relative; width: 100%; max-width: 420px; aspect-ratio: 1 / 1; }
 /* Flat, vibrant carnival wheel — no drop shadow; the rim + lights live in the SVG. */
 .wheel-svg { width: 100%; height: 100%; display: block; border-radius: 50%; }
+/* The wheel doubles as a giant spin button — pointer cursor + a light press
+   feedback so it reads as tappable, not just decorative. */
+.wheel-svg-clickable { cursor: pointer; }
+.wheel-svg-clickable:active { filter: brightness(0.97); }
+.wheel-svg-clickable:focus-visible { outline: 3px solid var(--sunshine); outline-offset: 3px; }
 .wheel-pointer {
   position: absolute; top: -8px; left: 50%; transform: translateX(-50%); z-index: 3;
   width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent;
   border-top: 28px solid var(--energy-orange);
+  pointer-events: none;
 }
 .wheel-hub {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;
   width: 16%; height: 16%; border-radius: 50%; background: var(--sunshine);
   border: 3px solid var(--ib-blue); display: grid; place-items: center; font-size: 18px;
+  pointer-events: none;
 }
 .wheel-spin-btn { min-width: 220px; }
 .wheel-hint { color: var(--slate); font-size: 13px; }
