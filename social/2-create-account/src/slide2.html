@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+  .slide { background: var(--purple); justify-content: center; gap: 40px; padding: 0 80px; }
+  .head { text-align: center; position: relative; }
+  .why-eyebrow { background: var(--sunshine); color: var(--ink); margin-bottom: 26px; box-shadow: 0 7px 0 rgba(0,0,0,.25); }
+  h1 { font-size: 88px; line-height: 1.05; color: var(--white); }
+  h1 .flip { display: inline-block; color: var(--ink); background: var(--sunshine); padding: 0 28px; border-radius: 24px; transform: rotate(-2deg); box-shadow: 0 9px 0 rgba(0,0,0,.28); }
+  .cards { display: flex; flex-direction: column; gap: 26px; width: 100%; position: relative; }
+  .card {
+    display: flex; align-items: center; gap: 30px; background: var(--white); border-radius: 30px;
+    padding: 32px 38px; box-shadow: 0 12px 0 rgba(0,0,0,.28);
+  }
+  .card:nth-child(1) { transform: rotate(-1deg); }
+  .card:nth-child(2) { transform: rotate(0.8deg); }
+  .card:nth-child(3) { transform: rotate(-0.8deg); }
+  .icon {
+    flex-shrink: 0; width: 90px; height: 90px; border-radius: 26px; display: grid; place-items: center;
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 44px; color: var(--white);
+    transform: rotate(-6deg); box-shadow: 0 7px 0 rgba(0,0,0,.2);
+  }
+  .card h3 { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 36px; margin-bottom: 4px; color: var(--ink); }
+  .card p { font-size: 24px; color: var(--slate); font-weight: 500; }
+  .link { position: relative; background: var(--ink); color: var(--sunshine); font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 27px; padding: 15px 38px; border-radius: 999px; box-shadow: 0 8px 0 rgba(0,0,0,.3); transform: rotate(-1deg); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <span class="blob" style="width:240px;height:240px;right:-90px;top:-80px;background:var(--energy-orange);opacity:.9"></span>
+  <span class="blob" style="width:180px;height:180px;left:-70px;bottom:-60px;background:var(--sky-blue);opacity:.85"></span>
+  <span class="ring" style="width:90px;height:90px;border:10px solid rgba(255,255,255,.35);left:6%;top:24%"></span>
+  <span class="spark" style="left:88%;top:20%;font-size:44px;color:var(--sunshine)">✦</span>
+  <span class="spark" style="left:5%;top:60%;font-size:34px;color:#fff">✦</span>
+  <span class="spark" style="left:92%;top:66%;font-size:30px;color:var(--sunshine)">✧</span>
+  <span class="plus" style="left:10%;top:8%;font-size:44px;color:var(--vitality-green)">+</span>
+  <span class="confetti" style="left:80%;top:9%;width:20px;height:20px;background:var(--sunshine)"></span>
+  <span class="ring" style="width:64px;height:64px;border:8px solid rgba(255,255,255,.3);right:5%;bottom:13%"></span>
+
+  <div class="head">
+    <span class="eyebrow why-eyebrow">Why create an account</span>
+    <h1 class="display">Set up once.<br><span class="flip">Host forever.</span></h1>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <span class="icon" style="background:var(--energy-orange)">✓</span>
+      <div>
+        <h3>Save your setup</h3>
+        <p>Rosters, questions &amp; boards, remembered automatically.</p>
+      </div>
+    </div>
+    <div class="card">
+      <span class="icon" style="background:var(--sky-blue)">↻</span>
+      <div>
+        <h3>Pick up where you left off</h3>
+        <p>Any device, any day. Game night starts pre-loaded.</p>
+      </div>
+    </div>
+    <div class="card">
+      <span class="icon" style="background:var(--vitality-green)">✕</span>
+      <div>
+        <h3>No email, ever</h3>
+        <p>Just a username &amp; password. Optional, always free.</p>
+      </div>
+    </div>
+  </div>
+
+  <span class="link">icebrk.vercel.app</span>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --ib-blue: #1A56C4;
+  --royal-blue: #4169E1;
+  --sky-blue: #38B6FF;
+  --energy-orange: #F47920;
+  --vitality-green: #00A651;
+  --sunshine: #FFD23F;
+  --purple: #8338EC;
+  --ink: #22223B;
+  --cloud: #FFFDF7;
+  --mist: #F2EFE4;
+  --slate: #7A786E;
+  --white: #FFFFFF;
+}
+html, body { width: 1080px; height: 1080px; overflow: hidden; }
+body { font-family: 'Poppins', sans-serif; color: var(--ink); position: relative; }
+.display { font-family: 'Baloo 2', sans-serif; font-weight: 800; }
+.slide {
+  width: 1080px; height: 1080px; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center;
+}
+.blob { position: absolute; border-radius: 50%; }
+.confetti { position: absolute; border-radius: 999px; }
+.tri {
+  width: 0; height: 0; background: transparent; border-radius: 0;
+  border-left: 16px solid transparent; border-right: 16px solid transparent;
+  border-bottom: 28px solid var(--sunshine);
+}
+/* Decorative sprinkles: sparkle glyphs, hollow rings, plus signs, floating emoji */
+.spark { position: absolute; font-family: 'Baloo 2', sans-serif; font-weight: 800; line-height: 1; }
+.ring { position: absolute; border-radius: 50%; }
+.plus { position: absolute; font-family: 'Baloo 2', sans-serif; font-weight: 800; line-height: 1; }
+.femoji { position: absolute; line-height: 1; }
+.sticker {
+  position: absolute; font-family: 'Baloo 2', sans-serif; font-weight: 800;
+  border-radius: 999px; box-shadow: 0 8px 0 rgba(10, 30, 60, 0.3); padding: 16px 30px;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 26px;
+  padding: 14px 28px; border-radius: 999px;
+}
+.brand-row { display: flex; align-items: center; gap: 16px; }
+.brand-mark {
+  display: grid; place-items: center; width: 64px; height: 64px; border-radius: 20px;
+  background: var(--ib-blue); color: var(--white); font-family: 'Baloo 2', sans-serif;
+  font-weight: 800; font-size: 26px; box-shadow: 0 8px 0 var(--sunshine); transform: rotate(-6deg);
+}
+.brand-name { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 44px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px;
+  letter-spacing: 2px; text-transform: uppercase; padding: 14px 30px; border-radius: 999px;
+}

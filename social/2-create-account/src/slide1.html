@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+  .slide { background: var(--energy-orange); justify-content: flex-start; }
+  .top { margin-top: 56px; position: relative; z-index: 2; }
+  .brand-mark { background: var(--white); color: var(--energy-orange); box-shadow: 0 8px 0 var(--ib-blue); }
+  .brand-name { color: var(--white); }
+
+  .badge-new {
+    position: relative; z-index: 2; margin-top: 40px; background: var(--ink); color: var(--sunshine);
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: 1px;
+    padding: 14px 34px; border-radius: 999px; box-shadow: 0 8px 0 rgba(0,0,0,.3); transform: rotate(-2deg);
+  }
+
+  h1 {
+    position: relative; z-index: 2; color: var(--white); font-size: 118px; line-height: 0.98;
+    text-align: center; margin-top: 30px; text-shadow: 0 6px 0 rgba(0,0,0,.12);
+  }
+  h1 .pop {
+    display: inline-block; color: var(--ink); background: var(--sunshine);
+    padding: 4px 30px; border-radius: 26px; transform: rotate(-1.5deg);
+    box-shadow: 0 10px 0 rgba(0,0,0,.22);
+  }
+
+  .sub {
+    position: relative; z-index: 2; color: rgba(255,255,255,.96); font-size: 30px; font-weight: 600;
+    text-align: center; margin-top: 34px; padding: 0 100px;
+  }
+
+  .flow-wrap { position: relative; z-index: 2; width: 100%; margin-top: 70px; padding: 0 96px; }
+  .flow-line {
+    position: absolute; top: 47px; left: 176px; right: 176px; height: 0;
+    border-top: 5px dashed rgba(34, 34, 59, 0.4); z-index: 1;
+  }
+  .flow { position: relative; z-index: 2; display: flex; justify-content: space-between; }
+  .flow-step { display: flex; flex-direction: column; align-items: center; width: 210px; text-align: center; }
+  .flow-num {
+    width: 94px; height: 94px; border-radius: 50%; display: grid; place-items: center;
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 40px; color: var(--white);
+    box-shadow: 0 8px 0 rgba(0,0,0,.25); border: 6px solid var(--white); margin-bottom: 18px;
+  }
+  .flow-step .label { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 25px; color: var(--ink); line-height: 1.15; }
+  .flow-step .tag {
+    margin-top: 8px; font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 16px;
+    color: var(--ink); background: var(--white); padding: 5px 14px; border-radius: 999px; opacity: .85;
+  }
+
+  .swipe {
+    position: absolute; left: 50%; transform: translateX(-50%) rotate(-1.5deg); bottom: 56px; z-index: 2;
+    background: var(--ink); color: var(--sunshine);
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 26px; padding: 15px 36px;
+    border-radius: 999px; box-shadow: 0 8px 0 rgba(0, 0, 0, 0.3);
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <span class="blob" style="width:280px;height:280px;right:-110px;top:-100px;background:var(--purple);opacity:.85"></span>
+  <span class="blob" style="width:220px;height:220px;left:-90px;bottom:-80px;background:var(--vitality-green);opacity:.9"></span>
+  <span class="blob" style="width:130px;height:130px;left:-50px;top:20%;background:var(--sunshine);opacity:.9"></span>
+  <span class="confetti" style="left:10%;top:9%;width:18px;height:18px;background:var(--sunshine)"></span>
+  <span class="confetti" style="left:88%;top:60%;width:22px;height:22px;background:var(--white)"></span>
+  <span class="confetti tri" style="left:6%;top:60%"></span>
+  <span class="spark" style="left:4%;top:38%;font-size:36px;color:var(--sunshine)">✦</span>
+  <span class="spark" style="left:93%;top:16%;font-size:30px;color:#fff">✧</span>
+  <span class="spark" style="left:90%;top:82%;font-size:30px;color:var(--sunshine)">✦</span>
+  <span class="plus" style="left:88%;top:40%;font-size:38px;color:#fff;opacity:.7">+</span>
+  <span class="ring" style="width:64px;height:64px;border:8px solid rgba(255,255,255,.4);left:6%;top:78%"></span>
+
+  <div class="top brand-row">
+    <span class="brand-mark">IB</span>
+    <span class="brand-name">IceBrk</span>
+  </div>
+
+  <span class="badge-new">✦ NEW FEATURE ✦</span>
+
+  <h1 class="display">Game night,<br><span class="pop">remembered.</span></h1>
+  <p class="sub">Create a free account and every roster, question &amp; board saves itself for next time.</p>
+
+  <div class="flow-wrap">
+    <span class="flow-line"></span>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-num" style="background:var(--ib-blue)">1</span>
+        <span class="label">Create account</span>
+        <span class="tag">optional</span>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num" style="background:var(--vitality-green)">2</span>
+        <span class="label">Build your game</span>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num" style="background:var(--purple)">3</span>
+        <span class="label">Enjoy, it's remembered</span>
+      </div>
+    </div>
+  </div>
+
+  <span class="swipe">swipe →</span>
+</div>
+</body>
+</html>

@@ -1,7 +1,5 @@
 import { useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/react'
 import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
 import ValueProps from './components/ValueProps.jsx'
@@ -97,8 +95,6 @@ export default function App() {
         <Route path="/:gameId" element={<GamePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <Analytics />
-      <SpeedInsights />
     </>
   )
 }
