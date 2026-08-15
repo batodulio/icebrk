@@ -1,0 +1,1814 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IceBrk — Bonding made simple.</title>
+<link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ib-blue:#1A56C4; --sky-blue:#38B6FF; --energy-orange:#F47920; --vitality-green:#00A651;
+  --sunshine:#FFD23F; --purple:#8338EC; --ink:#22223B; --cloud:#FFFDF7; --mist:#F2EFE4;
+  --slate:#7A786E; --white:#FFFFFF;
+  --font-display:'Baloo 2',sans-serif; --font-body:'Poppins',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--cloud);color:var(--ink);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img,svg{display:block;max-width:100%;}
+a{color:var(--ib-blue);font-weight:600;text-decoration:none;}
+a:hover{text-decoration:underline;}
+.wrap{max-width:1160px;margin:0 auto;padding:0 32px;}
+@media(max-width:640px){.wrap{padding:0 20px;}}
+
+/* ---------- HERO ---------- */
+.hero{background:var(--ib-blue);color:var(--white);padding:56px 0 40px;position:relative;overflow:hidden;}
+.hero-blob{position:absolute;border-radius:50%;pointer-events:none;}
+.hb1{top:-90px;left:-70px;width:240px;height:240px;background:var(--sky-blue);}
+.hb2{bottom:-160px;right:-90px;width:340px;height:340px;background:var(--energy-orange);opacity:.9;}
+.hb3{top:120px;right:280px;width:90px;height:90px;background:var(--purple);opacity:.85;}
+.hdot{position:absolute;border-radius:50%;pointer-events:none;}
+.hd1{top:44px;right:150px;width:18px;height:18px;background:var(--sunshine);}
+.hd2{top:110px;right:70px;width:12px;height:12px;background:var(--vitality-green);}
+.hd3{bottom:74px;left:44%;width:14px;height:14px;background:var(--sunshine);}
+.hero-inner{position:relative;}
+.brandmark{display:inline-flex;align-items:center;gap:10px;background:var(--sunshine);color:var(--ink);font-family:var(--font-display);font-weight:800;font-size:20px;padding:8px 20px;border-radius:999px;margin-bottom:22px;}
+.hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(34px,5.4vw,58px);line-height:1.1;max-width:720px;margin-bottom:14px;}
+.hero p{font-size:clamp(15px,1.8vw,18px);max-width:600px;color:rgba(255,255,255,.92);font-weight:500;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;}
+.chip{background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);color:var(--white);font-size:12.5px;font-weight:700;padding:6px 15px;border-radius:999px;}
+
+/* ---------- TABS ---------- */
+.tabbar{position:sticky;top:0;z-index:60;background:rgba(255,253,247,.95);backdrop-filter:blur(8px);border-bottom:3px solid var(--mist);}
+.tabbar-inner{display:flex;gap:10px;padding:14px 32px;max-width:1160px;margin:0 auto;flex-wrap:wrap;}
+@media(max-width:640px){.tabbar-inner{padding:12px 20px;}}
+.tab{font-family:var(--font-body);font-weight:700;font-size:14.5px;padding:11px 24px;border-radius:999px;border:3px solid var(--ib-blue);background:transparent;color:var(--ib-blue);cursor:pointer;transition:transform 150ms ease,box-shadow 150ms ease;}
+.tab:hover{transform:translateY(-2px);}
+.tab[aria-selected="true"]{background:var(--ib-blue);color:var(--white);box-shadow:0 5px 0 var(--sunshine);}
+.panel[hidden]{display:none;}
+
+/* ---------- SECTIONS ---------- */
+section{padding:54px 0;position:relative;}
+@media(max-width:640px){section{padding:40px 0;}}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--ib-blue);margin-bottom:10px;}
+.section-title{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,3.6vw,36px);line-height:1.18;margin-bottom:12px;}
+.section-sub{color:var(--slate);font-size:16px;max-width:660px;margin-bottom:30px;}
+.band-mist{background:var(--mist);}
+
+/* ---------- CARDS ---------- */
+.grid{display:grid;gap:20px;}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+.g4{grid-template-columns:repeat(auto-fit,minmax(215px,1fr));}
+.card{background:var(--white);border-radius:20px;padding:26px;box-shadow:0 6px 0 rgba(34,34,59,.07);position:relative;overflow:hidden;}
+.card h3{font-family:var(--font-display);font-weight:700;font-size:20px;margin-bottom:8px;position:relative;}
+.card p{font-size:14.5px;color:var(--slate);position:relative;}
+.card-blob{position:absolute;border-radius:50%;pointer-events:none;}
+.bordered{background:var(--white);border-radius:18px;padding:22px;border:3px solid var(--mist);}
+.b-blue{border-color:var(--ib-blue);}
+.b-sky{border-color:var(--sky-blue);}
+.b-green{border-color:var(--vitality-green);}
+.b-orange{border-color:var(--energy-orange);}
+.b-purple{border-color:var(--purple);}
+.b-sun{border-color:var(--sunshine);}
+.bordered h4{font-family:var(--font-display);font-weight:700;font-size:17px;margin-bottom:10px;}
+.bordered ul{list-style:none;font-size:14px;}
+.bordered li{padding:6px 0 6px 22px;position:relative;border-top:2px solid var(--mist);}
+.bordered li:first-child{border-top:none;}
+.bordered li::before{content:'';position:absolute;left:4px;top:15px;width:9px;height:9px;border-radius:50%;background:var(--sky-blue);}
+.bordered li code,.tbl code,p code,li code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--mist);padding:2px 7px;border-radius:8px;color:var(--ink);font-weight:600;}
+.b-blue li::before{background:var(--ib-blue);}
+.b-green li::before{background:var(--vitality-green);}
+.b-orange li::before{background:var(--energy-orange);}
+.b-purple li::before{background:var(--purple);}
+.b-sun li::before{background:var(--sunshine);}
+
+/* ---------- GAME CARDS ---------- */
+.game-card{border-radius:20px;padding:22px;color:var(--white);position:relative;overflow:hidden;min-height:158px;display:flex;flex-direction:column;justify-content:flex-end;}
+.game-emoji{position:relative;font-size:30px;margin-bottom:6px;}
+.game-name{position:relative;font-family:var(--font-display);font-weight:700;font-size:21px;}
+.game-tag{position:relative;font-size:13px;opacity:.9;margin-bottom:12px;}
+.badge{position:relative;display:inline-block;font-size:11px;font-weight:700;padding:5px 13px;border-radius:999px;width:fit-content;}
+.badge-sun{background:var(--sunshine);color:var(--ink);}
+
+/* ---------- STEPS ---------- */
+.steps{counter-reset:s;display:grid;gap:14px;}
+.step{background:var(--white);border-radius:18px;padding:20px 22px 20px 68px;position:relative;box-shadow:0 5px 0 rgba(34,34,59,.06);}
+.step::before{counter-increment:s;content:counter(s);position:absolute;left:20px;top:18px;width:34px;height:34px;border-radius:50%;background:var(--ib-blue);color:var(--white);font-family:var(--font-display);font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;}
+.step:nth-child(2)::before{background:var(--energy-orange);}
+.step:nth-child(3)::before{background:var(--vitality-green);}
+.step:nth-child(4)::before{background:var(--purple);}
+.step:nth-child(5)::before{background:var(--sky-blue);}
+.step:nth-child(6)::before{background:var(--sunshine);color:var(--ink);}
+.step h4{font-family:var(--font-display);font-weight:700;font-size:16.5px;margin-bottom:3px;}
+.step p{font-size:14px;color:var(--slate);}
+
+/* ---------- TABLE ---------- */
+.tbl-scroll{overflow-x:auto;border-radius:18px;box-shadow:0 6px 0 rgba(34,34,59,.07);background:var(--white);}
+table.tbl{border-collapse:collapse;width:100%;min-width:620px;font-size:14px;}
+table.tbl th{background:var(--ib-blue);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:14px;text-align:left;padding:13px 18px;}
+table.tbl th:first-child{border-top-left-radius:18px;}
+table.tbl th:last-child{border-top-right-radius:18px;}
+table.tbl td{padding:12px 18px;border-top:2px solid var(--mist);vertical-align:top;}
+table.tbl tr td:first-child{font-weight:600;}
+
+/* ---------- SWATCHES ---------- */
+.swatch{border-radius:16px;overflow:hidden;box-shadow:0 6px 0 rgba(34,34,59,.08);background:var(--white);}
+.swatch-color{height:78px;position:relative;}
+.swatch-color span{position:absolute;bottom:8px;right:12px;font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:700;color:rgba(255,255,255,.95);}
+.swatch-meta{padding:11px 14px;}
+.swatch-meta b{font-family:var(--font-display);font-size:14px;display:block;}
+.swatch-meta small{color:var(--slate);font-size:12px;}
+
+/* ---------- VOICE ---------- */
+.voice{border-radius:20px;padding:24px;position:relative;overflow:hidden;}
+.voice h4{font-family:var(--font-display);font-weight:800;font-size:19px;margin-bottom:10px;position:relative;}
+.voice p{font-size:15px;position:relative;font-weight:500;}
+.voice-yes{background:var(--vitality-green);color:var(--white);}
+.voice-no{background:var(--white);border:3px solid var(--mist);color:var(--slate);}
+
+/* ---------- DIAGRAM ---------- */
+.diagram-shell{background:var(--white);border-radius:24px;padding:22px;box-shadow:0 8px 0 rgba(34,34,59,.07);overflow-x:auto;}
+.diagram-shell svg{min-width:940px;}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;font-size:13px;font-weight:600;color:var(--slate);}
+.legend span{display:inline-flex;align-items:center;gap:8px;}
+.legend i{width:14px;height:14px;border-radius:5px;display:inline-block;}
+
+/* ---------- CALLOUT ---------- */
+.callout{border-radius:20px;padding:26px;position:relative;overflow:hidden;background:var(--ib-blue);color:var(--white);}
+.callout h3{font-family:var(--font-display);font-weight:800;font-size:22px;margin-bottom:8px;position:relative;}
+.callout p{position:relative;font-size:15px;color:rgba(255,255,255,.92);max-width:640px;}
+.pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:8px;}
+.pill{font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;color:var(--white);}
+.p-blue{background:var(--ib-blue);} .p-orange{background:var(--energy-orange);} .p-green{background:var(--vitality-green);}
+.p-sky{background:var(--sky-blue);} .p-purple{background:var(--purple);} .p-sun{background:var(--sunshine);color:var(--ink);}
+.p-ink{background:var(--ink);}
+
+/* ---------- CODE BLOCKS (Under Construction tab) ---------- */
+.codewrap{margin:16px 0 22px;}
+.codelabel{display:inline-block;background:var(--ink);color:var(--sunshine);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;font-weight:700;padding:7px 16px;border-radius:14px 14px 0 0;}
+pre.code{background:var(--ink);color:#F4F2EA;border-radius:0 16px 16px 16px;padding:18px 20px;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.65;white-space:pre;}
+pre.code.solo{border-radius:16px;}
+.note{border-left:6px solid var(--sunshine);background:var(--white);border-radius:0 16px 16px 0;padding:16px 20px;font-size:14.5px;margin:16px 0;box-shadow:0 4px 0 rgba(34,34,59,.05);}
+.note b{font-family:var(--font-display);font-size:15px;}
+.note-blue{border-left-color:var(--ib-blue);}
+.note-green{border-left-color:var(--vitality-green);}
+.note-orange{border-left-color:var(--energy-orange);}
+table.tbl td.num{font-family:ui-monospace,Menlo,monospace;font-weight:600;white-space:nowrap;}
+.stack-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-bottom:6px;}
+.stack-head h4{font-family:var(--font-display);font-weight:700;font-size:18px;}
+.free-pill{background:var(--vitality-green);color:var(--white);font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;}
+.watch-pill{background:var(--sunshine);color:var(--ink);font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--ink);color:var(--white);padding:38px 0 26px;}
+.footer-logo{font-family:var(--font-display);font-weight:800;font-size:24px;color:var(--sunshine);}
+.footer-inner{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;}
+.footer-links{display:flex;flex-wrap:wrap;gap:20px;font-size:14px;font-weight:600;}
+.footer-links a{color:rgba(255,255,255,.85);}
+.footer-bottom{margin-top:22px;padding-top:18px;border-top:2px solid rgba(255,255,255,.14);font-size:13px;color:rgba(255,255,255,.6);}
+</style>
+</head>
+<body>
+
+<!-- ============================= HERO ============================= -->
+<header class="hero">
+  <span class="hero-blob hb1"></span><span class="hero-blob hb2"></span><span class="hero-blob hb3"></span>
+  <span class="hdot hd1"></span><span class="hdot hd2"></span><span class="hdot hd3"></span>
+  <div class="wrap hero-inner">
+    <div class="brandmark">🧊 IceBrk</div>
+    <h1>Bonding made simple.</h1>
+    <p>We're all about genuine connection and fun. Create instant bonding and memories with friends, zero setup needed!</p>
+    <div class="hero-meta">
+      <span class="chip">🎉 6 games live</span>
+      <span class="chip">⚡ React 19 + Vite on Vercel</span>
+      <span class="chip">🔐 Accounts &amp; cloud save on Supabase</span>
+      <span class="chip">🇵🇭 Built in Manila</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= TABS ============================= -->
+<nav class="tabbar">
+  <div class="tabbar-inner" role="tablist" aria-label="IceBrk overview sections">
+    <button class="tab" id="tab-about" role="tab" aria-selected="true" aria-controls="panel-about" onclick="showTab('about')">🎈 What IceBrk is</button>
+    <button class="tab" id="tab-arch" role="tab" aria-selected="false" aria-controls="panel-arch" onclick="showTab('arch')">🛠️ How it's built</button>
+    <button class="tab" id="tab-azure" role="tab" aria-selected="false" aria-controls="panel-azure" onclick="showTab('azure')">🚧 Under Construction</button>
+  </div>
+</nav>
+
+<!-- ============================================================================
+     TAB 1 — WHAT ICEBRK IS
+============================================================================= -->
+<main class="panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about">
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">The short version</div>
+      <h2 class="section-title">A game library for hosts who want the room laughing in five minutes.</h2>
+      <p class="section-sub">IceBrk is a web platform for customizable icebreaker and party games, made for corporate events, schools, and everyday gatherings. Hosts pick a game, tune it to their group in a few minutes, and run it live — the timing, scoring, and celebration all live in the same screen.</p>
+      <div class="grid g3">
+        <div class="card">
+          <span class="card-blob" style="top:-26px;right:-24px;width:86px;height:86px;background:var(--sky-blue);"></span>
+          <h3>Pick a game</h3>
+          <p>Six ready-to-run games in the library today, each with its own play surface and rhythm.</p>
+        </div>
+        <div class="card">
+          <span class="card-blob" style="top:-26px;right:-24px;width:86px;height:86px;background:var(--energy-orange);"></span>
+          <h3>Make it yours</h3>
+          <p>Type in your own questions, names, prompts, and board categories. Choose a color theme and a timer that fits the room.</p>
+        </div>
+        <div class="card">
+          <span class="card-blob" style="top:-26px;right:-24px;width:86px;height:86px;background:var(--vitality-green);"></span>
+          <h3>Run it live</h3>
+          <p>Project the Play Arena, hit start, and let the confetti, sound cues, and scorekeeping carry the energy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Why it exists</div>
+      <h2 class="section-title">Connection, minus the busywork.</h2>
+      <p class="section-sub">Real bonding often gets lost in planning, in the hunt for "the right icebreaker," or in a room full of people who just met. Every feature here serves one outcome: helping people laugh together, open up, and walk away with a memory worth keeping — a team of coworkers, a classroom of students, or a group of friends at a party.</p>
+      <div class="grid g3">
+        <div class="bordered b-blue"><h4>🏢 Corporate events</h4><p style="font-size:14.5px;color:var(--slate);">Team offsites, all-hands warmups, new-hire welcomes, and holiday parties.</p></div>
+        <div class="bordered b-orange"><h4>🎓 Schools</h4><p style="font-size:14.5px;color:var(--slate);">First-day introductions, review sessions turned into trivia, and club nights.</p></div>
+        <div class="bordered b-green"><h4>🎂 Everyday gatherings</h4><p style="font-size:14.5px;color:var(--slate);">Birthdays, reunions, family nights, and any hangout that deserves a spark.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">The game library</div>
+      <h2 class="section-title">Six games live today.</h2>
+      <p class="section-sub">Every game follows the same two-surface pattern, so a host who learns one game already knows how to run the rest.</p>
+      <div class="grid g3">
+        <div class="game-card" style="background:var(--ib-blue);">
+          <span class="card-blob" style="top:-24px;right:-20px;width:88px;height:88px;background:var(--sky-blue);"></span>
+          <span class="card-blob" style="bottom:-34px;left:-22px;width:66px;height:66px;background:var(--energy-orange);opacity:.85;"></span>
+          <div class="game-emoji">🎯</div><div class="game-name">Roulette</div><div class="game-tag">Spin the wheel, crown a winner</div><span class="badge badge-sun">Live</span>
+        </div>
+        <div class="game-card" style="background:var(--energy-orange);">
+          <span class="card-blob" style="top:-26px;right:-26px;width:92px;height:92px;background:var(--sunshine);"></span>
+          <span class="card-blob" style="bottom:-30px;left:-18px;width:60px;height:60px;background:var(--ib-blue);"></span>
+          <div class="game-emoji">🤔</div><div class="game-name">Would You Rather</div><div class="game-tag">Pick a side, defend it</div><span class="badge" style="background:var(--ink);color:var(--white);">Live</span>
+        </div>
+        <div class="game-card" style="background:var(--vitality-green);">
+          <span class="card-blob" style="top:-24px;right:-22px;width:84px;height:84px;background:var(--sunshine);"></span>
+          <span class="card-blob" style="bottom:-32px;left:-20px;width:64px;height:64px;background:var(--sky-blue);"></span>
+          <div class="game-emoji">🏆</div><div class="game-name">Jeopardy</div><div class="game-tag">Trivia showdown, your categories</div><span class="badge" style="background:var(--ink);color:var(--white);">Live</span>
+        </div>
+        <div class="game-card" style="background:var(--purple);">
+          <span class="card-blob" style="top:-26px;right:-24px;width:88px;height:88px;background:var(--sky-blue);"></span>
+          <span class="card-blob" style="bottom:-30px;left:-20px;width:62px;height:62px;background:var(--sunshine);"></span>
+          <div class="game-emoji">🎱</div><div class="game-name">Bingo</div><div class="game-tag">Mark the board, shout it out</div><span class="badge badge-sun">Live</span>
+        </div>
+        <div class="game-card" style="background:var(--sky-blue);">
+          <span class="card-blob" style="top:-24px;right:-22px;width:86px;height:86px;background:var(--ib-blue);"></span>
+          <span class="card-blob" style="bottom:-32px;left:-18px;width:64px;height:64px;background:var(--vitality-green);"></span>
+          <div class="game-emoji">🤥</div><div class="game-name">Two Truths &amp; a Lie</div><div class="game-tag">Guess what's real</div><span class="badge badge-sun">Live</span>
+        </div>
+        <div class="game-card" style="background:var(--ink);">
+          <span class="card-blob" style="top:-26px;right:-24px;width:90px;height:90px;background:var(--energy-orange);"></span>
+          <span class="card-blob" style="bottom:-30px;left:-20px;width:62px;height:62px;background:var(--purple);"></span>
+          <div class="game-emoji">🔍</div><div class="game-name">Scavenger Hunt</div><div class="game-tag">Find it, snap it, win it</div><span class="badge badge-sun">Live</span>
+        </div>
+      </div>
+      <p style="margin-top:22px;font-size:14.5px;color:var(--slate);">Hosts can pitch the next game through the <b>Suggest a Game</b> page — the library grows from what people actually want to play.</p>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">The game module pattern</div>
+      <h2 class="section-title">Learn it once, run everything.</h2>
+      <p class="section-sub">Each game ships as a self-contained module with the same shell around it: a back link to the library, a game header, and a tab strip.</p>
+      <div class="grid g2">
+        <div class="bordered b-orange">
+          <h4>🎛️ Customize Game</h4>
+          <ul>
+            <li>Your own questions, prompts, names, board categories, and hunt items</li>
+            <li>Host utilities live right here: timer length, roster / team setup, and card counts</li>
+            <li>Color theme picker — Colorful, Summer, Ocean, or Night</li>
+            <li>Everything typed here saves to your account as you go</li>
+          </ul>
+        </div>
+        <div class="bordered b-green">
+          <h4>🎪 Play Arena</h4>
+          <ul>
+            <li>The live surface you project or share during the event</li>
+            <li>Big, bold type built to read from the back of a room</li>
+            <li>Confetti bursts and synthesized sound cues on the winning moments</li>
+            <li>Scores and winners tracked as the round plays out</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Accounts</div>
+      <h2 class="section-title">Set it up once, reuse it every event.</h2>
+      <p class="section-sub">Signing up asks for a username and a password — that's the whole form. From there, every game setup a host types in follows them to any device they log in from.</p>
+      <div class="grid g4">
+        <div class="card"><h3>👤 Username signup</h3><p>Three to twenty characters, letters, numbers, and underscores. Quick enough to finish on a phone before the event starts.</p></div>
+        <div class="card"><h3>💾 Autosave</h3><p>Edits save quietly in the background while you type, so your board is waiting the next time you open it.</p></div>
+        <div class="card"><h3>🔒 Your row only</h3><p>Database rules scope every read and write to the signed-in host, so setups stay private per account.</p></div>
+        <div class="card"><h3>🎮 Guest play</h3><p>Prefer to jump straight in? Every game runs beautifully while logged out, held in the browser for the session.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">How a host uses it</div>
+      <h2 class="section-title">From landing page to laughter.</h2>
+      <div class="steps">
+        <div class="step"><h4>Open IceBrk and browse the library</h4><p>The landing page shows every game with its emoji, name, and one-line hook.</p></div>
+        <div class="step"><h4>Create an account (optional, and quick)</h4><p>A username and password unlock cloud save across devices.</p></div>
+        <div class="step"><h4>Customize the game</h4><p>Type your questions or names, set the timer, pick a color theme.</p></div>
+        <div class="step"><h4>Switch to the Play Arena</h4><p>Share the screen with the room and start the round.</p></div>
+        <div class="step"><h4>Celebrate the winners</h4><p>Confetti, sound, and a winners list close the loop on every round.</p></div>
+        <div class="step"><h4>Come back next month</h4><p>Your setup is right where you left it, ready for the next group.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Brand identity</div>
+      <h2 class="section-title">Game show energy, party invite warmth.</h2>
+      <p class="section-sub">IceBrk looks fun, colorful, casual, and high-energy. Bold saturated fills, rounded corners everywhere, confetti blobs bleeding off the corners of cards, and type that stays confident at any size.</p>
+      <div class="grid g4" style="margin-bottom:24px;">
+        <div class="swatch"><div class="swatch-color" style="background:#1A56C4;"><span>#1A56C4</span></div><div class="swatch-meta"><b>IceBrk Blue</b><small>Primary / brand anchor</small></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#F47920;"><span>#F47920</span></div><div class="swatch-meta"><b>Energy Orange</b><small>Primary CTAs</small></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#38B6FF;"><span>#38B6FF</span></div><div class="swatch-meta"><b>Sky Blue</b><small>Links / accents</small></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#00A651;"><span>#00A651</span></div><div class="swatch-meta"><b>Vitality Green</b><small>Success / correct</small></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#FFD23F;"><span style="color:rgba(34,34,59,.75);">#FFD23F</span></div><div class="swatch-meta"><b>Sunshine Yellow</b><small>Timers / celebration</small></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#8338EC;"><span>#8338EC</span></div><div class="swatch-meta"><b>Playful Purple</b><small>Team colors / variety</small></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#22223B;"><span>#22223B</span></div><div class="swatch-meta"><b>Charcoal Ink</b><small>Body text &amp; headings</small></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#FFFDF7;border-bottom:2px solid var(--mist);"><span style="color:rgba(34,34,59,.6);">#FFFDF7</span></div><div class="swatch-meta"><b>Cloud White</b><small>Warm background</small></div></div>
+      </div>
+      <div class="grid g2">
+        <div class="bordered b-blue">
+          <h4>Typography</h4>
+          <p style="font-family:var(--font-display);font-weight:800;font-size:32px;line-height:1.15;">Baloo 2 — display</p>
+          <p style="font-size:14.5px;color:var(--slate);margin-bottom:14px;">Bold, rounded, high personality. Weights 500–800 for every headline.</p>
+          <p style="font-family:var(--font-body);font-weight:600;font-size:19px;">Poppins — body &amp; UI</p>
+          <p style="font-size:14.5px;color:var(--slate);">Geometric, clean, friendly. Weights 400–700, kept at 600+ on colored fills.</p>
+        </div>
+        <div class="bordered b-purple">
+          <h4>Shape language</h4>
+          <ul>
+            <li>Confetti blobs — solid circles at 80–100% opacity, bleeding off card corners</li>
+            <li>Scattered dots and triangles near CTAs and celebratory moments</li>
+            <li>Pill-shaped buttons and badges with bold fills and 700-weight labels</li>
+            <li>Rounded corners on every button, card, and container</li>
+            <li>Playful drop shadows that make cards feel like game pieces you could pick up</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Brand voice</div>
+      <h2 class="section-title">Positive scripting, always.</h2>
+      <p class="section-sub">Copy says what IceBrk <i>does</i>. Warm, casual, emotion-first — like a fun friend hosting the party. Filipino-inclusive identity is part of the origin story and stays in the voice.</p>
+      <div class="grid g2">
+        <div class="voice voice-yes">
+          <span class="card-blob" style="top:-30px;right:-20px;width:96px;height:96px;background:var(--sunshine);opacity:.9;"></span>
+          <span class="card-blob" style="bottom:-34px;right:34px;width:56px;height:56px;background:var(--sky-blue);"></span>
+          <h4>✅ On brand</h4>
+          <p>"Create instant bonding and memories with friends, zero setup needed!"</p>
+          <p style="margin-top:8px;">"Bonding made simple."</p>
+        </div>
+        <div class="voice voice-no">
+          <h4 style="color:var(--ink);">⛔ Off brand</h4>
+          <p>"Eliminate the hassle of awkward, unproductive team-building sessions."</p>
+          <p style="margin-top:8px;">"Built on Trust. Designed to Last."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="callout">
+        <span class="card-blob" style="top:-40px;right:60px;width:110px;height:110px;background:var(--sunshine);opacity:.92;"></span>
+        <span class="card-blob" style="bottom:-56px;right:-30px;width:130px;height:130px;background:var(--sky-blue);"></span>
+        <span class="card-blob" style="top:48%;left:26px;width:14px;height:14px;background:var(--vitality-green);"></span>
+        <span class="card-blob" style="top:20%;left:44%;width:11px;height:11px;background:var(--energy-orange);"></span>
+        <h3>Say hi 👋</h3>
+        <p>Questions, game ideas, or a group you want IceBrk to run for — reach the team at <a href="mailto:icebrkmnl@outlook.com" style="color:var(--sunshine);">icebrkmnl@outlook.com</a> or <a href="mailto:icebrkmnl@gmail.com" style="color:var(--sunshine);">icebrkmnl@gmail.com</a>. Hosts who want to fuel the build can chip in through the ☕ Support page.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================================
+     TAB 2 — ARCHITECTURE
+============================================================================= -->
+<main class="panel" id="panel-arch" role="tabpanel" aria-labelledby="tab-arch" hidden>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">End-to-end architecture</div>
+      <h2 class="section-title">From a laptop commit to a room full of players.</h2>
+      <p class="section-sub">Everything running in production today, in order: source control, continuous delivery, hosting, the browser app, and the managed data layer it talks to. The browser reaches Supabase straight over HTTPS, which keeps the whole runtime to two moving pieces.</p>
+
+      <div class="diagram-shell">
+        <svg viewBox="0 0 1200 1010" role="img" aria-labelledby="archTitle archDesc" width="100%">
+          <title id="archTitle">IceBrk end-to-end technical architecture</title>
+          <desc id="archDesc">Developer machine pushes to GitHub, which triggers a Vercel build of the Vite bundle, served from Vercel's edge network to the host's browser. The React single-page app talks directly to Supabase Auth and Postgres over HTTPS, and loads fonts from Google Fonts.</desc>
+
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#22223B"/>
+            </marker>
+            <marker id="ah-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#FFFDF7"/>
+            </marker>
+          </defs>
+
+          <!-- ============ BAND 1: BUILD & DELIVERY ============ -->
+          <rect x="24" y="24" width="1152" height="216" rx="24" fill="#F2EFE4"/>
+          <text x="48" y="56" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#7A786E">BUILD &amp; DELIVERY</text>
+
+          <!-- Developer machine -->
+          <rect x="48" y="72" width="232" height="146" rx="18" fill="#FFFFFF" stroke="#8338EC" stroke-width="3"/>
+          <circle cx="256" cy="196" r="13" fill="#8338EC"/>
+          <text x="70" y="106" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="700" fill="#22223B">💻 Developer machine</text>
+          <text x="70" y="130" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Vite 6 dev server + HMR</text>
+          <text x="70" y="150" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">ESLint 9 · TypeScript 6</text>
+          <text x="70" y="170" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">npm run dev / build / preview</text>
+          <text x="70" y="196" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="#8338EC">.env.local → Supabase keys</text>
+
+          <!-- arrow dev -> github -->
+          <line x1="286" y1="145" x2="346" y2="145" stroke="#22223B" stroke-width="3" marker-end="url(#ah)"/>
+          <text x="316" y="132" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#22223B">git push</text>
+
+          <!-- GitHub -->
+          <rect x="352" y="72" width="240" height="146" rx="18" fill="#22223B"/>
+          <circle cx="578" cy="90" r="22" fill="#8338EC"/>
+          <circle cx="372" cy="204" r="14" fill="#38B6FF"/>
+          <text x="374" y="106" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="700" fill="#FFFDF7">🐙 GitHub</text>
+          <text x="374" y="128" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,253,247,0.82)">batodulio/icebrk</text>
+          <rect x="374" y="140" width="52" height="21" rx="11" fill="#00A651"/><text x="384" y="155" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">main</text>
+          <rect x="432" y="140" width="46" height="21" rx="11" fill="#38B6FF"/><text x="442" y="155" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">dev</text>
+          <rect x="484" y="140" width="48" height="21" rx="11" fill="#F47920"/><text x="494" y="155" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">test</text>
+          <text x="396" y="184" font-family="Poppins,sans-serif" font-size="12" fill="rgba(255,253,247,0.72)">Single source of truth</text>
+          <text x="396" y="202" font-family="Poppins,sans-serif" font-size="12" fill="rgba(255,253,247,0.72)">Code · schema · brand guide</text>
+
+          <!-- arrow github -> vercel build -->
+          <line x1="598" y1="145" x2="658" y2="145" stroke="#22223B" stroke-width="3" marker-end="url(#ah)"/>
+          <text x="628" y="132" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#22223B">deploy hook</text>
+
+          <!-- Vercel build -->
+          <rect x="664" y="72" width="240" height="146" rx="18" fill="#FFFFFF" stroke="#1A56C4" stroke-width="3"/>
+          <circle cx="884" cy="98" r="13" fill="#1A56C4"/>
+          <text x="686" y="106" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="700" fill="#22223B">▲ Vercel Build</text>
+          <text x="686" y="130" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">npm install → vite build</text>
+          <text x="686" y="150" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Rollup bundle, hashed assets</text>
+          <text x="686" y="170" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Env vars injected at build time</text>
+          <text x="686" y="196" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="#1A56C4">VITE_SUPABASE_URL · ANON_KEY</text>
+
+          <!-- arrow build -> edge -->
+          <line x1="910" y1="145" x2="964" y2="145" stroke="#22223B" stroke-width="3" marker-end="url(#ah)"/>
+          <text x="937" y="132" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#22223B">publish</text>
+
+          <!-- Vercel edge -->
+          <rect x="970" y="72" width="182" height="146" rx="18" fill="#1A56C4"/>
+          <circle cx="1136" cy="88" r="24" fill="#38B6FF"/>
+          <circle cx="1138" cy="204" r="16" fill="#F47920"/>
+          <text x="990" y="106" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="700" fill="#FFFFFF">🌎 Vercel Edge</text>
+          <text x="990" y="130" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.9)">Global CDN + HTTPS</text>
+          <text x="990" y="150" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.9)">main → production</text>
+          <text x="990" y="170" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.9)">dev / test → previews</text>
+          <text x="990" y="196" font-family="Poppins,sans-serif" font-size="12" font-weight="700" fill="#FFD23F">Static SPA hosting</text>
+
+          <!-- edge -> browser -->
+          <path d="M1061,222 V262 H470 V296" fill="none" stroke="#1A56C4" stroke-width="3" marker-end="url(#ah)" stroke-linejoin="round"/>
+          <text x="700" y="254" font-family="Poppins,sans-serif" font-size="11.5" font-weight="700" fill="#1A56C4">index.html + bundle over HTTPS</text>
+
+          <!-- ============ BAND 2: RUNTIME ============ -->
+          <rect x="24" y="296" width="836" height="404" rx="24" fill="#FFFFFF" stroke="#38B6FF" stroke-width="3"/>
+          <text x="48" y="330" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#38B6FF">RUNTIME · HOST'S BROWSER</text>
+          <text x="48" y="360" font-family="'Baloo 2',sans-serif" font-size="21" font-weight="800" fill="#22223B">🧊 IceBrk single-page app — React 19</text>
+
+          <!-- app shell strip -->
+          <rect x="48" y="376" width="788" height="58" rx="14" fill="#1A56C4"/>
+          <circle cx="820" cy="386" r="24" fill="#38B6FF" opacity="0.85"/>
+          <text x="66" y="400" font-family="'Baloo 2',sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">App shell</text>
+          <text x="66" y="420" font-family="Poppins,sans-serif" font-size="12" fill="rgba(255,255,255,0.9)">StrictMode → BrowserRouter (react-router 7) → AuthProvider → routes: / · /:gameId · /login · /support · /suggest-a-game</text>
+
+          <!-- three columns -->
+          <rect x="48" y="448" width="252" height="234" rx="16" fill="#FFFDF7" stroke="#F47920" stroke-width="3"/>
+          <text x="66" y="476" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🏠 Landing &amp; pages</text>
+          <text x="66" y="500" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Nav · Hero · ValueProps</text>
+          <text x="66" y="520" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">GameLibrary · HowItWorks</text>
+          <text x="66" y="540" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Celebrate · Quote · FinalCta</text>
+          <text x="66" y="560" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Footer</text>
+          <text x="66" y="586" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">AuthPage (username + password)</text>
+          <text x="66" y="606" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">SupportPage · SuggestGamePage</text>
+          <text x="66" y="638" font-family="Poppins,sans-serif" font-size="12" font-weight="700" fill="#F47920">Styling</text>
+          <text x="66" y="658" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">index.css + games.css</text>
+          <text x="66" y="674" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">CSS custom-property brand tokens</text>
+
+          <rect x="312" y="448" width="260" height="234" rx="16" fill="#FFFDF7" stroke="#00A651" stroke-width="3"/>
+          <text x="330" y="476" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🎮 Game modules ×6</text>
+          <text x="330" y="500" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">roulette · would-you-rather</text>
+          <text x="330" y="518" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">jeopardy · bingo</text>
+          <text x="330" y="536" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">two-truths-and-a-lie</text>
+          <text x="330" y="554" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">scavenger-hunt</text>
+          <rect x="330" y="568" width="106" height="22" rx="11" fill="#F47920"/>
+          <text x="342" y="583" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">Customize tab</text>
+          <rect x="442" y="568" width="106" height="22" rx="11" fill="#00A651"/>
+          <text x="456" y="583" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">Play Arena tab</text>
+          <text x="330" y="614" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Each module owns types.ts +</text>
+          <text x="330" y="632" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">its own tab components</text>
+          <text x="330" y="660" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">ComingSoonGame covers catalog</text>
+          <text x="330" y="676" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">entries awaiting a module</text>
+
+          <rect x="584" y="448" width="252" height="234" rx="16" fill="#FFFDF7" stroke="#8338EC" stroke-width="3"/>
+          <text x="602" y="476" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🧰 Shared game kit</text>
+          <text x="602" y="500" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">GameShell (chrome + tab strip)</text>
+          <text x="602" y="518" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">gameCatalog · types · themes</text>
+          <text x="602" y="536" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">RosterEditor · useParticipants</text>
+          <text x="602" y="554" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">UtilitySelect (timers, themes)</text>
+          <text x="602" y="572" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">ConfettiBurst · sound.ts (Web Audio)</text>
+          <rect x="602" y="588" width="216" height="34" rx="12" fill="#FFD23F"/>
+          <text x="614" y="610" font-family="Poppins,sans-serif" font-size="11.5" font-weight="700" fill="#22223B">sessionStore — in-memory state</text>
+          <rect x="602" y="628" width="216" height="34" rx="12" fill="#38B6FF"/>
+          <text x="614" y="650" font-family="Poppins,sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF">useCloudSync — debounced save</text>
+
+          <!-- ============ EXTERNAL SERVICES ============ -->
+          <rect x="880" y="296" width="296" height="404" rx="24" fill="#F2EFE4"/>
+          <text x="904" y="330" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#7A786E">EXTERNAL TOUCHPOINTS</text>
+
+          <rect x="904" y="348" width="248" height="72" rx="16" fill="#FFFFFF" stroke="#38B6FF" stroke-width="3"/>
+          <text x="922" y="376" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🔤 Google Fonts CDN</text>
+          <text x="922" y="400" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Baloo 2 + Poppins, preconnected</text>
+
+          <rect x="904" y="434" width="248" height="90" rx="16" fill="#FFFFFF" stroke="#00A651" stroke-width="3"/>
+          <text x="922" y="462" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">☕ Support links</text>
+          <text x="922" y="486" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">PayPal.me · GCash QR image</text>
+          <text x="922" y="506" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">LinkedIn profile link</text>
+
+          <rect x="904" y="538" width="248" height="90" rx="16" fill="#FFFFFF" stroke="#F47920" stroke-width="3"/>
+          <text x="922" y="566" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">✉️ Email</text>
+          <text x="922" y="590" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">mailto: game suggestions</text>
+          <text x="922" y="610" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">icebrkmnl@outlook.com</text>
+
+          <rect x="904" y="642" width="248" height="44" rx="14" fill="#8338EC"/>
+          <text x="922" y="669" font-family="Poppins,sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Static assets: favicon · logo · QR</text>
+
+          <!-- browser -> external arrow -->
+          <line x1="860" y1="498" x2="898" y2="498" stroke="#22223B" stroke-width="3" marker-end="url(#ah)"/>
+
+          <!-- ============ BAND 3: DATA & IDENTITY ============ -->
+          <path d="M442,704 V740" fill="none" stroke="#00A651" stroke-width="3" marker-end="url(#ah)"/>
+          <path d="M470,740 V704" fill="none" stroke="#00A651" stroke-width="3" marker-end="url(#ah)"/>
+          <text x="500" y="730" font-family="Poppins,sans-serif" font-size="11.5" font-weight="700" fill="#00A651">HTTPS · supabase-js · anon key + user JWT</text>
+
+          <rect x="24" y="748" width="1152" height="238" rx="24" fill="#00A651"/>
+          <circle cx="1120" cy="770" r="46" fill="#FFD23F" opacity="0.95"/>
+          <circle cx="60" cy="964" r="30" fill="#38B6FF"/>
+          <circle cx="640" cy="762" r="11" fill="#FFD23F"/>
+          <text x="48" y="784" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="rgba(255,255,255,0.85)">DATA &amp; IDENTITY · SUPABASE (MANAGED)</text>
+          <text x="48" y="814" font-family="'Baloo 2',sans-serif" font-size="21" font-weight="800" fill="#FFFFFF">⚡ Supabase project "icebrk"</text>
+
+          <rect x="48" y="832" width="356" height="134" rx="16" fill="#FFFDF7"/>
+          <text x="68" y="860" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🔐 Supabase Auth</text>
+          <text x="68" y="884" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Email provider with confirmation off</text>
+          <text x="68" y="904" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Username → synthetic internal address</text>
+          <text x="68" y="924" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Real username kept in user_metadata</text>
+          <text x="68" y="944" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Session persisted in localStorage</text>
+
+          <rect x="420" y="832" width="356" height="134" rx="16" fill="#FFFDF7"/>
+          <text x="440" y="860" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🔌 PostgREST data API</text>
+          <text x="440" y="884" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">select / upsert straight from the client</text>
+          <text x="440" y="904" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">One row per host per game (user_id)</text>
+          <text x="440" y="924" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Load once on mount, autosave after</text>
+          <text x="440" y="944" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">900 ms debounce + flush on unmount</text>
+
+          <rect x="792" y="832" width="360" height="134" rx="16" fill="#FFFDF7"/>
+          <text x="812" y="860" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🗄️ Postgres + Row Level Security</text>
+          <text x="812" y="884" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">6 *_settings tables, jsonb payloads</text>
+          <text x="812" y="904" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">CHECK constraints on timers &amp; themes</text>
+          <text x="812" y="924" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">set_updated_at() trigger per table</text>
+          <text x="812" y="944" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">4 policies each scoped to auth.uid()</text>
+        </svg>
+      </div>
+
+      <div class="legend">
+        <span><i style="background:#8338EC;"></i> Local development</span>
+        <span><i style="background:#22223B;"></i> Source control</span>
+        <span><i style="background:#1A56C4;"></i> Build &amp; hosting</span>
+        <span><i style="background:#38B6FF;"></i> Browser runtime</span>
+        <span><i style="background:#00A651;"></i> Managed data &amp; identity</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Component inventory</div>
+      <h2 class="section-title">Every layer, named.</h2>
+      <p class="section-sub">The full list of what IceBrk runs on today, grouped from infrastructure up to the screen.</p>
+      <div class="grid g2">
+
+        <div class="bordered b-purple">
+          <h4>1 · Local development</h4>
+          <ul>
+            <li><b>Node + npm</b> — workspace tooling and lockfile-pinned installs</li>
+            <li><b>Vite 6</b> dev server with hot module replacement (<code>npm run dev</code>)</li>
+            <li><b>@vitejs/plugin-react</b> — Fast Refresh for React components</li>
+            <li><b>TypeScript 6</b> — <code>npm run typecheck</code> via <code>tsc --noEmit</code></li>
+            <li><b>ESLint 9</b> with react-hooks and react-refresh plugins</li>
+            <li><b>.env.local</b> — Supabase URL and anon key, kept out of git</li>
+          </ul>
+        </div>
+
+        <div class="bordered b-blue">
+          <h4>2 · Source control &amp; CI/CD</h4>
+          <ul>
+            <li><b>GitHub</b> — <code>batodulio/icebrk</code>, the single source of truth</li>
+            <li><b>Branches</b> — <code>main</code> for production, <code>dev</code> for active work, <code>test</code> for trials</li>
+            <li><b>Vercel Git integration</b> — every push builds and deploys automatically</li>
+            <li><b>Preview deploys</b> — each branch and PR gets its own live URL</li>
+            <li><b>Versioned alongside the code</b> — <code>supabase/schema.sql</code>, the branding guide, the branding skill, and the README</li>
+            <li><b>Room to grow</b> — GitHub Actions can layer on lint and typecheck gates when the team expands</li>
+          </ul>
+        </div>
+
+        <div class="bordered b-sky">
+          <h4>3 · Build &amp; hosting</h4>
+          <ul>
+            <li><b>Vercel Build</b> — <code>npm install</code> then <code>vite build</code> using the auto-detected Vite preset</li>
+            <li><b>Output</b> — a static bundle: <code>index.html</code> plus content-hashed JS and CSS</li>
+            <li><b>Build-time env injection</b> — <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> land in the bundle</li>
+            <li><b>Vercel Edge Network</b> — global CDN delivery with HTTPS and automatic certificates</li>
+            <li><b>Static SPA</b> — one HTML entry point, routing handled in the browser</li>
+          </ul>
+        </div>
+
+        <div class="bordered b-green">
+          <h4>4 · Client application</h4>
+          <ul>
+            <li><b>React 19</b> with StrictMode</li>
+            <li><b>react-router-dom 7</b> — BrowserRouter over <code>/</code>, <code>/:gameId</code>, <code>/login</code>, <code>/support</code>, <code>/suggest-a-game</code></li>
+            <li><b>AuthProvider</b> — app-wide context over the Supabase session</li>
+            <li><b>Landing page</b> — Nav, Hero, ValueProps, GameLibrary, HowItWorks, Celebrate, Quote, FinalCta, Footer</li>
+            <li><b>GameShell</b> — shared chrome, header, and tab strip for all six modules</li>
+            <li><b>Shared kit</b> — gameCatalog, themes, participants, RosterEditor, UtilitySelect, ConfettiBurst, sound.ts</li>
+            <li><b>Plain CSS</b> — <code>index.css</code> and <code>games.css</code> with brand tokens as custom properties</li>
+          </ul>
+        </div>
+
+        <div class="bordered b-orange">
+          <h4>5 · State &amp; persistence</h4>
+          <ul>
+            <li><b>sessionStore</b> — module-level Map holding live objects; state survives moving between games and resets on a full refresh</li>
+            <li><b>useCloudSync</b> — loads the host's saved row once, then autosaves every change with a 900 ms debounce</li>
+            <li><b>Unmount flush</b> — a pending edit writes on the way out, so quick navigation keeps the change</li>
+            <li><b>Graceful fallback</b> — builds that skip Supabase config keep full session-local play</li>
+            <li><b>localStorage</b> — supabase-js keeps the auth session there across refreshes</li>
+          </ul>
+        </div>
+
+        <div class="bordered b-sun">
+          <h4>6 · Data &amp; identity (Supabase)</h4>
+          <ul>
+            <li><b>Supabase Auth</b> — username plus password, mapped to a synthetic internal address, with email confirmation switched off</li>
+            <li><b>PostgREST</b> — the browser calls the data API directly with the anon key and the signed-in user's JWT</li>
+            <li><b>Postgres</b> — six <code>*_settings</code> tables, one unique row per host per game</li>
+            <li><b>jsonb columns</b> — rosters, questions, boards, cards, and items stored in the exact shape the app already uses</li>
+            <li><b>Row Level Security</b> — enabled on every table, with select / insert / update / delete policies scoped to <code>auth.uid()</code></li>
+            <li><b>Triggers</b> — <code>set_updated_at()</code> keeps <code>updated_at</code> fresh on every write</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Data model</div>
+      <h2 class="section-title">Six tables, one shape.</h2>
+      <p class="section-sub">Every table carries <code>id</code>, a unique <code>user_id</code> referencing <code>auth.users</code> with cascade delete, <code>theme_id</code>, <code>created_at</code>, and <code>updated_at</code>. The columns below are what each game adds on top.</p>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Table</th><th>Game-specific columns</th><th>Shape stored</th></tr></thead>
+          <tbody>
+            <tr><td>roulette_settings</td><td><code>participants</code> jsonb · <code>spin_seconds</code></td><td>Names on the wheel, spin length from 5 to 25 seconds</td></tr>
+            <tr><td>would_you_rather_settings</td><td><code>questions</code> jsonb · <code>timer_seconds</code></td><td>Paired A/B prompts, round timer up to 90 seconds</td></tr>
+            <tr><td>jeopardy_settings</td><td><code>board</code> jsonb · <code>teams</code> jsonb</td><td>Categories with point-valued clues, plus team names and scores</td></tr>
+            <tr><td>bingo_settings</td><td><code>card_count</code> · <code>cards</code> jsonb · <code>auto_call_seconds</code></td><td>Generated cards saved so the same set restores after a refresh</td></tr>
+            <tr><td>two_truths_settings</td><td><code>participants</code> jsonb · <code>timer_seconds</code></td><td>Who's up next, and how long each guess round runs</td></tr>
+            <tr><td>scavenger_hunt_settings</td><td><code>items</code> jsonb · <code>hunt_minutes</code></td><td>The hunt list and the countdown, up to 15 minutes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:18px;font-size:14.5px;color:var(--slate);">CHECK constraints keep timer values and <code>theme_id</code> inside the set the UI offers, so the database agrees with the picker even when a request arrives from somewhere else.</p>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Request flow</div>
+      <h2 class="section-title">What happens when a host saves a board.</h2>
+      <div class="steps">
+        <div class="step"><h4>The host types in the Customize tab</h4><p>React state updates immediately and the Customize surface re-renders, so editing stays instant.</p></div>
+        <div class="step"><h4>sessionStore keeps the value in memory</h4><p>Navigating to the library and back returns the host to the same board.</p></div>
+        <div class="step"><h4>useCloudSync starts a 900 ms debounce</h4><p>Rapid keystrokes collapse into a single write instead of one request per character.</p></div>
+        <div class="step"><h4>supabase-js upserts on user_id</h4><p>An HTTPS call to PostgREST carries the anon key plus the signed-in host's JWT.</p></div>
+        <div class="step"><h4>Row Level Security checks the claim</h4><p>Postgres compares <code>auth.uid()</code> to <code>user_id</code> and applies the write to that host's row alone; the trigger stamps <code>updated_at</code>.</p></div>
+        <div class="step"><h4>Next login loads it back</h4><p>On mount the hook selects the saved row once and hands it to the game module before autosave resumes, keeping stored setups intact.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Configuration</div>
+      <h2 class="section-title">What it takes to run this.</h2>
+      <div class="grid g2">
+        <div class="bordered b-blue">
+          <h4>Environment variables</h4>
+          <ul>
+            <li><code>VITE_SUPABASE_URL</code> — project URL from Supabase → Settings → API</li>
+            <li><code>VITE_SUPABASE_ANON_KEY</code> — public anon key, safe in the browser because RLS guards every table</li>
+            <li>Set locally in <code>.env.local</code> and in the Vercel project settings for deployed builds</li>
+          </ul>
+        </div>
+        <div class="bordered b-green">
+          <h4>Supabase setup</h4>
+          <ul>
+            <li>Run <code>supabase/schema.sql</code> once in the SQL Editor to create tables, triggers, and policies</li>
+            <li>Authentication → Providers → Email: leave "Confirm email" switched off, since signup uses a synthetic internal address</li>
+            <li>Keep the service role key on the server side only — the app runs entirely on the anon key</li>
+          </ul>
+        </div>
+        <div class="bordered b-orange">
+          <h4>Local commands</h4>
+          <ul>
+            <li><code>npm install</code> — restore dependencies from the lockfile</li>
+            <li><code>npm run dev</code> — Vite dev server with hot reload</li>
+            <li><code>npm run build</code> — production bundle, same command Vercel runs</li>
+            <li><code>npm run preview</code> — serve the built bundle locally</li>
+            <li><code>npm run lint</code> · <code>npm run typecheck</code> — quality gates before a push</li>
+          </ul>
+        </div>
+        <div class="bordered b-purple">
+          <h4>Deploy path</h4>
+          <ul>
+            <li>Work on <code>dev</code>, review the preview URL Vercel posts back</li>
+            <li>Merge to <code>main</code> to promote the same build to production</li>
+            <li>Schema changes ship as SQL applied in the Supabase dashboard, versioned in the repo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Roadmap position</div>
+      <h2 class="section-title">Where the phased plan stands today.</h2>
+      <p class="section-sub">IceBrk grows one validated step at a time. Phases 1 through 4 are live, and the full original game library shipped along with them.</p>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Phase</th><th>Adds</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>1 · React only</td><td>Vite SPA on Vercel, state held in the browser for the session</td><td><span class="pill p-green">Live</span></td></tr>
+            <tr><td>2 · Shared utilities</td><td>Timer, roster, and theme logic built once in the shared game kit and reused by every module</td><td><span class="pill p-green">Live in the client</span></td></tr>
+            <tr><td>3 · Database</td><td>Supabase Postgres holding per-game settings</td><td><span class="pill p-green">Live</span></td></tr>
+            <tr><td>4 · Auth + multi-tenancy</td><td>Supabase Auth with Row Level Security — the line into real SaaS</td><td><span class="pill p-green">Live</span></td></tr>
+            <tr><td>5 · Native mobile app</td><td>App Store / Play Store build, once a specific need calls for it</td><td><span class="pill p-sun">On deck</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:28px;" class="grid g2">
+        <div class="bordered b-sky">
+          <h4>Ready when the moment calls for it</h4>
+          <ul>
+            <li><b>Node/Express API on Render</b> — for logic that belongs on a server, such as shared live sessions</li>
+            <li><b>Stripe</b> — billing, once hosts ask for paid tiers</li>
+            <li><b>Resend</b> — transactional email, paired with real email capture</li>
+            <li><b>Sentry</b> — error tracking beyond today's console reporting</li>
+            <li><b>GitHub Actions</b> — lint and typecheck gates on every PR</li>
+            <li><b>Supabase Realtime &amp; Storage</b> — player-joined rooms and uploaded photos for Scavenger Hunt</li>
+          </ul>
+        </div>
+        <div class="bordered b-green">
+          <h4>What keeps the stack this small</h4>
+          <ul>
+            <li>The browser reaches Supabase directly, so there's one runtime hop to reason about</li>
+            <li>Static hosting keeps deploys fast, cheap, and easy to roll back</li>
+            <li>Security lives in the database as RLS policies, close to the data it protects</li>
+            <li>jsonb columns mirror the app's own types, so a save is one upsert and a load is one select</li>
+            <li>Sound is synthesized through Web Audio, keeping audio binaries out of the repo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="callout">
+        <span class="card-blob" style="top:-46px;right:80px;width:120px;height:120px;background:var(--sunshine);opacity:.92;"></span>
+        <span class="card-blob" style="bottom:-60px;right:-34px;width:140px;height:140px;background:var(--vitality-green);"></span>
+        <span class="card-blob" style="top:44%;left:24px;width:14px;height:14px;background:var(--sky-blue);"></span>
+        <span class="card-blob" style="top:18%;left:40%;width:11px;height:11px;background:var(--energy-orange);"></span>
+        <h3>The whole stack in one line</h3>
+        <p style="margin-bottom:14px;">GitHub → Vercel build → Vercel Edge CDN → React 19 SPA in the browser → Supabase Auth, PostgREST, and Postgres with Row Level Security.</p>
+        <div class="pill-row">
+          <span class="pill p-purple">Vite 6</span><span class="pill p-ink">GitHub</span><span class="pill p-blue">Vercel</span>
+          <span class="pill p-sky">React 19</span><span class="pill p-sky">react-router 7</span><span class="pill p-green">Supabase Auth</span>
+          <span class="pill p-green">Postgres + RLS</span><span class="pill p-orange">TypeScript 6</span><span class="pill p-orange">ESLint 9</span>
+          <span class="pill p-sun">Web Audio</span><span class="pill p-sun">Google Fonts</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================================
+     TAB 3 — UNDER CONSTRUCTION (Azure-native target design)
+============================================================================= -->
+<main class="panel" id="panel-azure" role="tabpanel" aria-labelledby="tab-azure" hidden>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">🚧 Under construction</div>
+      <h2 class="section-title">IceBrk on Azure — an all-free-tier build plan.</h2>
+      <p class="section-sub">A target architecture that replaces Vercel and Supabase with Azure-native services, every one of them on an always-free tier, all provisionable from the Azure portal, with GitHub Actions doing the builds and deploys. This is a plan for work ahead — the <b>How it's built</b> tab describes what runs today.</p>
+
+      <div class="note note-blue">
+        <b>Ground rules this design holds to</b><br />
+        Always-free tiers only (the ones that survive past month 13, rather than the 12-month Azure free account offers) · every resource creatable in the portal UI · GitHub Actions as the only CI/CD · one resource group · Southeast Asia region as the default, since the audience is Manila-first.
+      </div>
+      <div class="note">
+        <b>Verify the numbers before you provision.</b> Every allowance quoted here was checked against Microsoft Learn on <b>August 15, 2026</b> and links to its source at the bottom of this tab. Azure revises free tiers, so re-read the quota pages on the day you build.
+      </div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Service mapping</div>
+      <h2 class="section-title">What replaces what.</h2>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Runs today</th><th>Azure replacement</th><th>Free allowance</th><th>Fit</th></tr></thead>
+          <tbody>
+            <tr><td>Vercel static hosting + edge CDN</td><td>Azure Static Web Apps (Free) <b>or</b> App Service (F1 Free)</td><td class="num">100 GB/mo bandwidth<br />60 CPU-min/day</td><td>Two real paths with different trade-offs — compared in the next section</td></tr>
+            <tr><td>Vercel preview deploys</td><td>SWA preview environments</td><td class="num">3 per app</td><td>One live URL per open PR. Deployment slots on App Service begin at the Standard tier</td></tr>
+            <tr><td>Supabase PostgREST</td><td>SWA managed Functions on <code>/api</code>, or Express routes on App Service</td><td>Included in either plan</td><td>Hand-written endpoints replace the generated data API</td></tr>
+            <tr><td>Supabase Postgres + jsonb</td><td>Azure SQL Database (free offer) <b>or</b> Cosmos DB for NoSQL (free tier)</td><td class="num">100k vCore-sec + 32 GB<br />1,000 RU/s + 25 GB</td><td>Azure SQL keeps relational habits and RLS; Cosmos matches the jsonb document shape</td></tr>
+            <tr><td>Postgres Row Level Security</td><td>Azure SQL security policies, or partition-key scoping in the API</td><td>Included</td><td>Azure SQL keeps RLS in the database; Cosmos moves the rule into the endpoint</td></tr>
+            <tr><td>Supabase Auth (username + password)</td><td>SWA built-in auth, or Microsoft Entra External ID</td><td>Included / first 50,000 MAU</td><td>The one place that needs a product decision — see below</td></tr>
+            <tr><td>Vercel Git integration</td><td>GitHub Actions</td><td>Unlimited on public repos</td><td>Portal writes the first workflow for you</td></tr>
+            <tr><td>Console error logging</td><td>Application Insights</td><td class="num">5 GB/mo ingestion</td><td>Adds function logs and browser telemetry</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Hosting choice</div>
+      <h2 class="section-title">Static Web Apps or a regular Web App?</h2>
+      <p class="section-sub">Both host IceBrk at $0. App Service gives you an ordinary Node server you control end to end; Static Web Apps gives you a CDN-backed static host with functions bolted on. The deciding factor is what the Free tiers withhold, and they withhold different things.</p>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Concern</th><th>Static Web Apps — Free</th><th>App Service — F1 Free</th></tr></thead>
+          <tbody>
+            <tr><td>What you deploy</td><td><code>dist/</code> plus managed Functions</td><td>One Node process — Express serving <code>dist/</code> and <code>/api</code> together</td></tr>
+            <tr><td><b>Custom domain</b></td><td class="num">2 included, managed SSL free</td><td>Comes with the Shared (D1) tier at about $9.49/mo; a TLS binding then needs Basic (B1). F1 stays on <code>*.azurewebsites.net</code></td></tr>
+            <tr><td>Distribution</td><td>Static content served globally</td><td>Single region</td></tr>
+            <tr><td>Idle behaviour</td><td>Static content is always served</td><td>The app unloads after 20 minutes idle, and the next visitor pays the cold start (Always On begins at Basic)</td></tr>
+            <tr><td>Compute budget</td><td class="num">100 GB/mo bandwidth</td><td class="num">60 CPU-minutes per day</td></tr>
+            <tr><td>At the ceiling</td><td>Free stops at 100 GB; Standard adds overage</td><td>The app answers 403 until the daily quota resets</td></tr>
+            <tr><td>Scale out</td><td>Handled by the platform</td><td>Free and Shared tiers stay on one shared instance</td></tr>
+            <tr><td>PR previews</td><td class="num">3 preview environments</td><td>Deployment slots begin at the Standard tier</td></tr>
+            <tr><td><b>Authentication</b></td><td>GitHub and Entra ID preconfigured; a custom provider requires Standard (~$9/mo)</td><td>Easy Auth accepts any OIDC provider, Entra External ID included, on the app itself</td></tr>
+            <tr><td>Managed identity to the database</td><td>Arrives with bring-your-own Functions</td><td>Available on the app — passwordless SQL access, so the connection string retires</td></tr>
+            <tr><td>Long-running or non-HTTP work</td><td>HTTP-triggered functions</td><td>Any Node process you care to write</td></tr>
+            <tr><td>Deploy action</td><td><code>Azure/static-web-apps-deploy@v1</code></td><td><code>azure/webapps-deploy@v3</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid g2" style="margin-top:24px;">
+        <div class="bordered b-blue">
+          <h4>Pick Static Web Apps when…</h4>
+          <ul>
+            <li>A branded domain on HTTPS matters at $0 — this is the single biggest difference</li>
+            <li>You want PR preview URLs as part of the review habit</li>
+            <li>Hosts are spread out and edge delivery is worth having</li>
+            <li>Sign-in through GitHub or a Microsoft account is acceptable for now</li>
+          </ul>
+        </div>
+        <div class="bordered b-purple">
+          <h4>Pick App Service when…</h4>
+          <ul>
+            <li>You want branded email-and-password sign-in on the free tier — Easy Auth with Entra External ID delivers exactly that</li>
+            <li>A single Express codebase is easier for you to reason about than static plus functions</li>
+            <li>Passwordless database access through managed identity appeals</li>
+            <li>You expect server-side work that outgrows HTTP-triggered functions</li>
+            <li><code>icebrk.azurewebsites.net</code> is fine for now, or the ~$9.49/mo Shared tier is acceptable later</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note note-orange"><b>Recommendation for IceBrk.</b> Static Web Apps, because a party-game link gets pasted into group chats and a free branded domain on HTTPS is worth more here than a long-lived server. If the username-and-password sign-up is the part you refuse to give up, App Service flips the answer — Easy Auth clears the exact hurdle that costs $9/month on Static Web Apps. Either way the data layer below stays identical.</div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Option 1 · Target architecture</div>
+      <h2 class="section-title">End to end on Static Web Apps.</h2>
+      <div class="diagram-shell">
+        <svg viewBox="0 0 1200 1000" role="img" aria-labelledby="azTitle azDesc" width="100%">
+          <title id="azTitle">IceBrk target architecture on Azure free tiers</title>
+          <desc id="azDesc">GitHub Actions builds the Vite bundle and deploys it to Azure Static Web Apps on the Free plan. Static Web Apps serves the SPA, handles authentication, and runs managed Azure Functions on /api, which read and write Azure Cosmos DB free tier. Application Insights collects telemetry and the host's browser reaches the app over HTTPS.</desc>
+          <defs>
+            <marker id="az-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#22223B"/>
+            </marker>
+            <marker id="az-ah-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#1A56C4"/>
+            </marker>
+            <marker id="az-ah-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#00A651"/>
+            </marker>
+          </defs>
+
+          <!-- ============ BAND 1: CI/CD ============ -->
+          <rect x="24" y="24" width="1152" height="212" rx="24" fill="#F2EFE4"/>
+          <text x="48" y="56" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#7A786E">CI/CD · GITHUB (FREE)</text>
+
+          <rect x="48" y="72" width="232" height="146" rx="18" fill="#FFFFFF" stroke="#8338EC" stroke-width="3"/>
+          <circle cx="258" cy="98" r="13" fill="#8338EC"/>
+          <text x="70" y="106" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="700" fill="#22223B">💻 Developer machine</text>
+          <text x="70" y="130" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Vite 6 · SWA CLI for local</text>
+          <text x="70" y="150" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">emulation of /api + auth</text>
+          <text x="70" y="170" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Cosmos emulator (optional)</text>
+          <text x="70" y="196" font-family="Poppins,sans-serif" font-size="11" font-weight="600" fill="#8338EC">swa start dist --api-location api</text>
+
+          <line x1="286" y1="145" x2="346" y2="145" stroke="#22223B" stroke-width="3" marker-end="url(#az-ah)"/>
+          <text x="316" y="132" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#22223B">git push</text>
+
+          <rect x="352" y="72" width="240" height="146" rx="18" fill="#22223B"/>
+          <circle cx="578" cy="90" r="22" fill="#8338EC"/>
+          <circle cx="372" cy="204" r="14" fill="#38B6FF"/>
+          <text x="374" y="106" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="700" fill="#FFFDF7">🐙 GitHub repo</text>
+          <text x="374" y="128" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,253,247,0.82)">batodulio/icebrk</text>
+          <rect x="374" y="140" width="52" height="21" rx="11" fill="#00A651"/><text x="384" y="155" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">main</text>
+          <rect x="432" y="140" width="46" height="21" rx="11" fill="#38B6FF"/><text x="442" y="155" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">dev</text>
+          <rect x="484" y="140" width="52" height="21" rx="11" fill="#F47920"/><text x="493" y="155" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">PRs</text>
+          <text x="396" y="186" font-family="Poppins,sans-serif" font-size="12" fill="rgba(255,253,247,0.72)">.github/workflows/</text>
+          <text x="396" y="204" font-family="Poppins,sans-serif" font-size="12" fill="rgba(255,253,247,0.72)">azure-static-web-apps.yml</text>
+
+          <line x1="598" y1="145" x2="658" y2="145" stroke="#22223B" stroke-width="3" marker-end="url(#az-ah)"/>
+          <text x="628" y="132" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#22223B">triggers</text>
+
+          <rect x="664" y="72" width="240" height="146" rx="18" fill="#FFFFFF" stroke="#1A56C4" stroke-width="3"/>
+          <circle cx="882" cy="98" r="13" fill="#1A56C4"/>
+          <text x="686" y="106" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="700" fill="#22223B">⚙️ GitHub Actions</text>
+          <text x="686" y="130" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">ubuntu-latest · Node 22</text>
+          <text x="686" y="150" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">npm ci → lint → typecheck</text>
+          <text x="686" y="170" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">vite build → dist/</text>
+          <text x="686" y="196" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="#1A56C4">static-web-apps-deploy@v1</text>
+
+          <line x1="910" y1="145" x2="964" y2="145" stroke="#22223B" stroke-width="3" marker-end="url(#az-ah)"/>
+          <text x="937" y="132" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="#22223B">upload</text>
+
+          <rect x="970" y="72" width="182" height="146" rx="18" fill="#1A56C4"/>
+          <circle cx="1136" cy="88" r="24" fill="#38B6FF"/>
+          <circle cx="1138" cy="204" r="16" fill="#F47920"/>
+          <text x="990" y="106" font-family="'Baloo 2',sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">🚀 Deploy</text>
+          <text x="990" y="130" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.9)">main → production</text>
+          <text x="990" y="150" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.9)">PR → preview env</text>
+          <text x="990" y="170" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.9)">deployment token</text>
+          <text x="990" y="196" font-family="Poppins,sans-serif" font-size="12" font-weight="700" fill="#FFD23F">3 previews on Free</text>
+
+          <path d="M1061,222 V258 H400 V294" fill="none" stroke="#1A56C4" stroke-width="3" marker-end="url(#az-ah-b)" stroke-linejoin="round"/>
+          <text x="700" y="250" font-family="Poppins,sans-serif" font-size="11.5" font-weight="700" fill="#1A56C4">dist/ + api/ uploaded to the Static Web App</text>
+
+          <!-- ============ BAND 2: AZURE ============ -->
+          <rect x="24" y="294" width="1152" height="492" rx="24" fill="#FFFFFF" stroke="#1A56C4" stroke-width="3"/>
+          <text x="48" y="328" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#1A56C4">AZURE SUBSCRIPTION · RESOURCE GROUP rg-icebrk-prod · SOUTHEAST ASIA</text>
+
+          <!-- SWA -->
+          <rect x="48" y="346" width="596" height="374" rx="18" fill="#FFFDF7" stroke="#38B6FF" stroke-width="3"/>
+          <text x="68" y="378" font-family="'Baloo 2',sans-serif" font-size="18" font-weight="800" fill="#22223B">🌐 Azure Static Web Apps — Free plan</text>
+          <text x="68" y="398" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">100 GB/mo · 250 MB per environment · 15,000 files · 2 custom domains · free renewing SSL</text>
+
+          <rect x="68" y="412" width="556" height="66" rx="14" fill="#1A56C4"/>
+          <text x="86" y="436" font-family="'Baloo 2',sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">Static content · globally distributed</text>
+          <text x="86" y="458" font-family="Poppins,sans-serif" font-size="12" fill="rgba(255,255,255,0.9)">Vite bundle + SPA fallback and routes from staticwebapp.config.json</text>
+
+          <rect x="68" y="490" width="556" height="66" rx="14" fill="#FFFFFF" stroke="#8338EC" stroke-width="3"/>
+          <text x="86" y="514" font-family="'Baloo 2',sans-serif" font-size="14" font-weight="700" fill="#22223B">Built-in auth · /.auth/*</text>
+          <text x="86" y="536" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">GitHub + Microsoft Entra ID preconfigured · client principal header to the API</text>
+
+          <rect x="68" y="568" width="556" height="66" rx="14" fill="#FFFFFF" stroke="#00A651" stroke-width="3"/>
+          <text x="86" y="592" font-family="'Baloo 2',sans-serif" font-size="14" font-weight="700" fill="#22223B">Managed Functions · /api/*</text>
+          <text x="86" y="614" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">Node 22, HTTP triggers, Consumption — included in the plan, same origin</text>
+
+          <rect x="68" y="646" width="556" height="56" rx="14" fill="#FFD23F"/>
+          <text x="86" y="670" font-family="'Baloo 2',sans-serif" font-size="13.5" font-weight="700" fill="#22223B">Application settings hold the Cosmos connection string</text>
+          <text x="86" y="690" font-family="Poppins,sans-serif" font-size="11.5" fill="#22223B">Managed identity and Key Vault references arrive with bring-your-own Functions</text>
+
+          <!-- Right column -->
+          <rect x="668" y="346" width="484" height="118" rx="18" fill="#00A651"/>
+          <circle cx="1120" cy="366" r="30" fill="#FFD23F"/>
+          <circle cx="690" cy="452" r="14" fill="#38B6FF"/>
+          <text x="690" y="380" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="800" fill="#FFFFFF">🌌 Cosmos DB for NoSQL — free tier</text>
+          <text x="690" y="404" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">1,000 RU/s + 25 GB free for the account lifetime</text>
+          <text x="690" y="424" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">database icebrk (shared 1,000 RU/s) → container settings</text>
+          <text x="712" y="444" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">partition key /userId · id = gameId · point reads ≈ 1 RU</text>
+
+          <rect x="668" y="480" width="484" height="112" rx="18" fill="#8338EC"/>
+          <circle cx="1128" cy="576" r="26" fill="#38B6FF"/>
+          <text x="690" y="512" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="800" fill="#FFFFFF">🔐 Microsoft Entra External ID</text>
+          <text x="690" y="536" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">First 50,000 monthly active users free</text>
+          <text x="690" y="556" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">Optional: swap in for branded email + password sign-up,</text>
+          <text x="690" y="574" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">driven by MSAL in the SPA and verified in the function</text>
+
+          <rect x="668" y="608" width="484" height="96" rx="18" fill="#FFFDF7" stroke="#F47920" stroke-width="3"/>
+          <text x="690" y="638" font-family="'Baloo 2',sans-serif" font-size="16" font-weight="700" fill="#22223B">📈 Application Insights</text>
+          <text x="690" y="662" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">5 GB/month ingestion free · function logs + traces</text>
+          <text x="690" y="682" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Browser telemetry through the JS SDK when you want it</text>
+
+          <rect x="668" y="718" width="484" height="46" rx="14" fill="#F2EFE4"/>
+          <text x="690" y="747" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="#7A786E">Relational swap-in: Azure SQL free offer — 100k vCore-sec + 32 GB per db</text>
+
+          <!-- arrows within Azure -->
+          <path d="M628,523 H660" fill="none" stroke="#22223B" stroke-width="3" marker-end="url(#az-ah)"/>
+          <path d="M628,596 H646 V412 H660" fill="none" stroke="#00A651" stroke-width="3" marker-end="url(#az-ah-g)" stroke-linejoin="round"/>
+          <path d="M628,672 H660" fill="none" stroke="#22223B" stroke-width="3" marker-end="url(#az-ah)"/>
+
+          <!-- ============ BAND 3: CLIENT ============ -->
+          <rect x="24" y="812" width="1152" height="164" rx="24" fill="#F2EFE4"/>
+          <text x="48" y="844" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#7A786E">CLIENT &amp; DOMAIN</text>
+
+          <rect x="48" y="858" width="540" height="100" rx="18" fill="#FFFFFF" stroke="#38B6FF" stroke-width="3"/>
+          <text x="70" y="888" font-family="'Baloo 2',sans-serif" font-size="16" font-weight="700" fill="#22223B">🖥️ Host's browser — React 19 SPA</text>
+          <text x="70" y="912" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Signed in: fetch /api/settings/:gameId — same origin, session cookie</text>
+          <text x="70" y="932" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Guest: sessionStore in memory exactly as it works today</text>
+
+          <rect x="612" y="858" width="540" height="100" rx="18" fill="#FFFFFF" stroke="#F47920" stroke-width="3"/>
+          <text x="634" y="888" font-family="'Baloo 2',sans-serif" font-size="16" font-weight="700" fill="#22223B">🌐 Domain &amp; TLS</text>
+          <text x="634" y="912" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Free: icebrk.azurestaticapps.net · 2 custom domains with managed certs</text>
+          <text x="634" y="932" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Keep DNS at your registrar — an Azure DNS zone bills about $0.50/month</text>
+
+          <path d="M300,854 V794" fill="none" stroke="#1A56C4" stroke-width="3" marker-end="url(#az-ah-b)"/>
+          <text x="316" y="828" font-family="Poppins,sans-serif" font-size="11.5" font-weight="700" fill="#1A56C4">HTTPS</text>
+        </svg>
+      </div>
+      <div class="legend">
+        <span><i style="background:#8338EC;"></i> Local &amp; identity</span>
+        <span><i style="background:#22223B;"></i> GitHub</span>
+        <span><i style="background:#1A56C4;"></i> Static Web Apps</span>
+        <span><i style="background:#00A651;"></i> Cosmos DB</span>
+        <span><i style="background:#F47920;"></i> Telemetry &amp; domain</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Option 2 · Target architecture</div>
+      <h2 class="section-title">End to end on App Service + Azure SQL.</h2>
+      <p class="section-sub">The same application, shaped as one Express process on an F1 Free plan, with Easy Auth in front and Azure SQL behind it. Everything below stays inside always-free allowances.</p>
+
+      <div class="diagram-shell">
+        <svg viewBox="0 0 1200 760" role="img" aria-labelledby="asTitle asDesc" width="100%">
+          <title id="asTitle">IceBrk on Azure App Service with Azure SQL</title>
+          <desc id="asDesc">GitHub Actions builds the app and deploys it with azure/webapps-deploy to an App Service F1 Free plan running Node. The app uses Easy Auth for sign-in, Express to serve the SPA and the API, and a system-assigned managed identity to reach Azure SQL Database on the free offer. Application Insights collects telemetry.</desc>
+          <defs>
+            <marker id="as-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#22223B"/>
+            </marker>
+            <marker id="as-ah-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#1A56C4"/>
+            </marker>
+          </defs>
+
+          <!-- CI/CD band -->
+          <rect x="24" y="24" width="1152" height="180" rx="24" fill="#F2EFE4"/>
+          <text x="48" y="52" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#7A786E">CI/CD · GITHUB ACTIONS</text>
+
+          <rect x="48" y="64" width="300" height="124" rx="18" fill="#22223B"/>
+          <circle cx="332" cy="80" r="20" fill="#8338EC"/>
+          <text x="70" y="98" font-family="'Baloo 2',sans-serif" font-size="16" font-weight="700" fill="#FFFDF7">🐙 GitHub repo</text>
+          <text x="70" y="122" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,253,247,0.82)">batodulio/icebrk · main</text>
+          <text x="70" y="144" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,253,247,0.82)">server.js + src/ + db/schema.sql</text>
+          <text x="70" y="168" font-family="Poppins,sans-serif" font-size="11.5" fill="rgba(255,253,247,0.66)">OIDC federated credential — short-lived tokens</text>
+
+          <line x1="354" y1="126" x2="404" y2="126" stroke="#22223B" stroke-width="3" marker-end="url(#as-ah)"/>
+
+          <rect x="410" y="64" width="330" height="124" rx="18" fill="#FFFFFF" stroke="#1A56C4" stroke-width="3"/>
+          <circle cx="716" cy="86" r="13" fill="#1A56C4"/>
+          <text x="432" y="98" font-family="'Baloo 2',sans-serif" font-size="16" font-weight="700" fill="#22223B">⚙️ Build job</text>
+          <text x="432" y="122" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">npm ci → lint → typecheck → vite build</text>
+          <text x="432" y="144" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">npm prune --omit=dev (runtime deps only)</text>
+          <text x="432" y="168" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="#1A56C4">azure/login@v2 with OIDC</text>
+
+          <line x1="746" y1="126" x2="796" y2="126" stroke="#22223B" stroke-width="3" marker-end="url(#as-ah)"/>
+
+          <rect x="802" y="64" width="350" height="124" rx="18" fill="#1A56C4"/>
+          <circle cx="1136" cy="82" r="22" fill="#38B6FF"/>
+          <circle cx="1140" cy="176" r="14" fill="#F47920"/>
+          <text x="824" y="98" font-family="'Baloo 2',sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">🚀 azure/webapps-deploy@v3</text>
+          <text x="824" y="122" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.9)">app-name: app-icebrk · package: .</text>
+          <text x="824" y="144" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.9)">Startup command: node server.js</text>
+          <text x="824" y="168" font-family="Poppins,sans-serif" font-size="12" font-weight="700" fill="#FFD23F">One environment on F1 — slots begin at Standard</text>
+
+          <path d="M977,192 V218 H400 V242" fill="none" stroke="#1A56C4" stroke-width="3" marker-end="url(#as-ah-b)" stroke-linejoin="round"/>
+
+          <!-- Azure band -->
+          <rect x="24" y="242" width="1152" height="374" rx="24" fill="#FFFFFF" stroke="#1A56C4" stroke-width="3"/>
+          <text x="48" y="274" font-family="Poppins,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="#1A56C4">AZURE SUBSCRIPTION · RESOURCE GROUP rg-icebrk-prod · SOUTHEAST ASIA</text>
+
+          <rect x="48" y="292" width="700" height="304" rx="18" fill="#FFFDF7" stroke="#38B6FF" stroke-width="3"/>
+          <text x="68" y="322" font-family="'Baloo 2',sans-serif" font-size="18" font-weight="800" fill="#22223B">🌐 Azure App Service — F1 Free · Linux · Node 22</text>
+          <text x="68" y="342" font-family="Poppins,sans-serif" font-size="12" fill="#7A786E">60 CPU-minutes/day · 1 GB RAM · 1 GB storage · icebrk.azurewebsites.net</text>
+
+          <rect x="68" y="356" width="660" height="62" rx="14" fill="#8338EC"/>
+          <text x="86" y="380" font-family="'Baloo 2',sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">Easy Auth — built-in authentication</text>
+          <text x="86" y="402" font-family="Poppins,sans-serif" font-size="12" fill="rgba(255,255,255,0.9)">Any OIDC provider, Entra External ID included · X-MS-CLIENT-PRINCIPAL header · /.auth/me</text>
+
+          <rect x="68" y="428" width="660" height="62" rx="14" fill="#1A56C4"/>
+          <text x="86" y="452" font-family="'Baloo 2',sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">Express — one process serves everything</text>
+          <text x="86" y="474" font-family="Poppins,sans-serif" font-size="12" fill="rgba(255,255,255,0.9)">express.static(dist) · /api/settings/:gameId · SPA fallback to index.html</text>
+
+          <rect x="68" y="500" width="660" height="62" rx="14" fill="#FFD23F"/>
+          <text x="86" y="524" font-family="'Baloo 2',sans-serif" font-size="14" font-weight="700" fill="#22223B">System-assigned managed identity</text>
+          <text x="86" y="546" font-family="Poppins,sans-serif" font-size="12" fill="#22223B">Passwordless sign-in to Azure SQL — the connection string retires entirely</text>
+
+          <rect x="772" y="292" width="380" height="158" rx="18" fill="#00A651"/>
+          <circle cx="1124" cy="314" r="28" fill="#FFD23F"/>
+          <circle cx="792" cy="438" r="14" fill="#38B6FF"/>
+          <text x="792" y="326" font-family="'Baloo 2',sans-serif" font-size="17" font-weight="800" fill="#FFFFFF">🗄️ Azure SQL Database</text>
+          <text x="792" y="350" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">Free offer: 100,000 vCore-sec + 32 GB data</text>
+          <text x="792" y="370" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">+ 32 GB backup, per database per month</text>
+          <text x="792" y="390" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">General Purpose serverless · auto-pause on</text>
+          <text x="792" y="410" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">Up to 10 free databases per subscription</text>
+          <text x="814" y="430" font-family="Poppins,sans-serif" font-size="12.5" fill="rgba(255,255,255,0.92)">RLS policy scopes rows to SESSION_CONTEXT</text>
+
+          <rect x="772" y="466" width="380" height="130" rx="18" fill="#FFFDF7" stroke="#F47920" stroke-width="3"/>
+          <text x="792" y="496" font-family="'Baloo 2',sans-serif" font-size="16" font-weight="700" fill="#22223B">📈 Application Insights</text>
+          <text x="792" y="520" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">5 GB/month ingestion free</text>
+          <text x="792" y="540" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Node SDK or the App Service extension</text>
+          <text x="792" y="560" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Watch cold starts and the daily CPU quota</text>
+          <text x="792" y="582" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="#F47920">Alert on Free amount remaining</text>
+
+          <path d="M732,531 H750 V368 H768" fill="none" stroke="#00A651" stroke-width="3" marker-end="url(#as-ah)" stroke-linejoin="round"/>
+          <path d="M732,459 H756 V520 H768" fill="none" stroke="#22223B" stroke-width="3" marker-end="url(#as-ah)" stroke-linejoin="round"/>
+
+          <!-- Client band -->
+          <rect x="24" y="642" width="1152" height="106" rx="24" fill="#F2EFE4"/>
+          <rect x="48" y="664" width="700" height="66" rx="18" fill="#FFFFFF" stroke="#38B6FF" stroke-width="3"/>
+          <text x="70" y="690" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🖥️ Host's browser — React 19 SPA</text>
+          <text x="70" y="712" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">One origin for the HTML, /api, and /.auth — same fetch code as option 1</text>
+
+          <rect x="772" y="664" width="380" height="66" rx="18" fill="#FFFFFF" stroke="#F47920" stroke-width="3"/>
+          <text x="792" y="690" font-family="'Baloo 2',sans-serif" font-size="15" font-weight="700" fill="#22223B">🌐 Domain</text>
+          <text x="792" y="712" font-family="Poppins,sans-serif" font-size="12.5" fill="#7A786E">Free host name today · custom domain from Shared (D1)</text>
+
+          <path d="M300,660 V622" fill="none" stroke="#1A56C4" stroke-width="3" marker-end="url(#as-ah-b)"/>
+          <text x="316" y="640" font-family="Poppins,sans-serif" font-size="11.5" font-weight="700" fill="#1A56C4">HTTPS</text>
+        </svg>
+      </div>
+
+      <div class="grid g2" style="margin-top:26px;">
+        <div class="bordered b-blue">
+          <h4>Portal settings for the Web App</h4>
+          <ul>
+            <li>Create → Web App → Publish <b>Code</b>, runtime stack <b>Node 22 LTS</b>, OS <b>Linux</b>, region Southeast Asia</li>
+            <li>App Service plan → Pricing plan → <b>Free F1</b> (listed under Dev/Test)</li>
+            <li>Configuration → General settings → Startup Command: <code>node server.js</code></li>
+            <li>Identity → System assigned → <b>On</b> — this is what the database trusts</li>
+            <li>Authentication → Add identity provider → Microsoft, or OpenID Connect pointed at your External ID tenant</li>
+            <li>Deployment Center → GitHub → the portal offers to write the workflow, or bring your own</li>
+            <li>Monitoring → Application Insights → On</li>
+          </ul>
+        </div>
+        <div class="bordered b-green">
+          <h4>Portal settings for Azure SQL</h4>
+          <ul>
+            <li>Create through <b>aka.ms/azuresqlhub</b> → <b>Start free</b> so the free-offer banner applies</li>
+            <li>Behavior when free limit reached → <b>Auto-pause the database until next month</b> holds the bill at $0</li>
+            <li>Logical server → Microsoft Entra admin → set yourself, so you can grant the app access</li>
+            <li>Networking → Public endpoint → <b>Allow Azure services and resources to access this server</b> — App Service on Free draws from a shared outbound IP pool, so allowlisting a single address falls short</li>
+            <li>Backups stay locally redundant and free; point-in-time restore covers 7 days</li>
+            <li>The region of your first free database applies to every later free database in the subscription</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="codewrap">
+        <span class="codelabel">server.js — Express serves the SPA and the API from one process</span>
+<pre class="code">import express from 'express'
+import path from 'node:path'
+import sql from 'mssql'
+
+const dist = path.resolve('dist')
+const app = express()
+app.use(express.json())
+
+// Hashed filenames, so long cache lifetimes are safe. index:false keeps the
+// SPA fallback below in charge of "/".
+app.use(express.static(dist, { maxAge: '1y', index: false }))
+
+// Passwordless: the App Service managed identity signs in to Azure SQL.
+const pool = await new sql.ConnectionPool({
+  server: 'sql-icebrk.database.windows.net',
+  database: 'icebrk',
+  authentication: { type: 'azure-active-directory-msi-app-service' },
+  options: { encrypt: true },
+}).connect()
+
+const GAMES = new Set([
+  'roulette', 'would-you-rather', 'jeopardy',
+  'bingo', 'two-truths-and-a-lie', 'scavenger-hunt',
+])
+
+/** Easy Auth injects the same base64 client-principal header SWA uses. */
+function callerId(req) {
+  const header = req.get('x-ms-client-principal')
+  if (!header) return null
+  const principal = JSON.parse(Buffer.from(header, 'base64').toString('utf8'))
+  return principal.userId ?? null
+}
+
+/** Hand the caller's id to SQL so the RLS policy can filter on it. */
+async function scopedRequest(userId) {
+  const request = pool.request()
+  await request.input('uid', sql.NVarChar(128), userId)
+    .query('EXEC sp_set_session_context @key = N\'user_id\', @value = @uid')
+  return pool.request().input('uid', sql.NVarChar(128), userId)
+}
+
+app.get('/api/settings/:gameId', async (req, res) => {
+  const userId = callerId(req)
+  if (!userId) return res.sendStatus(401)
+  if (!GAMES.has(req.params.gameId)) return res.sendStatus(404)
+
+  const request = await scopedRequest(userId)
+  const result = await request
+    .input('gid', sql.VarChar(32), req.params.gameId)
+    .query('SELECT payload FROM dbo.game_settings WHERE user_id = @uid AND game_id = @gid')
+
+  const row = result.recordset[0]
+  return row ? res.json(JSON.parse(row.payload)) : res.sendStatus(204)
+})
+
+app.put('/api/settings/:gameId', async (req, res) => {
+  const userId = callerId(req)
+  if (!userId) return res.sendStatus(401)
+  if (!GAMES.has(req.params.gameId)) return res.sendStatus(404)
+
+  const request = await scopedRequest(userId)
+  await request
+    .input('gid', sql.VarChar(32), req.params.gameId)
+    .input('payload', sql.NVarChar(sql.MAX), JSON.stringify(req.body))
+    .query(`MERGE dbo.game_settings AS target
+            USING (SELECT @uid AS user_id, @gid AS game_id) AS source
+              ON target.user_id = source.user_id AND target.game_id = source.game_id
+            WHEN MATCHED THEN
+              UPDATE SET payload = @payload, updated_at = sysutcdatetime()
+            WHEN NOT MATCHED THEN
+              INSERT (user_id, game_id, payload) VALUES (@uid, @gid, @payload);`)
+
+  return res.sendStatus(204)
+})
+
+// Every other GET returns the shell, so /jeopardy and /support resolve.
+app.get(/.*/, (_req, res) => res.sendFile(path.join(dist, 'index.html')))
+
+app.listen(process.env.PORT || 8080)</pre>
+      </div>
+
+      <div class="codewrap">
+        <span class="codelabel">Grant the managed identity access — run as the Entra admin on the server</span>
+<pre class="code">-- Connect to the icebrk database as the Microsoft Entra admin, then:
+CREATE USER [app-icebrk] FROM EXTERNAL PROVIDER;   -- the Web App's name
+ALTER ROLE db_datareader ADD MEMBER [app-icebrk];
+ALTER ROLE db_datawriter ADD MEMBER [app-icebrk];
+
+-- The predicate is an inline table-valued function, so the app's user needs
+-- SELECT on it (EXECUTE applies to scalar functions and procedures).
+GRANT SELECT ON dbo.fn_rls_current_user TO [app-icebrk];</pre>
+      </div>
+
+      <div class="codewrap">
+        <span class="codelabel">.github/workflows/azure-app-service.yml</span>
+<pre class="code">name: Build and deploy to Azure App Service
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write     # required for the OIDC login below
+  contents: read
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build            # vite build → dist/
+      - run: npm prune --omit=dev     # ship runtime dependencies only
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - uses: azure/webapps-deploy@v3
+        with:
+          app-name: app-icebrk
+          package: .</pre>
+      </div>
+
+      <div class="note note-blue"><b>Why OIDC rather than a publish profile.</b> New App Service apps often ship with basic authentication switched off, and publish-profile deploys depend on it. A federated credential — App registration → Certificates &amp; secrets → Federated credentials → GitHub Actions, scoped to <code>batodulio/icebrk</code> on <code>main</code> — works regardless, and leaves no long-lived secret in the repo. Give that identity the <b>Website Contributor</b> role on the resource group.</div>
+      <div class="note"><b>Two cold starts stack up here.</b> An F1 app unloads after 20 minutes idle, and a serverless SQL database auto-pauses on its own schedule, so the first host of the evening can wait through both. Warming them costs the very quotas that keep this free — 60 CPU-minutes a day and 100,000 vCore-seconds a month — so the practical answer is to open the app a few minutes before the event starts, and to treat the Basic tier as the fix if that stops being acceptable.</div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Free-tier ledger</div>
+      <h2 class="section-title">What each service gives you, and what IceBrk spends.</h2>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Service</th><th>Always-free allowance</th><th>IceBrk's expected draw</th><th>At the ceiling</th></tr></thead>
+          <tbody>
+            <tr><td>Static Web Apps (Free)</td><td class="num">100 GB/mo bandwidth<br />10 apps per subscription</td><td>Bundle is a few hundred KB gzipped — roughly 300k page loads/mo</td><td>Overage is unavailable on Free; move to Standard ($0.20/GB) before you need it</td></tr>
+            <tr><td>SWA storage</td><td class="num">250 MB per environment<br />500 MB total · 15,000 files</td><td>Well under 10 MB across dist/ and api/</td><td>Deploy fails the check — prune assets</td></tr>
+            <tr><td>SWA preview environments</td><td class="num">3 per app</td><td>1–2 open PRs at a time</td><td>The 4th PR waits for a slot</td></tr>
+            <tr><td>Managed Functions</td><td>Included in the SWA plan</td><td>2 endpoints, a few calls per host per session</td><td>Billed through SWA, so nothing separate to watch</td></tr>
+            <tr><td>App Service (F1 Free)</td><td class="num">60 CPU-min/day · 1 GB RAM<br />1 GB storage · 10 apps</td><td>Static file serving plus a handful of queries per host</td><td>The app answers 403 until the daily quota resets at midnight UTC</td></tr>
+            <tr><td>Azure SQL (free offer)</td><td class="num">100,000 vCore-sec/mo<br />32 GB data + 32 GB backup<br />up to 10 databases</td><td>~55 hours of active compute a month at the 0.5 vCore floor</td><td>Auto-pause until the next month, or switch to billed usage — chosen at create time</td></tr>
+            <tr><td>Cosmos DB free tier</td><td class="num">1,000 RU/s + 25 GB<br />1 account per subscription</td><td>~1 RU per load, ~5–10 RU per save → about 90 hosts editing at once</td><td>429 throttling, or billing if you raise the cap — set the account throughput limit to 1,000 RU/s</td></tr>
+            <tr><td>Entra External ID</td><td class="num">First 50,000 MAU</td><td>Far below, for a long while</td><td>Per-MAU billing past 50k; premium add-ons like SMS bill separately from the start</td></tr>
+            <tr><td>Application Insights</td><td class="num">5 GB/mo ingestion</td><td>Function logs and errors only, if you keep sampling on</td><td>Per-GB ingestion charges — cap it with a daily volume limit</td></tr>
+            <tr><td>GitHub Actions</td><td class="num">Unlimited (public repo)<br />2,000 Linux min/mo (private)</td><td>~2 minutes per build</td><td>Public repos stay unlimited; a private repo covers about 1,000 builds a month</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note note-green"><b>Running total: $0/month.</b> The only line items that can start a bill are an Azure DNS zone (~$0.50/mo, avoidable by leaving DNS at your registrar), Key Vault transactions (skipped here), and anything past the ceilings above.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">The one real decision</div>
+      <h2 class="section-title">Authentication, and what it costs the UX.</h2>
+      <p class="section-sub">Static Web Apps ships with GitHub and Microsoft Entra ID preconfigured on every plan, and registering a <i>custom</i> provider requires the Standard plan. Today's username-and-password form is the piece that has to change shape — here are the three honest paths.</p>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Option</th><th>How it works</th><th>Cost</th><th>Trade-off</th></tr></thead>
+          <tbody>
+            <tr><td><b>A · SWA built-in auth</b><br /><span class="free-pill">Recommended start</span></td><td>Link to <code>/.auth/login/github</code> or <code>/.auth/login/aad</code>; the function reads the <code>x-ms-client-principal</code> header for a stable <code>userId</code></td><td>$0 on Free</td><td>Hosts sign in with a GitHub or Microsoft account, so the username form retires. Credential handling stays with the identity provider</td></tr>
+            <tr><td><b>B · External ID + MSAL</b></td><td>Create an external tenant, register a SPA app, run MSAL Browser in React, and validate the issued JWT inside the function</td><td>$0 up to 50k MAU</td><td>Keeps branded email-and-password sign-up on the free tier; you own the token validation code and the sign-up flow collects a real email</td></tr>
+            <tr><td><b>C · External ID as a SWA custom provider</b></td><td>An <code>auth</code> block in <code>staticwebapp.config.json</code> points at your External ID tenant</td><td>Standard plan, about $9/app/mo</td><td>Cleanest wiring of the three, and it steps outside the free-tier rule</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note note-orange"><b>Suggested sequence.</b> Ship option A to get the whole stack live on Azure, then move to option B when IceBrk-branded accounts matter more than build speed. Both leave <code>useCloudSync</code> unchanged, since the server side is what resolves identity either way.</div>
+      <div class="note note-green"><b>Hosting changes this table.</b> The $9/month line above belongs to Static Web Apps: registering a custom provider there is a Standard-plan feature. App Service Easy Auth accepts a custom OIDC provider on the app itself, so <b>option C becomes free on App Service</b> — configure Entra External ID under Authentication → Add identity provider and keep branded email-and-password sign-up at $0. If password sign-in is the thing you refuse to lose, that single row is the strongest argument for the App Service path. Easy Auth and managed identity are platform features rather than tier-gated ones like custom domains and TLS, so confirm both are switchable on your app before you build the flow around them.</div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Data layer</div>
+      <h2 class="section-title">Azure SQL or Cosmos DB — both land at $0.</h2>
+      <p class="section-sub">Six tables, one row per host per game, with the interesting parts already in jsonb. That shape fits either database, and the endpoint code barely differs between them. Pick on habits and on cold starts, since the allowances both clear IceBrk's needs comfortably.</p>
+      <div class="grid g2" style="margin-bottom:26px;">
+        <div class="bordered b-green">
+          <h4>🗄️ Azure SQL Database — free offer</h4>
+          <ul>
+            <li>100,000 vCore-seconds, 32 GB data, 32 GB backup per database per month, for up to 10 databases per subscription</li>
+            <li>Row Level Security stays <i>in the database</i>, the closest match to what Supabase does today</li>
+            <li>T-SQL, the portal query editor, and every familiar tool from SSMS to the VS Code mssql extension</li>
+            <li>Pairs with App Service managed identity for passwordless access</li>
+            <li>Costs you a cold start: serverless auto-pause needs tens of seconds to resume</li>
+          </ul>
+        </div>
+        <div class="bordered b-purple">
+          <h4>🌌 Cosmos DB for NoSQL — free tier</h4>
+          <ul>
+            <li>1,000 RU/s and 25 GB free for the account lifetime, one account per subscription</li>
+            <li>The jsonb payloads land as documents exactly as they already exist</li>
+            <li>Stays warm — a point read answers in single-digit milliseconds any time of day</li>
+            <li>Access rules live in the endpoint rather than the database</li>
+            <li>Fits either host; it is what option 1 above assumes</li>
+          </ul>
+        </div>
+      </div>
+      <h3 style="font-family:var(--font-display);font-size:22px;font-weight:700;margin:8px 0 10px;">The document shape (Cosmos)</h3>
+
+      <div class="codewrap">
+        <span class="codelabel">container: settings — one item per host per game</span>
+<pre class="code">{
+  "id": "roulette",                   // gameId — unique within the partition
+  "userId": "aad|abc123...",          // partition key, from the client principal
+  "gameId": "roulette",
+  "participants": [ { "id": "…", "name": "Ana" } ],
+  "spinSeconds": 5,
+  "themeId": "colorful",
+  "updatedAt": "2026-08-15T04:12:09.412Z"
+}</pre>
+      </div>
+
+      <div class="grid g2">
+        <div class="bordered b-green">
+          <h4>Why this shape holds up</h4>
+          <ul>
+            <li><code>container.item(gameId, userId).read()</code> is a point read — about 1 RU and single-digit milliseconds</li>
+            <li>An upsert of a document this size lands around 5–10 RU, so the 900 ms debounce keeps a busy host near 10 RU/s</li>
+            <li>1,000 free RU/s therefore covers roughly 90 hosts customizing at the same moment</li>
+            <li>Storage per host is measured in kilobytes against a 25 GB allowance</li>
+            <li>Adding game #7 adds a field set, rather than a table and a migration</li>
+          </ul>
+        </div>
+        <div class="bordered b-orange">
+          <h4>What the schema gives up</h4>
+          <ul>
+            <li>CHECK constraints move into the function (validate <code>themeId</code> and timer values before the upsert)</li>
+            <li>The <code>set_updated_at()</code> trigger becomes a line of JavaScript</li>
+            <li>Cascade delete on <code>auth.users</code> becomes a delete-by-partition call when a host closes their account</li>
+            <li>Row Level Security becomes the rule that the function only ever touches the caller's partition</li>
+            <li>Keep <code>supabase/schema.sql</code> in the repo as the record of what the data means</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:22px;font-weight:700;margin:34px 0 10px;">The relational shape (Azure SQL)</h3>
+      <p style="font-size:15px;color:var(--slate);max-width:680px;margin-bottom:14px;">One table carries all six games, keyed on the caller and the game, with the payload as validated JSON. Security policies restore the Row Level Security guarantee that <code>supabase/schema.sql</code> relies on today.</p>
+
+      <div class="codewrap">
+        <span class="codelabel">db/schema.sql — Azure SQL equivalent</span>
+<pre class="code">CREATE TABLE dbo.game_settings (
+  user_id     nvarchar(128) NOT NULL,
+  game_id     varchar(32)   NOT NULL,
+  payload     nvarchar(max) NOT NULL
+    CONSTRAINT ck_game_settings_json CHECK (ISJSON(payload) = 1),
+  updated_at  datetime2     NOT NULL
+    CONSTRAINT df_game_settings_updated DEFAULT sysutcdatetime(),
+  CONSTRAINT pk_game_settings PRIMARY KEY (user_id, game_id)
+);
+
+-- Row Level Security, driven by a per-connection session value
+CREATE FUNCTION dbo.fn_rls_current_user(@user_id nvarchar(128))
+RETURNS TABLE WITH SCHEMABINDING
+AS RETURN
+  SELECT 1 AS allowed
+  WHERE @user_id = CAST(SESSION_CONTEXT(N'user_id') AS nvarchar(128));
+
+CREATE SECURITY POLICY dbo.game_settings_rls
+  ADD FILTER PREDICATE dbo.fn_rls_current_user(user_id) ON dbo.game_settings,
+  ADD BLOCK PREDICATE  dbo.fn_rls_current_user(user_id) ON dbo.game_settings AFTER INSERT
+  WITH (STATE = ON);
+
+-- The function runs this right after opening the connection:
+--   EXEC sp_set_session_context @key = N'user_id', @value = @callerId;</pre>
+      </div>
+
+      <div class="note"><b>Budget the compute.</b> 100,000 vCore-seconds is about 55 hours of active database time per month at the 0.5 vCore serverless floor, so auto-pause needs to stay on. Resuming a paused database takes tens of seconds, which a host feels — send a warm-up request when the app loads, and set a metric alert on <b>Free amount remaining</b> at 10,000 vCore-seconds. Cosmos sidesteps this entirely, which is why it leads this design.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">API surface</div>
+      <h2 class="section-title">Two endpoints replace PostgREST.</h2>
+      <p class="section-sub">Everything <code>useCloudSync</code> does today is one read on mount and one debounced upsert. That maps to a single function with two methods.</p>
+
+      <div class="codewrap">
+        <span class="codelabel">api/src/functions/settings.js — Azure Functions v4, Node 22</span>
+<pre class="code">const { app } = require('@azure/functions')
+const { CosmosClient } = require('@azure/cosmos')
+
+const container = new CosmosClient(process.env.COSMOS_CONNECTION_STRING)
+  .database('icebrk')
+  .container('settings')
+
+const GAMES = new Set([
+  'roulette', 'would-you-rather', 'jeopardy',
+  'bingo', 'two-truths-and-a-lie', 'scavenger-hunt',
+])
+
+/** Static Web Apps injects the signed-in user as a base64 JSON header. */
+function callerId(request) {
+  const header = request.headers.get('x-ms-client-principal')
+  if (!header) return null
+  const principal = JSON.parse(Buffer.from(header, 'base64').toString('utf8'))
+  return principal.userId ?? null
+}
+
+app.http('settings', {
+  methods: ['GET', 'PUT'],
+  authLevel: 'anonymous',        // SWA route rules do the gating
+  route: 'settings/{gameId}',
+  handler: async (request, context) => {
+    const userId = callerId(request)
+    if (!userId) return { status: 401 }
+
+    const gameId = request.params.gameId
+    if (!GAMES.has(gameId)) return { status: 404 }
+
+    if (request.method === 'GET') {
+      try {
+        const { resource } = await container.item(gameId, userId).read()
+        return resource ? { jsonBody: resource } : { status: 204 }
+      } catch (error) {
+        if (error.code === 404) return { status: 204 }   // first visit
+        context.error('read failed', error)
+        return { status: 502 }
+      }
+    }
+
+    const body = await request.json()
+    await container.items.upsert({
+      ...body,
+      id: gameId,
+      userId,                     // caller's partition, always
+      gameId,
+      updatedAt: new Date().toISOString(),
+    })
+    return { status: 204 }
+  },
+})</pre>
+      </div>
+
+      <div class="grid g2">
+        <div class="bordered b-blue">
+          <h4>Client-side changes</h4>
+          <ul>
+            <li><code>src/lib/supabaseClient.ts</code> retires; an <code>apiClient.ts</code> wraps <code>fetch('/api/settings/…')</code></li>
+            <li><code>useCloudSync</code> keeps its whole shape — load once, 900 ms debounce, flush on unmount — and swaps the two Supabase calls for fetch</li>
+            <li><code>AuthProvider</code> reads <code>/.auth/me</code> instead of <code>supabase.auth.getSession()</code>, and exposes the same <code>{ user, loading, signOut }</code></li>
+            <li><code>AuthPage</code> becomes provider buttons that link to <code>/.auth/login/github</code> (option A) or drives MSAL (option B)</li>
+            <li><code>src/lib/username.ts</code> and the synthetic-address trick retire with option A</li>
+            <li>Same-origin <code>/api</code> means CORS stays out of the picture</li>
+          </ul>
+        </div>
+        <div class="bordered b-purple">
+          <h4>Behaviour worth preserving</h4>
+          <ul>
+            <li>Guest play keeps working: a 401 from <code>/api</code> means "stay in session memory", the same branch that handles absent Supabase config today</li>
+            <li>The unmount flush can use <code>navigator.sendBeacon</code> when the page is closing, and plain fetch otherwise</li>
+            <li>Validate <code>themeId</code> and timer values in the function, since the CHECK constraints left with Postgres</li>
+            <li>Keep the debounce — it is what holds RU consumption flat</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">CI/CD</div>
+      <h2 class="section-title">GitHub Actions, start to finish.</h2>
+      <p class="section-sub">Creating the Static Web App in the portal commits a first workflow to the repo and adds the deployment token as a repository secret. The version below adds the lint and typecheck gates and pins Node.</p>
+
+      <div class="codewrap">
+        <span class="codelabel">.github/workflows/azure-static-web-apps.yml</span>
+<pre class="code">name: Build and deploy to Azure Static Web Apps
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build_and_deploy:
+    if: github.event_name == 'push' || github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    name: Build and deploy
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+
+      - name: Build and deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}     # posts the preview URL on the PR
+          action: upload
+          app_location: "/"        # repo root — where package.json lives
+          api_location: "api"      # managed functions
+          output_location: "dist"  # vite build output
+
+  close_preview:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close preview environment
+    steps:
+      - name: Close
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: close</pre>
+      </div>
+
+      <div class="tbl-scroll" style="margin-bottom:20px;">
+        <table class="tbl">
+          <thead><tr><th>Setting</th><th>Lives in</th><th>Where it comes from</th></tr></thead>
+          <tbody>
+            <tr><td><code>AZURE_STATIC_WEB_APPS_API_TOKEN</code></td><td>GitHub repository secret</td><td>Added by the portal during creation; rotate it under SWA → Overview → Manage deployment token</td></tr>
+            <tr><td><code>GITHUB_TOKEN</code></td><td>Supplied by Actions</td><td>Built in — it lets the action comment the preview URL on the PR</td></tr>
+            <tr><td><code>COSMOS_CONNECTION_STRING</code></td><td>SWA application settings</td><td>Cosmos DB → Settings → Keys → Primary connection string. This one stays in Azure rather than in the workflow</td></tr>
+            <tr><td><code>AZURE_CLIENT_ID</code> · <code>AZURE_TENANT_ID</code> · <code>AZURE_SUBSCRIPTION_ID</code></td><td>GitHub repository secrets (optional)</td><td>Only when you add <code>azure/login@v2</code> steps for schema jobs — use a federated credential, which trades a stored client secret for short-lived OIDC tokens</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="codewrap">
+        <span class="codelabel">staticwebapp.config.json — repo root, ships with the front end</span>
+<pre class="code">{
+  "platform": { "apiRuntime": "node:22" },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/api/*", "/*.{png,svg,ico,webmanifest}"]
+  },
+  "routes": [
+    { "route": "/api/*", "allowedRoles": ["authenticated"] },
+    { "route": "/login", "redirect": "/.auth/login/github" },
+    { "route": "/logout", "redirect": "/.auth/logout" }
+  ],
+  "mimeTypes": { ".webmanifest": "application/manifest+json" }
+}
+
+// Cache headers stay untouched on purpose: Vite emits content-hashed
+// filenames, so the platform defaults let the edge cache them safely.</pre>
+      </div>
+      <div class="note note-blue"><b>Two details that matter here.</b> <code>navigationFallback</code> is what makes react-router deep links like <code>/jeopardy</code> resolve — the same job Vercel's Vite preset does today. And leaving the <code>401</code> response override out keeps <code>/api</code> returning a clean 401, which is exactly the signal the SPA needs to fall back to guest play instead of bouncing a guest to a login screen.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Provisioning runbook</div>
+      <h2 class="section-title">Portal steps, in order.</h2>
+      <div class="steps">
+        <div class="step"><h4>Resource group</h4><p>Create <code>rg-icebrk-prod</code> in <b>Southeast Asia</b>. Keeping one group makes the whole stack deletable in a single action.</p></div>
+        <div class="step"><h4>Cosmos DB account</h4><p>Azure Cosmos DB → <b>Azure Cosmos DB for NoSQL</b> → set <b>Apply Free Tier Discount</b> to <b>Apply</b>, and tick <b>Limit total account throughput</b> at 1,000 RU/s. The free discount is opt-in at creation only, and one account per subscription, so get this right on the first pass.</p></div>
+        <div class="step"><h4>Database and container</h4><p>Data Explorer → New Database <code>icebrk</code> with <b>shared</b> manual throughput of 1,000 RU/s → New Container <code>settings</code>, partition key <code>/userId</code>. A shared-throughput database holds up to 25 containers inside the free allowance.</p></div>
+        <div class="step"><h4>Static Web App</h4><p>Create → plan <b>Free</b>, source <b>GitHub</b>, authorize, then pick org / <code>icebrk</code> / <code>main</code>. Build presets → <b>Custom</b>: app location <code>/</code>, api location <code>api</code>, output location <code>dist</code>. On create it commits the workflow and adds the token secret for you.</p></div>
+        <div class="step"><h4>Application settings</h4><p>SWA → Settings → Environment variables → add <code>COSMOS_CONNECTION_STRING</code> for the Production environment. Preview environments carry their own settings, so add it there too when a PR needs live data.</p></div>
+        <div class="step"><h4>Application Insights</h4><p>SWA → Monitoring → Application Insights → turn it on. This is what makes managed-function logs visible at all.</p></div>
+        <div class="step"><h4>Custom domain</h4><p>SWA → Custom domains → add your hostname, prove it with the CNAME or TXT record at your registrar, and the managed certificate issues itself. Two domains are included; leave DNS hosted at the registrar to stay at $0.</p></div>
+        <div class="step"><h4>Guardrail alerts</h4><p>Cosmos → Metrics → alert on <b>Total Request Units</b> approaching the 1,000 RU/s cap. On Azure SQL, alert on <b>Free amount remaining</b> at 10,000 vCore-seconds. Application Insights → Usage and estimated costs → set a daily ingestion cap. All free to configure.</p></div>
+      </div>
+      <div class="note note-blue"><b>Taking the App Service path instead?</b> Steps 1 and 6 through 8 carry over as written. Swap steps 2 through 5 for the two portal-settings cards under <b>Option 2</b> above — Web App on F1 with a <code>node server.js</code> startup command and system-assigned identity on, then the free-offer database created through the Azure SQL hub with <b>Allow Azure services</b> switched on, and the <code>CREATE USER … FROM EXTERNAL PROVIDER</code> grant run once as the Entra admin.</div>
+    </div>
+  </section>
+
+  <section class="band-mist">
+    <div class="wrap">
+      <div class="eyebrow">Watch-outs</div>
+      <h2 class="section-title">Things that bite on the way through.</h2>
+      <div class="grid g2">
+        <div class="bordered b-orange">
+          <h4>Platform limits</h4>
+          <ul>
+            <li>Managed Functions support HTTP triggers only, and managed identity plus Key Vault references arrive with bring-your-own Functions — so the Cosmos key lives in app settings and gets rotated there</li>
+            <li>SLA coverage begins on the Standard plan, which suits this stage and is worth a conscious nod</li>
+            <li>100 GB/month is where the Free plan stops; Standard adds overage at $0.20/GB, ideally arranged ahead of the traffic</li>
+            <li>Custom auth provider registration is a Standard-plan feature, which is what shapes the auth decision above</li>
+            <li>Cosmos free tier is one account per subscription and opt-in at creation; changing your mind means a new account</li>
+            <li>Azure SQL free databases lock to one region per subscription after the first one, and the auto-pause option caps the database at 4 vCores with 7-day point-in-time restore</li>
+            <li>App Service F1 keeps you on <code>*.azurewebsites.net</code> — a custom domain begins at Shared (D1) and a TLS binding for it at Basic (B1)</li>
+            <li>F1 gives 60 CPU-minutes a day and unloads the app after 20 minutes idle, since Always On begins at Basic</li>
+            <li>Free and Shared App Service tiers stay on a single shared instance, so scale-out and deployment slots arrive with higher tiers</li>
+          </ul>
+        </div>
+        <div class="bordered b-blue">
+          <h4>Build and runtime</h4>
+          <ul>
+            <li>Set <code>apiRuntime</code> explicitly — Node 18 and older are past their support dates, Node 20 and 22 are current</li>
+            <li>Private repos draw from 2,000 Linux minutes a month, and Windows runners count double while macOS counts tenfold — stay on <code>ubuntu-latest</code></li>
+            <li>Preview environments cap at 3; the <code>close_preview</code> job returns slots as PRs merge</li>
+            <li>Run <code>swa start</code> from the SWA CLI locally to emulate <code>/api</code> and the auth headers, rather than discovering behaviour differences in CI</li>
+            <li>Application Insights only shows function logs once it is switched on for the app</li>
+            <li>Deployment tokens are long-lived — rotate on the SWA overview blade if one ever leaks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="callout">
+        <span class="card-blob" style="top:-46px;right:80px;width:120px;height:120px;background:var(--sunshine);opacity:.92;"></span>
+        <span class="card-blob" style="bottom:-60px;right:-34px;width:140px;height:140px;background:var(--vitality-green);"></span>
+        <span class="card-blob" style="top:44%;left:24px;width:14px;height:14px;background:var(--sky-blue);"></span>
+        <h3>Both stacks in one line each</h3>
+        <p style="margin-bottom:10px;"><b>Option 1 —</b> GitHub → GitHub Actions → Azure Static Web Apps (Free) serving the SPA, the built-in auth endpoints, and managed Functions on <code style="background:rgba(255,255,255,.18);color:#fff;">/api</code> → Cosmos DB free tier or Azure SQL free offer, with Application Insights watching. Free custom domain and PR previews; sign-in through GitHub or Microsoft.</p>
+        <p style="margin-bottom:14px;"><b>Option 2 —</b> GitHub → GitHub Actions → App Service F1 Free running one Express process behind Easy Auth → Azure SQL free offer over managed identity. Branded password sign-in at $0; a custom domain waits for the Shared tier.</p>
+        <div class="pill-row">
+          <span class="pill p-ink">GitHub Actions</span><span class="pill p-blue">Static Web Apps Free</span><span class="pill p-blue">App Service F1</span>
+          <span class="pill p-green">Azure SQL free offer</span><span class="pill p-green">Cosmos DB free tier</span><span class="pill p-purple">Entra External ID</span>
+          <span class="pill p-orange">App Insights</span><span class="pill p-sky">Node 22</span><span class="pill p-sun">$0 / month</span>
+        </div>
+      </div>
+      <p style="margin-top:26px;font-size:13.5px;color:var(--slate);">Allowances verified August 15, 2026 against
+        <a href="https://learn.microsoft.com/en-us/azure/static-web-apps/plans">SWA hosting plans</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/static-web-apps/quotas">SWA quotas</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/static-web-apps/authentication-authorization">SWA authentication</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/static-web-apps/apis-functions">SWA managed functions</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/static-web-apps/languages-runtimes">SWA runtimes</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans">App Service plans</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/app-service/configure-authentication-provider-openid-connect">App Service OIDC auth</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits">App Service limits</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/cosmos-db/free-tier">Cosmos DB free tier</a>,
+        <a href="https://learn.microsoft.com/en-us/azure/azure-sql/database/free-offer">Azure SQL free offer</a>,
+        <a href="https://azure.microsoft.com/en-us/pricing/details/microsoft-entra-external-id/">Entra External ID pricing</a>, and
+        <a href="https://docs.github.com/billing/managing-billing-for-github-actions/about-billing-for-github-actions">GitHub Actions billing</a>.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">🧊 IceBrk</div>
+      <div class="footer-links">
+        <a href="https://github.com/batodulio/icebrk">GitHub</a>
+        <a href="mailto:icebrkmnl@outlook.com">Contact</a>
+        <a href="IceBrk-Branding-Guide.html">Branding guide</a>
+        <a href="README.md">README</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 IceBrk. Bonding made simple. · Architecture current as of August 15, 2026.</div>
+  </div>
+</footer>
+
+<script>
+var TABS = ['about', 'arch', 'azure'];
+function showTab(name){
+  if (TABS.indexOf(name) === -1) name = 'about';
+  TABS.forEach(function(id){
+    var selected = id === name;
+    document.getElementById('panel-' + id).hidden = !selected;
+    document.getElementById('tab-' + id).setAttribute('aria-selected', String(selected));
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+  history.replaceState(null, '', '#' + name);
+}
+showTab(location.hash.slice(1) || 'about');
+</script>
+
+</body>
+</html>
