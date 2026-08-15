@@ -17,9 +17,22 @@ concurrency:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - uses: actions/checkout@v4
+
+      # Prints whether each secret resolved to something, and the exact subject
+      # GitHub will assert to Entra. Values are never printed — only true/false —
+      # so this is safe to leave in place.
+      - name: Preflight — check Azure inputs
+        run: |
+          echo "AZURE_CLIENT_ID set ......... ${{ secrets.AZURE_CLIENT_ID != '' }}"
+          echo "AZURE_TENANT_ID set ......... ${{ secrets.AZURE_TENANT_ID != '' }}"
+          echo "AZURE_SUBSCRIPTION_ID set ... ${{ secrets.AZURE_SUBSCRIPTION_ID != '' }}"
+          echo ""
+          echo "Subject GitHub will send to Entra:"
+          echo "  repo:${{ github.repository }}:ref:${{ github.ref }}"
+          echo ""
+          echo "The federated credential's Subject identifier must match that line exactly."
 
       - uses: actions/setup-node@v4
         with:
