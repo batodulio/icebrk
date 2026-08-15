@@ -34,6 +34,27 @@ jobs:
           echo ""
           echo "The federated credential's Subject identifier must match that line exactly."
 
+      # A secret can be present but malformed — a truncated paste, or a trailing
+      # newline picked up when copying. Both are invisible above and both fail
+      # the login. This prints only shape and length, never any value.
+      - name: Preflight — validate ID formats
+        env:
+          CID: ${{ secrets.AZURE_CLIENT_ID }}
+          TID: ${{ secrets.AZURE_TENANT_ID }}
+          SID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          check () {
+            name="$1"; val="$2"; len=${#val}
+            if printf '%s' "$val" | grep -qiE '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'; then
+              echo "$name : OK — valid GUID (length $len)"
+            else
+              echo "$name : BAD — length $len, expected exactly 36. Likely a truncated copy, extra spaces, or a newline."
+            fi
+          }
+          check AZURE_CLIENT_ID       "$CID"
+          check AZURE_TENANT_ID       "$TID"
+          check AZURE_SUBSCRIPTION_ID "$SID"
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
