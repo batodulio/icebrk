@@ -37,7 +37,7 @@ export default function ScavengerHuntGame({ onExit }: ScavengerHuntGameProps) {
 
   // Signed-in hosts: load saved items/settings on open, autosave changes after.
   useCloudSync<ScavengerHuntRow>(
-    'scavenger_hunt_settings',
+    'scavenger-hunt',
     { items, hunt_minutes: minutes, theme_id: themeId },
     (row) => {
       setItems(row.items)

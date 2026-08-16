@@ -44,7 +44,7 @@ export default function RouletteGame({ onExit }: RouletteGameProps) {
 
   // Signed-in hosts: load a saved roster/settings on open, autosave changes after.
   useCloudSync<RouletteRow>(
-    'roulette_settings',
+    'roulette',
     { participants: roster.participants, spin_seconds: spinSeconds, theme_id: themeId },
     (row) => {
       roster.setText(row.participants.map((p) => p.name).join('\n'))

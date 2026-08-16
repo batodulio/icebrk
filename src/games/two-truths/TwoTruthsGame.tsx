@@ -40,7 +40,7 @@ export default function TwoTruthsGame({ onExit }: TwoTruthsGameProps) {
 
   // Signed-in hosts: load a saved roster/settings on open, autosave changes after.
   useCloudSync<TwoTruthsRow>(
-    'two_truths_settings',
+    'two-truths-and-a-lie',
     { participants: roster.participants, timer_seconds: timerSeconds, theme_id: themeId },
     (row) => {
       roster.setText(row.participants.map((p) => p.name).join('\n'))

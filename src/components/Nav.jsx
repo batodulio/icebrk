@@ -21,8 +21,8 @@ export default function Nav() {
           {!loading &&
             (user ? (
               <>
-                <span className="nav-user" title={user.user_metadata?.username}>
-                  👋 {user.user_metadata?.username ?? 'friend'}
+                <span className="nav-user" title={user.name}>
+                  👋 {user.name}
                 </span>
                 <button type="button" className="nav-coffee nav-logout" onClick={signOut}>
                   Log out

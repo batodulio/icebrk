@@ -51,7 +51,7 @@ export default function WouldYouRatherGame({ onExit }: WouldYouRatherGameProps) 
 
   // Signed-in hosts: load a saved deck/settings on open, autosave changes after.
   useCloudSync<WyrRow>(
-    'would_you_rather_settings',
+    'would-you-rather',
     { questions, timer_seconds: timerSeconds, theme_id: themeId },
     (row) => {
       setQuestions(row.questions)

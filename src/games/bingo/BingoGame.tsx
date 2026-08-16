@@ -47,7 +47,7 @@ export default function BingoGame({ onExit }: BingoGameProps) {
 
   // Signed-in hosts: load saved cards/settings on open, autosave changes after.
   useCloudSync<BingoRow>(
-    'bingo_settings',
+    'bingo',
     { card_count: cardCount, cards, auto_call_seconds: autoCallSeconds, theme_id: themeId },
     (row) => {
       setCardCount(row.card_count)

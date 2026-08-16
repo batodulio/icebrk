@@ -1,44 +1,43 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import type { User } from '@supabase/supabase-js'
-import { supabase } from '../lib/supabaseClient'
+import { fetchCurrentUser, logoutUrl, type AuthUser } from '../lib/authClient'
 
 interface AuthContextValue {
-  /** Signed-in Supabase user, or null (signed out / Supabase not configured). */
-  user: User | null
-  /** True until the initial session check resolves, avoids a "Log in" flash for returning users. */
+  /** Signed-in host, or null when browsing as a guest. */
+  user: AuthUser | null
+  /** True until the first session check resolves, avoiding a "Log in" flash for returning hosts. */
   loading: boolean
-  signOut: () => Promise<void>
+  signOut: () => void
 }
 
-const AuthContext = createContext<AuthContextValue>({ user: null, loading: false, signOut: async () => {} })
+const AuthContext = createContext<AuthContextValue>({ user: null, loading: false, signOut: () => {} })
 
 /**
- * App-wide auth state backed by Supabase Auth. Sessions persist in localStorage
- * (supabase-js default), so a signed-in host stays signed in across refreshes,
- * exactly what the per-user game tables in supabase/schema.sql key off of.
+ * App-wide auth state, backed by App Service Easy Auth. The platform keeps the
+ * session in its own cookie, so a signed-in host stays signed in across
+ * refreshes and every /api call is authenticated automatically.
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState<boolean>(supabase !== null)
+  const [user, setUser] = useState<AuthUser | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!supabase) return
+    let cancelled = false
 
-    supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null)
+    fetchCurrentUser().then((current) => {
+      if (cancelled) return
+      setUser(current)
       setLoading(false)
     })
 
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
-
-    return () => subscription.subscription.unsubscribe()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
-  const signOut = async () => {
-    await supabase?.auth.signOut()
+  // Sign-out is a platform redirect rather than a local state change, so the
+  // session cookie is actually cleared instead of just being forgotten by the UI.
+  const signOut = () => {
+    window.location.href = logoutUrl('/')
   }
 
   return <AuthContext.Provider value={{ user, loading, signOut }}>{children}</AuthContext.Provider>

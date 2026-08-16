@@ -47,7 +47,7 @@ export default function JeopardyGame({ onExit }: JeopardyGameProps) {
 
   // Signed-in hosts: load a saved board/teams on open, autosave changes after.
   useCloudSync<JeopardyRow>(
-    'jeopardy_settings',
+    'jeopardy',
     { board, teams, theme_id: themeId },
     (row) => {
       setBoard(row.board)
