@@ -24,13 +24,12 @@ IceBrk exists to remove the friction between people and connection. Too often, r
 
 ## Product architecture: the 3-tab game module
 
-Every game in IceBrk — regardless of which game it is — is built as a self-contained module with exactly **three tabs**. This is the core pattern; a host who learns it once can run any game in the library.
+Every game in IceBrk is a self-contained module wrapped in the shared `GameShell`, with the same two tabs. A host who learns one game can run any of them.
 
-1. **Game Arena** — the live play surface (what's projected/shared during the actual event)
-2. **Customize Game** — game content & theme setup (questions, prompts, branding) done beforehand
-3. **Utilities** — shared host tools: **Timer**, **Team Setup**, **Scorecard**
+1. **Customize Game** — questions, prompts, rosters, and theme, set up beforehand. The host utilities (timer, roster/team setup, color theme) live here, built once in `src/games/shared` and reused by every game rather than rebuilt per game.
+2. **Play Arena** — the live surface projected or shared during the event.
 
-These three Utilities (Timer, Team Setup, Scorecard) should be built once and reused across every game, not rebuilt per game.
+*(The original plan called for a third Utilities tab; in practice the utilities read better inside Customize, so shipped modules have two.)*
 
 ### Game library (planned, in build order)
 1. **Jeopardy** — customizable trivia board *(already built — original proof of concept used a Batman theme; production version uses IceBrk branding)*
@@ -42,23 +41,45 @@ These three Utilities (Timer, Team Setup, Scorecard) should be built once and re
 
 ---
 
-## How this gets built: phased rollout
+## How this gets built
 
-Architecture and the game library grow together, **one validated step at a time.** Don't build ahead of the current phase — each phase is only added once the previous one proves the product is worth continuing.
+The library and the architecture grew together, one validated step at a time. All five original games shipped, accounts arrived, and in August 2026 hosting moved from Vercel + Supabase to **Azure, running entirely on always-free tiers.**
 
-| Phase | Adds | Games live | Hosting | Triggered by |
-|---|---|---|---|---|
-| 1 | Just React — no database, no auth, no backend API. Everything lives in browser memory for the session | 2 (Jeopardy + Would You Rather) | Vercel (free) | Starting point — always build here first |
-| 2 | Backend API (Node.js/Express) — still no database, just shared Timer/Team/Scorecard logic | 3 (+1) | Render (free) | A 3rd game makes duplicated utility logic obvious |
-| 3 | Database (Supabase Postgres) — still no auth | 4 (+1) | Supabase (free) | Hosts want to reuse customized games across events |
-| 4 | Auth + multi-tenancy (Supabase Auth + Row Level Security) — this is the line into "real SaaS" | 5 (+1) — full original library | Supabase Auth + RLS | Strangers (not just trusted contacts) start signing up |
-| 5 | Native mobile app — only if the website genuinely can't do something | 6+ (ongoing) | App Store / Play Store | A specific need: push notifications, offline play, camera features, etc. |
+### Current architecture (live)
 
-**Currently building: Phase 1.** No database, no auth needed yet. Don't introduce a backend, database, or authentication unless explicitly asked — assume Phase 1 constraints (pure React, in-memory state, Vercel hosting) unless told otherwise.
+```
+push to main
+  → GitHub Actions        lint · typecheck · vite build · npm prune --omit=dev
+  → OIDC federated login  no stored password; app registration gh-icebrk-deploy
+  → Azure App Service     F1 Free · Linux · Node 22 · Southeast Asia
+      ├── Easy Auth       platform sign-in; injects x-ms-client-principal-id
+      ├── Express         server.js: serves dist/, /api/settings/:gameId, SPA fallback
+      └── managed identity → Azure SQL (free offer) with Row Level Security
+```
 
-**Tech stack (full target state, phases 3+):** React (Vite) frontend on Vercel · Node.js/Express API on Render · Supabase (Postgres + Auth + Storage + Realtime) · Stripe for billing · Resend for email · Sentry for error tracking · GitHub + GitHub Actions for repo/CI-CD · Notion for requirements/PM (offline, no runtime connection).
+| Layer | What runs there |
+|---|---|
+| **Repo / CI-CD** | GitHub `batodulio/icebrk`, deploys from `main` via `.github/workflows/azure-app-service.yml` |
+| **Host** | Azure App Service `icebrk-app`, plan `AZ-ASP-ICEBRK-TEST-01` (F1 Free) |
+| **Auth** | App Service Easy Auth, Microsoft provider. The app never handles a credential |
+| **API** | Express in `server.js` — two endpoints, parameterised queries, 64 KB body cap, 120 req/min per caller |
+| **Database** | Azure SQL `icebrk-test` on `sql-icebrk-test`, free offer, serverless with auto-pause |
+| **Schema** | One `dbo.game_settings` table for all six games; see `db/azure-sql-schema.sql` |
+| **Isolation** | Row Level Security via `sp_set_session_context`, set in the same batch as each query |
+| **Secrets** | None in code. The database is reached by the app's managed identity; app settings hold only `SQL_SERVER` and `SQL_DATABASE` |
 
-**Repo:** github.com/batodulio/JeopardyGame (current Jeopardy proof of concept — both plain HTML/CSS/JS and React/Vite versions exist here)
+**Cost: $0/month.** Every service sits inside an always-free tier.
+
+### Known constraints of the free tiers
+
+- **F1 gives 60 CPU-minutes/day** and unloads the app after 20 minutes idle, so the first visitor after a quiet spell waits through a cold start.
+- **No custom domain on F1** — the app lives at `icebrk-app-*.azurewebsites.net`. A custom domain starts at the Shared (D1) tier, and TLS for it at Basic (B1).
+- **Azure SQL free offer** allows ~55 hours of active compute a month at the 0.5 vCore floor, so auto-pause stays on and the first query after idle is slow.
+- **Sign-in is a Microsoft account.** Branded email-and-password sign-up means adding Entra External ID as a custom OIDC provider in Easy Auth — portal configuration only, no code change, since the client-principal header is identical either way.
+
+### What is deliberately absent
+
+No Stripe, Resend, Sentry, Realtime, or Storage yet. Add them when a real need appears, not before.
 
 ---
 
@@ -144,12 +165,13 @@ If you (the AI assistant) catch a draft using a negation word in user-facing cop
 
 ## Working conventions
 
-- **Default to Phase 1 constraints** unless told otherwise: pure React, no backend, no database, no auth, in-memory state only.
-- **Every game follows the 3-tab pattern** (Game Arena / Customize Game / Utilities) — don't introduce a different structure for a new game without a strong reason.
+- **Match the live architecture** described above: React SPA served by Express on Azure App Service, Easy Auth for identity, Azure SQL behind `/api`. Guest play stays session-local in `sessionStore`; signed-in hosts sync through `useCloudSync`.
+- **Keep credentials out of the codebase.** The database is reached by managed identity, and CI signs in with an OIDC federated credential. If a change seems to need a stored secret, that is a signal the approach is wrong.
+- **Every game follows the 2-tab pattern** (Customize Game / Play Arena) inside `GameShell` — don't introduce a different structure for a new game without a strong reason.
 - **Utilities (Timer, Team Setup, Scorecard) are shared, not duplicated** — when adding a new game, reuse the existing utility components/logic rather than rebuilding them.
 - **Apply the brand system automatically** to anything user-facing (UI, copy, marketing assets) without needing to be re-asked each time — colors, fonts, shape language, and positive-scripting voice should be the default, not an afterthought.
 - **Don't reintroduce the old corporate branding** (navy blue anchor, serif type, low-opacity dotted rings) — it has been fully superseded.
 
 ---
 
-*Last updated: June 28, 2026. Source of truth lives in the IceBrk Notion workspace (🧊 icebrk teamspace) — this README is a synced summary for AI assistants and contributors working in this repo.*
+*Last updated: August 16, 2026, when hosting moved to Azure. Source of truth lives in the IceBrk Notion workspace (🧊 icebrk teamspace) — this README is a synced summary for AI assistants and contributors working in this repo.*

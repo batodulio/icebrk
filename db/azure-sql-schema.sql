@@ -2,9 +2,9 @@
 -- IceBrk — Azure SQL schema (Azure SQL Database free offer)
 --
 -- The record of what was run against the `icebrk-test` database on the
--- `sql-icebrk-test` logical server. This is the Azure equivalent of
--- supabase/schema.sql: one table covers all six games, and Row Level Security
--- restores the per-host isolation the Supabase policies provided.
+-- `sql-icebrk-test` logical server. One table covers all six games, and Row
+-- Level Security restores the per-host isolation the previous Postgres
+-- policies provided (that schema lives on in git history).
 --
 -- The Azure portal query editor has no GO batch separator, so run each
 -- numbered block as its own execution.
@@ -36,7 +36,7 @@ CREATE TABLE dbo.game_settings (
 );
 
 -- ---------------------------------------------------------------------------
--- 3. The security predicate. Equivalent to Supabase's `auth.uid() = user_id`:
+-- 3. The security predicate. Equivalent to the old `auth.uid() = user_id`:
 --    a row is visible only when it matches the identity the connection
 --    declared through sp_set_session_context.
 --
