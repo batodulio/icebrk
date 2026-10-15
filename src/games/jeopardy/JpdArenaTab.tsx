@@ -3,7 +3,7 @@ import ConfettiBurst from '../shared/ConfettiBurst'
 import { COLOR_THEMES, wedgeTextColor } from '../shared/themes'
 import type { ColorThemeId } from '../shared/types'
 import { soundManager } from '../shared/sound'
-import type { JpdCategory, JpdClue, JpdTeam } from './types'
+import type { JpdCategory, JpdClue, JpdTeam, JpdTimerSeconds } from './types'
 
 interface ActiveClue {
   category: JpdCategory
@@ -15,20 +15,39 @@ interface JpdArenaTabProps {
   usedClueIds: Set<string>
   teams: JpdTeam[]
   themeId: ColorThemeId
+  /** Seconds on the answer clock; 0 (unli time) leaves the question untimed. */
+  timerSeconds: JpdTimerSeconds
   onAward: (teamId: string, points: number, clueId: string) => void
   onNoAnswer: (clueId: string) => void
   onRestart: () => void
 }
 
+function formatClock(totalSeconds: number): string {
+  const m = Math.floor(totalSeconds / 60)
+  const s = totalSeconds % 60
+  return `${m}:${String(s).padStart(2, '0')}`
+}
+
+/** Clock face drawn in currentColor, so it follows the timer pill from ink to white. */
+function ClockIcon() {
+  return (
+    <svg className="jpd-timer-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2.5" />
+      <path d="M12 7v5l3.5 2" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 /**
  * Tab 2 — Play Arena. The projected quiz board: scoreboard on top, the 4×4 grid
- * below. Tapping a cell opens the clue overlay; the host reveals the answer and
- * awards the points. When the board is cleared, the leading team gets the big
+ * below. Tapping a cell opens the clue overlay and starts the answer clock; the
+ * host reveals the answer and awards the points. When the board is cleared, the leading team gets the big
  * confetti moment.
  */
-export default function JpdArenaTab({ board, usedClueIds, teams, themeId, onAward, onNoAnswer, onRestart }: JpdArenaTabProps) {
+export default function JpdArenaTab({ board, usedClueIds, teams, themeId, timerSeconds, onAward, onNoAnswer, onRestart }: JpdArenaTabProps) {
   const [active, setActive] = useState<ActiveClue | null>(null)
   const [revealed, setRevealed] = useState(false)
+  const [remaining, setRemaining] = useState<number>(timerSeconds)
   const [burstKey, setBurstKey] = useState(0)
   const [celebrating, setCelebrating] = useState(false)
 
@@ -41,6 +60,21 @@ export default function JpdArenaTab({ board, usedClueIds, teams, themeId, onAwar
 
   const topScore = Math.max(...teams.map((t) => t.score), 0)
   const champions = teams.filter((t) => t.score === topScore && topScore > 0)
+
+  const timed = timerSeconds > 0
+  const timesUp = timed && remaining <= 0
+
+  // The answer clock runs from the moment a question opens until the answer is
+  // revealed, which freezes it so the host can award points in peace.
+  useEffect(() => {
+    if (!active || revealed || !timed) return
+    if (remaining <= 0) {
+      soundManager.playBuzzer()
+      return
+    }
+    const t = window.setTimeout(() => setRemaining((r) => r - 1), 1000)
+    return () => window.clearTimeout(t)
+  }, [active, revealed, timed, remaining])
 
   // Fire the fanfare + confetti exactly once when the last clue gets used.
   const celebratedRef = useRef(false)
@@ -56,8 +90,12 @@ export default function JpdArenaTab({ board, usedClueIds, teams, themeId, onAwar
 
   const openClue = (category: JpdCategory, clue: JpdClue) => {
     if (usedClueIds.has(clue.id)) return
+    // The buzzer fires seconds later, outside any tap, and browsers only let audio
+    // start during one. Waking the audio here, on the tile tap, lets it sound.
+    soundManager.unlock()
     setActive({ category, clue })
     setRevealed(false)
+    setRemaining(timerSeconds)
   }
 
   const closeOverlay = () => {
@@ -140,11 +178,32 @@ export default function JpdArenaTab({ board, usedClueIds, teams, themeId, onAwar
 
       {active && (
         <div className="jpd-overlay" role="dialog" aria-modal="true" aria-label={`${active.category.name} for ${active.clue.points}`}>
-          <div className="jpd-overlay-card">
+          <div className={`jpd-overlay-card ${timed ? 'timed' : ''}`}>
+            {timed && (
+              <div className={`jpd-timer ${timesUp ? 'done' : ''} ${timesUp && !revealed ? 'flashing' : ''}`} role="timer">
+                <ClockIcon />
+                <span className="jpd-timer-clock">{timesUp ? "Time's up!" : formatClock(remaining)}</span>
+                {/* A fresh clock for the team stealing the question. */}
+                {!revealed && (
+                  <button
+                    type="button"
+                    className="jpd-timer-restart"
+                    onClick={() => setRemaining(timerSeconds)}
+                    aria-label="Restart the clock"
+                    title="Restart the clock"
+                  >
+                    ↺
+                  </button>
+                )}
+              </div>
+            )}
             <p className="jpd-overlay-head">
               {active.category.name} · {active.clue.points} points
             </p>
             <p className="jpd-overlay-question">{active.clue.question}</p>
+            {active.clue.image && (
+              <img className="jpd-overlay-image" src={active.clue.image} alt={`Picture for ${active.category.name} ${active.clue.points}`} />
+            )}
             {revealed && <p className="jpd-overlay-answer">💡 {active.clue.answer}</p>}
 
             {!revealed ? (

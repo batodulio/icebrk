@@ -3,7 +3,7 @@ import ConfettiBurst from '../shared/ConfettiBurst'
 import { COLOR_THEMES, wedgeTextColor } from '../shared/themes'
 import type { ColorThemeId } from '../shared/types'
 import { soundManager } from '../shared/sound'
-import type { WyrQuestion, WyrSide, WyrTimerSeconds } from './types'
+import type { WyrQuestion, WyrSide, WyrSideLabels, WyrTimerSeconds } from './types'
 
 interface WyrArenaTabProps {
   question: WyrQuestion | null
@@ -12,6 +12,8 @@ interface WyrArenaTabProps {
   pick: WyrSide | null
   themeId: ColorThemeId
   timerSeconds: WyrTimerSeconds
+  /** The action for each side, e.g. Stand / Sit, shown in each card's corner. */
+  sideLabels: WyrSideLabels
   onPick: (questionId: string, side: WyrSide) => void
   onPrev: () => void
   onNext: () => void
@@ -36,6 +38,7 @@ export default function WyrArenaTab({
   pick,
   themeId,
   timerSeconds,
+  sideLabels,
   onPick,
   onPrev,
   onNext,
@@ -46,6 +49,9 @@ export default function WyrArenaTab({
   const [timerRunning, setTimerRunning] = useState(false)
 
   const theme = COLOR_THEMES[themeId]
+  // A label the host has blanked out falls back to the classic letter.
+  const labelA = sideLabels.a.trim() || 'A'
+  const labelB = sideLabels.b.trim() || 'B'
   const paletteSize = theme.colors.length
   // Rotate the pair of card colors per question so the arena stays lively deck-long.
   const colorA = theme.colors[(index * 2) % paletteSize]
@@ -103,7 +109,7 @@ export default function WyrArenaTab({
           style={{ background: colorA, color: wedgeTextColor(theme, colorA) }}
           onClick={() => handlePick('a')}
         >
-          <span className="wyr-side-letter">A</span>
+          <span className="wyr-side-label">{labelA}</span>
           {question.a}
           {burst?.side === 'a' && <ConfettiBurst key={burst.key} theme={themeId} pieceCount={32} onDone={() => setBurst(null)} />}
         </button>
@@ -114,7 +120,7 @@ export default function WyrArenaTab({
           style={{ background: colorB, color: wedgeTextColor(theme, colorB) }}
           onClick={() => handlePick('b')}
         >
-          <span className="wyr-side-letter">B</span>
+          <span className="wyr-side-label">{labelB}</span>
           {question.b}
           {burst?.side === 'b' && <ConfettiBurst key={burst.key} theme={themeId} pieceCount={32} onDone={() => setBurst(null)} />}
         </button>

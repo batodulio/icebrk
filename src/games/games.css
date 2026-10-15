@@ -43,6 +43,81 @@
 }
 .game-shell-title { font-family: var(--font-display); font-weight: 800; font-size: 28px; color: var(--ink); }
 .game-shell-tagline { color: var(--slate); font-size: 15px; font-weight: 500; }
+/* Takes the free space, which pushes the how-to-play button to the far right. */
+.game-shell-heading { flex: 1; min-width: 0; }
+
+/* ---------- Shared: How to play ("i" button + instruction card) ---------- */
+.how-to-play-btn {
+  display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0;
+  border: none; border-radius: 50%; cursor: pointer; padding: 4px 0 0;
+  background: var(--sky-blue); color: var(--white);
+  font-family: var(--font-display); font-weight: 800; font-size: 25px; line-height: 1;
+  box-shadow: 0 4px 0 rgba(20, 90, 150, 0.3); transition: transform 160ms ease;
+}
+.how-to-play-btn:hover { transform: translateY(-2px) scale(1.08); }
+.how-to-play-btn:focus-visible { outline: 3px solid var(--sunshine); outline-offset: 3px; }
+
+.how-to-play {
+  border: none; padding: 0; background: transparent; margin: auto;
+  width: min(560px, calc(100% - 28px)); max-width: none; max-height: none; overflow: visible;
+}
+.how-to-play[open] { animation: winner-pop 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.how-to-play::backdrop { background: rgba(34, 34, 59, 0.66); animation: jpd-fade-in 180ms ease both; }
+.how-to-play-card {
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+  max-height: calc(100dvh - 28px);
+  background: var(--white); border: 4px solid var(--sunshine); border-radius: 26px;
+}
+/* Positioned so it paints above the blobs, which come first in the markup. */
+.how-to-play-body {
+  position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  padding: 34px 32px 28px; text-align: center;
+}
+/* Confetti blobs bleeding off the card's corners. */
+.htp-blob { position: absolute; border-radius: 50%; pointer-events: none; }
+.htp-blob-1 { width: 110px; height: 110px; top: -52px; left: -44px; background: var(--energy-orange); opacity: 0.9; }
+.htp-blob-2 { width: 80px; height: 80px; bottom: -36px; right: -30px; background: var(--vitality-green); opacity: 0.85; }
+.how-to-play-close {
+  position: absolute; z-index: 1; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%;
+  border: none; cursor: pointer; background: var(--mist); color: var(--ink);
+  font-size: 22px; font-weight: 700; line-height: 1; transition: background 160ms ease;
+}
+.how-to-play-close:hover { background: var(--sunshine); }
+.how-to-play-eyebrow {
+  display: inline-flex; background: var(--ib-blue); color: var(--white);
+  font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 999px; margin-bottom: 8px;
+}
+.how-to-play-title {
+  font-family: var(--font-display); font-weight: 800; font-size: 30px; line-height: 1.15;
+  color: var(--ink); margin-bottom: 20px;
+}
+.how-to-play-steps {
+  list-style: none; counter-reset: htp-step; padding: 0; margin: 0 0 22px;
+  display: flex; flex-direction: column; gap: 12px; text-align: left;
+}
+.how-to-play-steps li {
+  counter-increment: htp-step; position: relative; min-height: 32px;
+  padding: 4px 0 0 46px; font-size: 15px; line-height: 1.5; color: var(--ink);
+}
+.how-to-play-steps li::before {
+  content: counter(htp-step); position: absolute; left: 0; top: 0;
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--white);
+  background: var(--ib-blue);
+}
+.how-to-play-steps li:nth-child(6n+2)::before { background: var(--energy-orange); }
+.how-to-play-steps li:nth-child(6n+3)::before { background: var(--vitality-green); }
+.how-to-play-steps li:nth-child(6n+4)::before { background: var(--sky-blue); }
+.how-to-play-steps li:nth-child(6n+5)::before { background: var(--purple); }
+.how-to-play-steps li:nth-child(6n+6)::before { background: var(--sunshine); color: var(--ink); }
+.how-to-play-steps b { font-weight: 700; color: var(--ib-blue); }
+.how-to-play-cheer {
+  font-family: var(--font-display); font-weight: 800; font-size: 20px; line-height: 1.25;
+  color: var(--white); background: var(--energy-orange); border-radius: 18px;
+  padding: 14px 18px; margin-bottom: 22px; box-shadow: 0 6px 0 rgba(244, 121, 32, 0.3);
+}
+.how-to-play-go { padding: 12px 28px; font-size: 15px; }
 
 /* Full-width tab strip: each tab takes an equal share of the row. */
 .game-tabs { display: flex; gap: 10px; width: 100%; margin-bottom: 28px; }
@@ -251,10 +326,13 @@
 .wyr-card:hover { transform: translateY(-3px) scale(1.01); }
 .wyr-card.picked { transform: scale(1.04); box-shadow: 0 8px 0 var(--sunshine), 0 0 0 4px var(--sunshine); }
 .wyr-card.dimmed { opacity: 0.45; }
-.wyr-side-letter {
-  position: absolute; top: 14px; left: 16px; width: 30px; height: 30px; border-radius: 50%;
+/* The side's action (Stand, Thumbs Up, …): a pill that grows with its text. */
+.wyr-side-label {
+  position: absolute; top: 14px; left: 16px; max-width: calc(100% - 32px);
+  min-width: 30px; height: 30px; padding: 0 12px; border-radius: 999px;
   background: rgba(255, 255, 255, 0.28); display: grid; place-items: center;
-  font-family: var(--font-body); font-weight: 800; font-size: 14px;
+  font-family: var(--font-body); font-weight: 800; font-size: 13px; letter-spacing: 0.3px;
+  text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .wyr-or {
   align-self: center; justify-self: center; z-index: 1; width: 58px; height: 58px; border-radius: 50%;
@@ -294,6 +372,17 @@
 }
 .wyr-add-input:focus { outline: none; border-color: var(--sky-blue); }
 .wyr-or-chip { font-weight: 800; font-size: 12px; color: var(--slate); text-transform: uppercase; }
+
+/* Customize tab: side actions */
+.wyr-side-input { min-width: 140px; font-weight: 700; }
+.wyr-side-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.wyr-side-preset {
+  border: 3px solid var(--mist); background: var(--white); color: var(--ink); cursor: pointer;
+  border-radius: 999px; padding: 7px 14px; font-family: var(--font-body); font-weight: 700; font-size: 13px;
+  transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+.wyr-side-preset:hover { border-color: var(--sunshine); }
+.wyr-side-preset.active { background: var(--ib-blue); border-color: var(--ib-blue); color: var(--white); }
 .wyr-restore-btn {
   border: none; background: transparent; cursor: pointer; font-family: var(--font-body);
   font-weight: 700; font-size: 13px; color: var(--ib-blue); padding: 4px;
@@ -357,11 +446,16 @@
   background: rgba(34, 34, 59, 0.66); animation: jpd-fade-in 180ms ease both;
 }
 .jpd-overlay-card {
-  background: var(--white); border-radius: 26px; padding: 36px 32px; max-width: 640px; width: 100%;
+  position: relative; background: var(--white); border-radius: 26px; padding: 36px 32px; max-width: 640px; width: 100%;
   text-align: center; border: 4px solid var(--sunshine); animation: winner-pop 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 .jpd-overlay-head { font-weight: 800; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--ib-blue); margin-bottom: 14px; }
 .jpd-overlay-question { font-family: var(--font-display); font-weight: 800; font-size: clamp(20px, 3vw, 28px); color: var(--ink); line-height: 1.3; margin-bottom: 18px; }
+/* contain keeps a whole logo in view whatever its shape. */
+.jpd-overlay-image {
+  display: block; margin: 0 auto 20px; max-width: 100%; max-height: min(40vh, 340px);
+  object-fit: contain; border-radius: 16px;
+}
 .jpd-overlay-answer {
   font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--ink);
   background: var(--sunshine); border-radius: 999px; padding: 10px 24px; display: inline-block; margin-bottom: 18px;
@@ -372,6 +466,32 @@
 .jpd-overlay-actions .btn { padding: 12px 24px; font-size: 14px; }
 .jpd-award-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 @keyframes jpd-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Answer clock, pinned to the question card's top-right corner. A timed card
+   gets extra top padding to keep the category line clear of it; unli time
+   leaves the card at its usual size. */
+.jpd-overlay-card.timed { padding-top: 70px; }
+.jpd-timer {
+  position: absolute; top: 16px; right: 16px; display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white); color: var(--ink); border: 3px solid var(--mist); border-radius: 999px;
+  padding: 6px 8px 6px 14px; box-shadow: 0 4px 0 rgba(34, 34, 59, 0.08);
+}
+.jpd-timer-icon { width: 20px; height: 20px; flex-shrink: 0; }
+.jpd-timer-clock { font-family: var(--font-display); font-weight: 800; font-size: 20px; line-height: 1; min-width: 44px; text-align: center; }
+.jpd-timer-restart {
+  display: grid; place-items: center; width: 30px; height: 30px; border: none; border-radius: 50%; cursor: pointer;
+  background: var(--mist); color: var(--ink); font-size: 19px; font-weight: 800; line-height: 1;
+  transition: background 160ms ease;
+}
+.jpd-timer-restart:hover { background: var(--sunshine); }
+.jpd-timer.done { background: var(--alert-red); border-color: var(--alert-red); color: var(--white); }
+/* Inherits the pill's text color, so the arrow stays visible at both ends of the flash. */
+.jpd-timer.done .jpd-timer-restart { background: rgba(34, 34, 59, 0.18); color: inherit; }
+.jpd-timer.flashing { animation: jpd-timer-flash 0.9s ease-in-out infinite; }
+@keyframes jpd-timer-flash {
+  0%, 100% { background: var(--alert-red); color: var(--white); box-shadow: 0 0 0 0 rgba(229, 56, 59, 0.55); }
+  50% { background: var(--white); color: var(--alert-red); box-shadow: 0 0 0 10px rgba(229, 56, 59, 0); }
+}
 
 /* Jeopardy customize: category editors */
 .jpd-category-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -394,6 +514,18 @@
 }
 .jpd-clue-input:focus { outline: none; border-color: var(--sky-blue); }
 .jpd-clue-answer { border-style: dashed; color: var(--vitality-green); }
+.jpd-clue-picture { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.jpd-pic-thumb {
+  height: 40px; max-width: 80px; object-fit: contain; background: var(--white);
+  border: 2px solid var(--mist); border-radius: 8px;
+}
+.jpd-pic-btn {
+  border: none; background: transparent; cursor: pointer; padding: 2px 4px;
+  font-family: var(--font-body); font-weight: 700; font-size: 12px; color: var(--ib-blue);
+}
+.jpd-pic-btn:hover:not(:disabled) { text-decoration: underline; }
+.jpd-pic-btn:disabled { opacity: 0.6; cursor: wait; }
+.jpd-pic-error { flex-basis: 100%; font-size: 12px; font-weight: 600; color: var(--energy-orange); }
 
 /* ---------- Bingo ---------- */
 .bng-arena { display: flex; flex-direction: column; gap: 20px; align-items: center; }
@@ -539,12 +671,25 @@
   .ttl-spotlight { padding: 28px 18px; }
   .jpd-overlay { padding: 14px; }
   .jpd-overlay-card { padding: 26px 18px; }
+  .jpd-overlay-card.timed { padding-top: 66px; }
+  .jpd-overlay-image { max-height: 30vh; }
+  .jpd-timer { top: 12px; right: 12px; }
   .jpd-cell { padding: 18px 4px; }
+  .how-to-play-body { padding: 24px 16px 20px; }
+  .how-to-play-title { font-size: 24px; margin-bottom: 14px; }
+  .how-to-play-steps { gap: 9px; margin-bottom: 16px; }
+  .how-to-play-steps li { min-height: 28px; padding: 3px 0 0 38px; font-size: 14px; line-height: 1.45; }
+  .how-to-play-steps li::before { width: 28px; height: 28px; font-size: 15px; }
+  .how-to-play-cheer { font-size: 17px; padding: 12px 14px; margin-bottom: 16px; }
+  .how-to-play-go { width: 100%; }
+  .htp-blob-2 { width: 60px; height: 60px; bottom: -28px; right: -24px; }
   .bng-ball { width: 140px; height: 140px; font-size: 32px; }
   .bng-ball.empty { font-size: 22px; }
   .sch-timer { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wheel-svg, .confetti-piece, .queue-item { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .wheel-svg, .confetti-piece, .queue-item, .how-to-play, .how-to-play::backdrop { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  /* Time's up still reads as solid red, just without the flashing. */
+  .jpd-timer.flashing { animation: none; }
 }

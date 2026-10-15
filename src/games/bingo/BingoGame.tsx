@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import GameShell from '../shared/GameShell'
+import type { HowToPlayContent } from '../shared/HowToPlay'
 import { useSessionState } from '../shared/sessionStore'
 import { useCloudSync } from '../shared/useCloudSync'
 import type { ColorThemeId, GameTabDefinition } from '../shared/types'
@@ -27,6 +28,20 @@ const TABS: GameTabDefinition[] = [
   { id: 'customize', label: 'Customize Game' },
   { id: 'arena', label: 'Play Arena' },
 ]
+
+// Opened from the "i" at the right of the game header.
+const HOW_TO_PLAY: HowToPlayContent = {
+  steps: [
+    <>In <b>Customize Game</b>, choose how many cards you need. Tap <b>Shuffle Cards</b> for a fresh set.</>,
+    <>Deal a card to every player: print the page, screenshot it, or copy one onto paper.</>,
+    <>Open <b>Play Arena</b> and put the caller on the big screen.</>,
+    <>Tap <b>Call First Number</b>, then <b>Call Next Number</b>. Set an auto-call pace for hands-free calling.</>,
+    <>Players mark each called number on their card. The ★ in the middle is free!</>,
+    <>Five in a row across, down, or diagonally? Shout "BINGO!"</>,
+    <>Tap <b>📣 BINGO!</b> to celebrate, then check the card against the board.</>,
+  ],
+  cheer: 'Cards ready, ears open… first to shout BINGO takes the glory! 📣🎉',
+}
 
 interface BingoGameProps {
   onExit: () => void
@@ -90,6 +105,7 @@ export default function BingoGame({ onExit }: BingoGameProps) {
       activeTabId={activeTab}
       onTabChange={setActiveTab}
       onBack={onExit}
+      howToPlay={HOW_TO_PLAY}
     >
       {activeTab === 'customize' && (
         <BingoCustomizeTab

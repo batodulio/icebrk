@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
+import type { HowToPlayContent } from '../shared/HowToPlay'
 import { useParticipants } from '../shared/useParticipants'
 import { useSessionState } from '../shared/sessionStore'
 import { useCloudSync } from '../shared/useCloudSync'
@@ -19,6 +20,20 @@ const TABS: GameTabDefinition[] = [
   { id: 'customize', label: 'Customize Game' },
   { id: 'arena', label: 'Play Arena' },
 ]
+
+// Opened from the "i" at the right of the game header.
+const HOW_TO_PLAY: HowToPlayContent = {
+  steps: [
+    <>Add everyone's names in <b>Customize Game</b>, one per line. Each person gets one turn in the spotlight.</>,
+    <>Pick a color theme, and add a guessing timer if you like.</>,
+    <>Open <b>Play Arena</b>. The spotlight shows whose turn it is.</>,
+    <>The storyteller shares two truths and one lie about themselves, in any order.</>,
+    <>The room talks it over and votes on the lie. Tap <b>Start Timer</b> if you set one.</>,
+    <>Tap <b>They Fooled Us!</b> or <b>We Caught the Lie!</b>, then <b>Next Player →</b>.</>,
+    <>Once everyone has had a turn, the <b>Bluff Masters</b> list crowns the sneakiest storytellers! 😱</>,
+  ],
+  cheer: "Put on your best poker face and keep 'em guessing! 🃏😏",
+}
 
 interface TwoTruthsGameProps {
   onExit: () => void
@@ -85,6 +100,7 @@ export default function TwoTruthsGame({ onExit }: TwoTruthsGameProps) {
       activeTabId={activeTab}
       onTabChange={setActiveTab}
       onBack={onExit}
+      howToPlay={HOW_TO_PLAY}
     >
       {activeTab === 'customize' && (
         <TtlCustomizeTab

@@ -2,7 +2,16 @@ import { useState } from 'react'
 import UtilitySelect from '../shared/UtilitySelect'
 import { COLOR_THEME_LIST } from '../shared/themes'
 import type { ColorThemeId } from '../shared/types'
-import { MAX_QUESTIONS, WYR_TIMER_OPTIONS, type WyrQuestion, type WyrSide, type WyrTimerSeconds } from './types'
+import {
+  MAX_QUESTIONS,
+  MAX_SIDE_LABEL_LENGTH,
+  SIDE_LABEL_PRESETS,
+  WYR_TIMER_OPTIONS,
+  type WyrQuestion,
+  type WyrSide,
+  type WyrSideLabels,
+  type WyrTimerSeconds,
+} from './types'
 
 interface CustomizeQuestionsTabProps {
   questions: WyrQuestion[]
@@ -14,6 +23,8 @@ interface CustomizeQuestionsTabProps {
   onClear: () => void
   timerSeconds: WyrTimerSeconds
   onTimerSecondsChange: (value: WyrTimerSeconds) => void
+  sideLabels: WyrSideLabels
+  onSideLabelsChange: (labels: WyrSideLabels) => void
   themeId: ColorThemeId
   onThemeChange: (value: ColorThemeId) => void
 }
@@ -41,6 +52,8 @@ export default function CustomizeQuestionsTab({
   onClear,
   timerSeconds,
   onTimerSecondsChange,
+  sideLabels,
+  onSideLabelsChange,
   themeId,
   onThemeChange,
 }: CustomizeQuestionsTabProps) {
@@ -76,6 +89,50 @@ export default function CustomizeQuestionsTab({
             options={COLOR_THEME_LIST.map((t) => ({ value: t.id, label: `${t.emoji} ${t.label}` }))}
             onChange={(value) => onThemeChange(value as ColorThemeId)}
           />
+        </div>
+      </div>
+
+      <div className="customize-card">
+        <div className="customize-card-head">
+          <h3>🙋 Side Actions</h3>
+        </div>
+        <p className="customize-card-hint">
+          How does the room pick a side? Each card shows its action in the top-left corner. Tap a pair below or write your own.
+        </p>
+        <div className="wyr-add-row">
+          <input
+            className="wyr-add-input wyr-side-input"
+            value={sideLabels.a}
+            maxLength={MAX_SIDE_LABEL_LENGTH}
+            placeholder="A"
+            onChange={(e) => onSideLabelsChange({ ...sideLabels, a: e.target.value })}
+            aria-label="Action for side A"
+          />
+          <span className="wyr-or-chip">or</span>
+          <input
+            className="wyr-add-input wyr-side-input"
+            value={sideLabels.b}
+            maxLength={MAX_SIDE_LABEL_LENGTH}
+            placeholder="B"
+            onChange={(e) => onSideLabelsChange({ ...sideLabels, b: e.target.value })}
+            aria-label="Action for side B"
+          />
+        </div>
+        <div className="wyr-side-presets">
+          {SIDE_LABEL_PRESETS.map((preset) => {
+            const active = preset.a === sideLabels.a && preset.b === sideLabels.b
+            return (
+              <button
+                type="button"
+                key={`${preset.a}/${preset.b}`}
+                className={`wyr-side-preset ${active ? 'active' : ''}`}
+                aria-pressed={active}
+                onClick={() => onSideLabelsChange(preset)}
+              >
+                {preset.a} / {preset.b}
+              </button>
+            )
+          })}
         </div>
       </div>
 

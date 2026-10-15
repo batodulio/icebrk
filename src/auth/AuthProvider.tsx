@@ -1,19 +1,29 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import { fetchCurrentUser, logoutUrl, type AuthUser } from '../lib/authClient'
+import * as authClient from '../lib/authClient'
+import type { AuthUser } from '../lib/authClient'
 
 interface AuthContextValue {
   /** Signed-in host, or null when browsing as a guest. */
   user: AuthUser | null
   /** True until the first session check resolves, avoiding a "Log in" flash for returning hosts. */
   loading: boolean
-  signOut: () => void
+  /** Both reject with an AuthError whose message is ready to show. */
+  signIn: (username: string, password: string) => Promise<void>
+  signUp: (username: string, password: string) => Promise<void>
+  signOut: () => Promise<void>
 }
 
-const AuthContext = createContext<AuthContextValue>({ user: null, loading: false, signOut: () => {} })
+const AuthContext = createContext<AuthContextValue>({
+  user: null,
+  loading: false,
+  signIn: async () => {},
+  signUp: async () => {},
+  signOut: async () => {},
+})
 
 /**
- * App-wide auth state, backed by App Service Easy Auth. The platform keeps the
- * session in its own cookie, so a signed-in host stays signed in across
+ * App-wide auth state, backed by the /api/auth endpoints. The server keeps the
+ * session in an HttpOnly cookie, so a signed-in host stays signed in across
  * refreshes and every /api call is authenticated automatically.
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -23,7 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false
 
-    fetchCurrentUser().then((current) => {
+    authClient.fetchCurrentUser().then((current) => {
       if (cancelled) return
       setUser(current)
       setLoading(false)
@@ -34,13 +44,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  // Sign-out is a platform redirect rather than a local state change, so the
-  // session cookie is actually cleared instead of just being forgotten by the UI.
-  const signOut = () => {
-    window.location.href = logoutUrl('/')
+  const signIn = async (username: string, password: string) => {
+    setUser(await authClient.signIn(username, password))
   }
 
-  return <AuthContext.Provider value={{ user, loading, signOut }}>{children}</AuthContext.Provider>
+  const signUp = async (username: string, password: string) => {
+    setUser(await authClient.signUp(username, password))
+  }
+
+  const signOut = async () => {
+    try {
+      await authClient.signOut()
+    } catch (error: unknown) {
+      console.error('[auth] sign-out request failed:', error)
+    } finally {
+      setUser(null)
+    }
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>{children}</AuthContext.Provider>
+  )
 }
 
 export function useAuth(): AuthContextValue {

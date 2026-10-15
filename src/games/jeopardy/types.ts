@@ -7,6 +7,8 @@ export interface JpdClue {
   points: number
   question: string
   answer: string
+  /** Optional picture shown under the question: an /api/images URL, or a guest's data: URL. */
+  image?: string
 }
 
 export interface JpdCategory {
@@ -30,6 +32,14 @@ export const CATEGORY_COUNT_OPTIONS = [3, 4, 5, 6]
 export const ROW_COUNT_OPTIONS = [3, 4, 5]
 
 export const MAX_TEAMS = 6
+
+/** Seconds a team gets to answer once a question opens; 0 is unli time, with no clock. */
+export type JpdTimerSeconds = 0 | 5 | 7 | 10 | 15 | 20 | 25
+
+// Unli time sits last, after the longest clock.
+export const JPD_TIMER_OPTIONS: JpdTimerSeconds[] = [5, 7, 10, 15, 20, 25, 0]
+
+export const DEFAULT_JPD_TIMER: JpdTimerSeconds = 15
 
 export function createBlankClue(rowIndex: number): JpdClue {
   return { id: crypto.randomUUID(), points: pointsForRow(rowIndex), question: '', answer: '' }
