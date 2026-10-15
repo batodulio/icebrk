@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import HowToPlay, { type HowToPlayContent } from './HowToPlay'
 import type { GameTabDefinition } from './types'
 
 interface GameShellProps {
@@ -9,6 +10,8 @@ interface GameShellProps {
   activeTabId: string
   onTabChange: (id: string) => void
   onBack: () => void
+  /** When given, an "i" button at the right of the header opens these instructions. */
+  howToPlay?: HowToPlayContent
   children: ReactNode
 }
 
@@ -19,7 +22,7 @@ interface GameShellProps {
  * only renders the surrounding layout so every game feels consistent without
  * duplicating this shell per game.
  */
-export default function GameShell({ emoji, title, tagline, tabs, activeTabId, onTabChange, onBack, children }: GameShellProps) {
+export default function GameShell({ emoji, title, tagline, tabs, activeTabId, onTabChange, onBack, howToPlay, children }: GameShellProps) {
   return (
     <div className="game-shell">
       {/* Floating brand-colored shapes so game pages feel like the landing page's
@@ -41,10 +44,11 @@ export default function GameShell({ emoji, title, tagline, tabs, activeTabId, on
 
         <div className="game-shell-header">
           <span className="game-shell-emoji">{emoji}</span>
-          <div>
+          <div className="game-shell-heading">
             <h1 className="game-shell-title">{title}</h1>
             <p className="game-shell-tagline">{tagline}</p>
           </div>
+          {howToPlay && <HowToPlay gameTitle={title} steps={howToPlay.steps} cheer={howToPlay.cheer} />}
         </div>
 
         {tabs.length > 0 && (

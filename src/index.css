@@ -11,6 +11,8 @@
   --mist: #F2EFE4;
   --slate: #7A786E;
   --white: #FFFFFF;
+  /* Outside the brand palette on purpose: reserved for the time's-up alert. */
+  --alert-red: #E5383B;
   --font-display: 'Baloo 2', sans-serif;
   --font-body: 'Poppins', sans-serif;
 }
@@ -380,18 +382,6 @@ section { padding: 56px 0; position: relative; }
 .auth-notice code { font-size: 12px; background: var(--mist); border-radius: 6px; padding: 1px 6px; }
 .auth-fineprint { font-size: 12px; color: var(--slate); text-align: center; margin-top: 14px; }
 
-/* Sign-in handoff card: the platform owns the credentials, so this is a
-   doorway rather than a form. */
-.auth-card-title {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 24px;
-  color: var(--ink);
-  line-height: 1.2;
-  margin-bottom: 8px;
-}
-.auth-card-sub { font-size: 14px; color: var(--slate); margin-bottom: 22px; }
-.auth-submit[href] { text-decoration: none; }
 .auth-guest-link {
   display: block;
   text-align: center;

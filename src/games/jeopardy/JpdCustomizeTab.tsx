@@ -1,10 +1,30 @@
 import UtilitySelect from '../shared/UtilitySelect'
+import JpdCluePicture from './JpdCluePicture'
 import { COLOR_THEME_LIST } from '../shared/themes'
 import type { ColorThemeId } from '../shared/types'
-import { CATEGORY_COUNT_OPTIONS, MAX_TEAMS, ROW_COUNT_OPTIONS, type JpdCategory, type JpdTeam } from './types'
+import {
+  CATEGORY_COUNT_OPTIONS,
+  JPD_TIMER_OPTIONS,
+  MAX_TEAMS,
+  ROW_COUNT_OPTIONS,
+  type JpdCategory,
+  type JpdTeam,
+  type JpdTimerSeconds,
+} from './types'
 
 // Playful digit emoji for the board-size dropdowns.
 const COUNT_EMOJI: Record<number, string> = { 3: '3️⃣', 4: '4️⃣', 5: '5️⃣', 6: '6️⃣' }
+
+// Quick clocks feel zappy, long ones leave room to think.
+const TIMER_LABELS: Record<JpdTimerSeconds, string> = {
+  5: '⚡ 5 seconds',
+  7: '🔥 7 seconds',
+  10: '⏱️ 10 seconds',
+  15: '⏳ 15 seconds',
+  20: '🕰️ 20 seconds',
+  25: '🐢 25 seconds',
+  0: '♾️ Unli time',
+}
 
 interface JpdCustomizeTabProps {
   board: JpdCategory[]
@@ -13,12 +33,15 @@ interface JpdCustomizeTabProps {
   onRowCountChange: (count: number) => void
   onCategoryName: (categoryId: string, name: string) => void
   onClueText: (categoryId: string, clueId: string, field: 'question' | 'answer', text: string) => void
+  onClueImage: (categoryId: string, clueId: string, image: string | undefined) => void
   onRestoreBoard: () => void
   onClearBoard: () => void
   teams: JpdTeam[]
   onAddTeam: () => void
   onTeamName: (teamId: string, name: string) => void
   onRemoveTeam: (teamId: string) => void
+  timerSeconds: JpdTimerSeconds
+  onTimerSecondsChange: (value: JpdTimerSeconds) => void
   themeId: ColorThemeId
   onThemeChange: (value: ColorThemeId) => void
 }
@@ -34,12 +57,15 @@ export default function JpdCustomizeTab({
   onRowCountChange,
   onCategoryName,
   onClueText,
+  onClueImage,
   onRestoreBoard,
   onClearBoard,
   teams,
   onAddTeam,
   onTeamName,
   onRemoveTeam,
+  timerSeconds,
+  onTimerSecondsChange,
   themeId,
   onThemeChange,
 }: JpdCustomizeTabProps) {
@@ -61,6 +87,13 @@ export default function JpdCustomizeTab({
             value={String(rowCount)}
             options={ROW_COUNT_OPTIONS.map((n) => ({ value: String(n), label: `${COUNT_EMOJI[n]} ${n} questions` }))}
             onChange={(value) => onRowCountChange(Number(value))}
+          />
+          <UtilitySelect
+            label="Answer Timer"
+            accent="var(--energy-orange)"
+            value={String(timerSeconds)}
+            options={JPD_TIMER_OPTIONS.map((s) => ({ value: String(s), label: TIMER_LABELS[s] }))}
+            onChange={(value) => onTimerSecondsChange(Number(value) as JpdTimerSeconds)}
           />
           <UtilitySelect
             label="Color Theme"
@@ -121,7 +154,7 @@ export default function JpdCustomizeTab({
           </div>
         </div>
         <p className="customize-card-hint">
-          Size the board in Game Settings above, then edit anything here. The answer is only shown when you reveal it in the arena.
+          Size the board in Game Settings above, then edit anything here. Add a picture to any question for a guess-the-brand round. The answer stays hidden until you reveal it in the arena.
         </p>
         <div className="jpd-category-grid">
           {board.map((cat) => (
@@ -149,6 +182,11 @@ export default function JpdCustomizeTab({
                       onChange={(e) => onClueText(cat.id, clue.id, 'answer', e.target.value)}
                       aria-label={`${cat.name} ${clue.points} answer`}
                       placeholder="Answer"
+                    />
+                    <JpdCluePicture
+                      image={clue.image}
+                      clueLabel={`${cat.name} ${clue.points}`}
+                      onChange={(image) => onClueImage(cat.id, clue.id, image)}
                     />
                   </div>
                 </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import GameShell from '../shared/GameShell'
+import type { HowToPlayContent } from '../shared/HowToPlay'
 import { useParticipants } from '../shared/useParticipants'
 import { useSessionState } from '../shared/sessionStore'
 import { useCloudSync } from '../shared/useCloudSync'
@@ -21,6 +22,20 @@ const TABS: GameTabDefinition[] = [
   { id: 'customize', label: 'Customize Game' },
   { id: 'arena', label: 'Play Arena' },
 ]
+
+// Opened from the "i" at the right of the game header.
+const HOW_TO_PLAY: HowToPlayContent = {
+  steps: [
+    <>Type or paste everyone's names in <b>Customize Game</b>, one per line.</>,
+    <>Pick a spin time and a color theme.</>,
+    <>Open <b>Play Arena</b> and put the wheel on the big screen.</>,
+    <>Tap <b>Spin the Wheel</b> and count down together as it slows.</>,
+    <>Cheer for the winner, then tap <b>Spin Again</b>. Each winner moves to the winners list, so every spin finds someone new.</>,
+    <>Winner stepped away? Tap <b>Withdraw</b> to put them back on the wheel.</>,
+    <>Keep spinning for raffles, prizes, or picking who goes next.</>,
+  ],
+  cheer: 'Drumroll, please… may the luckiest name win! 🥁🍀',
+}
 
 interface RouletteGameProps {
   onExit: () => void
@@ -88,6 +103,7 @@ export default function RouletteGame({ onExit }: RouletteGameProps) {
       activeTabId={activeTab}
       onTabChange={handleTabChange}
       onBack={onExit}
+      howToPlay={HOW_TO_PLAY}
     >
       {activeTab === 'customize' && (
         <CustomizeGameTab

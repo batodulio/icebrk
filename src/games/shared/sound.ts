@@ -135,6 +135,40 @@ function playTimerUp(): void {
   })
 }
 
+/**
+ * Long, low game-show buzzer for a hard "time's up" (Jeopardy's answer clock).
+ * Two slightly detuned sawtooths beat against each other for the classic rasp,
+ * and a lowpass filter takes the harsh edge off the top.
+ */
+function playBuzzer(): void {
+  const audioCtx = getContext()
+  if (!audioCtx) return
+  unlock()
+
+  const start = audioCtx.currentTime + 0.02
+  const duration = 0.85
+
+  const filter = audioCtx.createBiquadFilter()
+  filter.type = 'lowpass'
+  filter.frequency.setValueAtTime(1400, start)
+
+  const gain = audioCtx.createGain()
+  gain.gain.setValueAtTime(0.001, start)
+  gain.gain.linearRampToValueAtTime(0.14, start + 0.03)
+  gain.gain.setValueAtTime(0.14, start + duration - 0.12)
+  gain.gain.exponentialRampToValueAtTime(0.001, start + duration)
+  filter.connect(gain).connect(audioCtx.destination)
+
+  for (const freq of [146.83, 151]) {
+    const osc = audioCtx.createOscillator()
+    osc.type = 'sawtooth'
+    osc.frequency.setValueAtTime(freq, start)
+    osc.connect(filter)
+    osc.start(start)
+    osc.stop(start + duration + 0.02)
+  }
+}
+
 function stopAll(): void {
   clearSpinTimers()
 }
@@ -145,5 +179,6 @@ export const soundManager = {
   playWinnerFanfare,
   playDrawPop,
   playTimerUp,
+  playBuzzer,
   stopAll,
 }

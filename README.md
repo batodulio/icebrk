@@ -52,8 +52,8 @@ push to main
   → GitHub Actions        lint · typecheck · vite build · npm prune --omit=dev
   → OIDC federated login  no stored password; app registration gh-icebrk-deploy
   → Azure App Service     F1 Free · Linux · Node 22 · Southeast Asia
-      ├── Easy Auth       platform sign-in; injects x-ms-client-principal-id
-      ├── Express         server.js: serves dist/, /api/settings/:gameId, SPA fallback
+      ├── Express         server.js: serves dist/, /api/auth/*, /api/settings/:gameId, SPA fallback
+      ├── sign-in         username + password, scrypt hashes in dbo.users, signed HttpOnly cookie
       └── managed identity → Azure SQL (free offer) with Row Level Security
 ```
 
@@ -61,12 +61,12 @@ push to main
 |---|---|
 | **Repo / CI-CD** | GitHub `batodulio/icebrk`, deploys from `main` via `.github/workflows/azure-app-service.yml` |
 | **Host** | Azure App Service `icebrk-app`, plan `AZ-ASP-ICEBRK-TEST-01` (F1 Free) |
-| **Auth** | App Service Easy Auth, Microsoft provider. The app never handles a credential |
-| **API** | Express in `server.js` — two endpoints, parameterised queries, 64 KB body cap, 120 req/min per caller |
+| **Auth** | Username + password, handled by `server.js`: scrypt hashes in `dbo.users`, a 30-day HMAC-signed HttpOnly session cookie, 20 sign-in attempts per 15 min per IP |
+| **API** | Express in `server.js` — `/api/auth/{signup,login,logout,me}`, `/api/settings/:gameId`, and `/api/images` (Jeopardy clue pictures), parameterised queries, 64 KB settings cap, 300 KB per picture, 120 req/min per caller |
 | **Database** | Azure SQL `icebrk-test` on `sql-icebrk-test`, free offer, serverless with auto-pause |
-| **Schema** | One `dbo.game_settings` table for all six games; see `db/azure-sql-schema.sql` |
+| **Schema** | `dbo.users` for accounts, one `dbo.game_settings` table for all six games, `dbo.clue_images` for clue pictures; see `db/azure-sql-schema.sql` |
 | **Isolation** | Row Level Security via `sp_set_session_context`, set in the same batch as each query |
-| **Secrets** | None in code. The database is reached by the app's managed identity; app settings hold only `SQL_SERVER` and `SQL_DATABASE` |
+| **Secrets** | None in code. The database is reached by the app's managed identity; app settings hold `SQL_SERVER`, `SQL_DATABASE`, and `SESSION_SECRET` (the cookie signing key) |
 
 **Cost: $0/month.** Every service sits inside an always-free tier.
 
@@ -75,7 +75,7 @@ push to main
 - **F1 gives 60 CPU-minutes/day** and unloads the app after 20 minutes idle, so the first visitor after a quiet spell waits through a cold start.
 - **No custom domain on F1** — the app lives at `icebrk-app-*.azurewebsites.net`. A custom domain starts at the Shared (D1) tier, and TLS for it at Basic (B1).
 - **Azure SQL free offer** allows ~55 hours of active compute a month at the 0.5 vCore floor, so auto-pause stays on and the first query after idle is slow.
-- **Sign-in is a Microsoft account.** Branded email-and-password sign-up means adding Entra External ID as a custom OIDC provider in Easy Auth — portal configuration only, no code change, since the client-principal header is identical either way.
+- **Sign-in is deliberately simple for now:** a username and password, with no email, so there is no password reset yet. A host who forgets their password starts a fresh account.
 
 ### What is deliberately absent
 
@@ -165,8 +165,8 @@ If you (the AI assistant) catch a draft using a negation word in user-facing cop
 
 ## Working conventions
 
-- **Match the live architecture** described above: React SPA served by Express on Azure App Service, Easy Auth for identity, Azure SQL behind `/api`. Guest play stays session-local in `sessionStore`; signed-in hosts sync through `useCloudSync`.
-- **Keep credentials out of the codebase.** The database is reached by managed identity, and CI signs in with an OIDC federated credential. If a change seems to need a stored secret, that is a signal the approach is wrong.
+- **Match the live architecture** described above: React SPA served by Express on Azure App Service, username + password sign-in through `/api/auth`, Azure SQL behind `/api`. Guest play stays session-local in `sessionStore`; signed-in hosts sync through `useCloudSync`.
+- **Keep credentials out of the codebase.** The database is reached by managed identity, and CI signs in with an OIDC federated credential. The one secret, `SESSION_SECRET`, lives in App Service settings. If a change seems to need another stored secret, that is a signal the approach is wrong.
 - **Every game follows the 2-tab pattern** (Customize Game / Play Arena) inside `GameShell` — don't introduce a different structure for a new game without a strong reason.
 - **Utilities (Timer, Team Setup, Scorecard) are shared, not duplicated** — when adding a new game, reuse the existing utility components/logic rather than rebuilding them.
 - **Apply the brand system automatically** to anything user-facing (UI, copy, marketing assets) without needing to be re-asked each time — colors, fonts, shape language, and positive-scripting voice should be the default, not an afterthought.

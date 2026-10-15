@@ -12,6 +12,27 @@ export interface WyrQuestion {
 
 export type WyrSide = 'a' | 'b'
 
+/** What the room does to pick each side, shown in the top-left of its card. */
+export interface WyrSideLabels {
+  a: string
+  b: string
+}
+
+export const DEFAULT_SIDE_LABELS: WyrSideLabels = { a: 'Stand', b: 'Sit' }
+
+/** One-tap pairs offered under the side-action inputs. */
+export const SIDE_LABEL_PRESETS: WyrSideLabels[] = [
+  DEFAULT_SIDE_LABELS,
+  { a: 'Thumbs Up', b: 'Thumbs Down' },
+  { a: 'Hands Up', b: 'Hands Down' },
+  { a: 'Left Side', b: 'Right Side' },
+  { a: 'Clap', b: 'Stomp' },
+  { a: 'A', b: 'B' },
+]
+
+// Long enough for "Thumbs Down", short enough to sit in the card's corner.
+export const MAX_SIDE_LABEL_LENGTH = 16
+
 /** 0 = no timer; otherwise seconds of discussion time per question. */
 export type WyrTimerSeconds = 0 | 30 | 60 | 90
 
